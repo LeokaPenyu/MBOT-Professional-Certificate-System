@@ -1,0 +1,14 @@
+Project:
+MBOT Professional Certificate System
+
+Roles:
+- Applicant
+- Assessor
+- Admin
+
+Modules:
+- Authentication
+- Payment
+- Certificate
+- Assessment
+- Reports
