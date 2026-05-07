@@ -376,7 +376,7 @@ export default function Registration() {
                   value={formData.email}
                   onChange={e => setFormData({...formData, email: e.target.value})}
                   className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all placeholder:text-slate-300"
-                  placeholder={isSecretariat ? "name@mbot.gov.my" : "email@mbot.org.my"}
+                  placeholder={isSecretariat ? "name@mbot.gov.my" : "email@gmail.com"}
                 />
                 {isSecretariat && (
                   <p className="text-[9px] text-slate-400 ml-4 italic">Note: Only the @mbot.gov.my domain is authorized for staff accounts.</p>

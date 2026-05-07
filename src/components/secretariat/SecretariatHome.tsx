@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Users, FileText, CheckCircle, Clock, TrendingUp, AlertCircle, BarChart2, Award, X, ShieldAlert, Download, ShieldCheck, Database, RefreshCw, Zap, Trash2 } from 'lucide-react';
-import { getApplicants, seedApplicants, saveApplicants } from '../../lib/storage';
+import { getApplicants, seedApplicants, saveApplicants, getCurrentUser, updateUserProfile } from '../../lib/storage';
 import { Applicant, ApplicantStatus } from '../../types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { cn } from '../../lib/utils';
 import { DUMMY_AUDIT_LOGS, generateDummyApplicants } from '../../lib/dummyData';
+import ProfilePhotoUploader from '../common/ProfilePhotoUploader';
 import * as XLSX from 'xlsx';
 
 export default function SecretariatHome() {
+  const [user, setUser] = useState<any>(null);
   const [stats, setStats] = useState({
     total: 0,
     pending: 0,
@@ -17,6 +19,16 @@ export default function SecretariatHome() {
 
   const [chartData, setChartData] = useState<any[]>([]);
   const [showAuditModal, setShowAuditModal] = useState(false);
+  const [showPolicyModal, setShowPolicyModal] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizationResult, setOptimizationResult] = useState<string | null>(null);
+
+  const [systemPolicies, setSystemPolicies] = useState([
+    { id: 'auto-triage', name: 'Auto-Triage Low Risk Profiles', enabled: true, description: 'Automatically move complete profiles with 5+ years experience to Review stage.' },
+    { id: 'enforce-audit', name: 'Mandatory Dual-Assessor Audit', enabled: false, description: 'Require two separate assessors for all Professional Technologist certifications.' },
+    { id: 'strict-fees', name: 'Stricter Payment Validation', enabled: true, description: 'Block stage advancement if any prior fee components are flagged as pending.' },
+    { id: 'audit-logging', name: 'Enhanced Global Traceability', enabled: true, description: 'Log every field-level change to the permanent audit record.' }
+  ]);
 
   const refreshDashboard = () => {
     const applicants = getApplicants();
@@ -107,8 +119,56 @@ export default function SecretariatHome() {
     XLSX.writeFile(workbook, `MBOT_Audit_Matrix_${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
+  const handleRunOptimizer = () => {
+    setIsOptimizing(true);
+    setOptimizationResult(null);
+    
+    setTimeout(() => {
+      const applicants = getApplicants();
+      let optimizedCount = 0;
+      
+      const updated = applicants.map(app => {
+        // Find "Registered" applicants that have been sitting (simulation: 50% chance)
+        if (app.status === ApplicantStatus.REGISTERED && Math.random() > 0.5) {
+          optimizedCount++;
+          return { 
+            ...app, 
+            status: ApplicantStatus.UNDER_REVIEW,
+            workflowLog: [...(app.workflowLog || []), {
+              stage: 'Queue Optimization Pulse',
+              date: new Date().toISOString(),
+              actor: 'AI Core Optimizer',
+              comments: 'Automated bottleneck resolution: Escalated to Secretariat Review queue.'
+            }]
+          };
+        }
+        return app;
+      });
+      
+      saveApplicants(updated);
+      refreshDashboard();
+      setIsOptimizing(false);
+      setOptimizationResult(`OPTIMIZATION COMPLETE: ${optimizedCount} applications escalated to prioritized review channels.`);
+      setTimeout(() => setOptimizationResult(null), 5000);
+    }, 2000);
+  };
+
+  const togglePolicy = (id: string) => {
+    setSystemPolicies(prev => prev.map(p => 
+      p.id === id ? { ...p, enabled: !p.enabled } : p
+    ));
+  };
+
+  const handlePfpUpdate = (dataUrl: string) => {
+    if (!user) return;
+    const updatedUser = { ...user, profilePicture: dataUrl };
+    updateUserProfile(updatedUser);
+    setUser(updatedUser);
+  };
+
   useEffect(() => {
     refreshDashboard();
+    setUser(getCurrentUser());
   }, []);
 
   const colors = ['#3b82f6', '#4f46e5', '#10b981', '#f59e0b', '#ef4444'];
@@ -213,16 +273,29 @@ export default function SecretariatHome() {
             <div className="space-y-4">
                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400">Policy Management</h4>
                <p className="text-lg font-bold font-display leading-snug">Update operating procedures and Act 768 guidelines.</p>
-               <button className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition">
+               <button 
+                 onClick={() => setShowPolicyModal(true)}
+                 className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition"
+               >
                   Access Terminal <ChevronRight size={16} />
                </button>
             </div>
             <div className="space-y-4">
                <h4 className="text-xs font-bold uppercase tracking-wider text-green-400">Queue Optimizer</h4>
                <p className="text-lg font-bold font-display leading-snug">Average time: 4.2 days. Optimize verification paths.</p>
-               <button className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition" onClick={() => alert("Verification optimization engine initialized.")}>
-                  Run Analytics <ChevronRight size={16} />
+               <button 
+                 disabled={isOptimizing}
+                 onClick={handleRunOptimizer}
+                 className={cn(
+                   "flex items-center gap-2 text-sm font-medium transition",
+                   isOptimizing ? "text-green-400 animate-pulse" : "text-white/60 hover:text-white"
+                 )}
+               >
+                  {isOptimizing ? 'Optimizing AI Engines...' : 'Run Analytics'} <ChevronRight size={16} />
                </button>
+               {optimizationResult && (
+                 <p className="text-[9px] font-black text-green-400 uppercase tracking-widest animate-in slide-in-from-left-2">{optimizationResult}</p>
+               )}
             </div>
             <div className="space-y-4">
                <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400">Reporting Engine</h4>
@@ -301,57 +374,73 @@ export default function SecretariatHome() {
           </div>
         </div>
       )}
+
+      {/* Policy Modal */}
+      {showPolicyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
+           <div className="bg-white w-full max-w-md rounded-[2rem] shadow-2xl overflow-hidden border border-slate-100 flex flex-col">
+              <div className="p-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+                 <div>
+                    <h2 className="text-lg font-black text-slate-900 font-display uppercase tracking-tight flex items-center gap-3">
+                       <ShieldAlert className="text-blue-600" size={20} />
+                       Governance Terminal
+                    </h2>
+                    <p className="text-slate-400 text-[9px] mt-0.5 uppercase tracking-widest font-bold">Act 768 Policy Overrides</p>
+                 </div>
+                 <button 
+                   onClick={() => setShowPolicyModal(false)}
+                   className="w-9 h-9 bg-white rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-900 shadow-sm border border-slate-100 transition-all hover:rotate-90"
+                 >
+                    <X size={16} />
+                 </button>
+              </div>
+
+              <div className="p-6 space-y-2.5">
+                 {systemPolicies.map((policy) => (
+                    <div key={policy.id} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-white transition-all group">
+                       <div className="max-w-[75%]">
+                          <h4 className="text-[10px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors uppercase tracking-tight">{policy.name}</h4>
+                          <p className="text-[8px] text-slate-400 font-medium italic mt-0.5 leading-tight">{policy.description}</p>
+                       </div>
+                       <button 
+                         onClick={() => togglePolicy(policy.id)}
+                         className={cn(
+                           "relative inline-flex h-4.5 w-9 items-center rounded-full transition-colors outline-none",
+                           policy.enabled ? "bg-blue-600" : "bg-slate-200"
+                         )}
+                       >
+                          <span 
+                            className={cn(
+                              "inline-block h-3 w-3 transform rounded-full bg-white transition-transform",
+                              policy.enabled ? "translate-x-5" : "translate-x-1"
+                            )}
+                          />
+                       </button>
+                    </div>
+                 ))}
+
+                 <div className="bg-blue-50/50 p-3.5 rounded-xl border border-blue-100/50 mt-1">
+                    <div className="flex gap-2">
+                       <AlertCircle className="text-blue-600 shrink-0" size={12} />
+                       <p className="text-[8px] text-blue-600 font-bold uppercase tracking-wider leading-relaxed">
+                          NOTICE: Changes are applied globally to all active workstreams.
+                       </p>
+                    </div>
+                 </div>
+              </div>
+
+              <div className="p-5 border-t border-slate-50 bg-slate-50/50 flex justify-end gap-3">
+                 <button 
+                   onClick={() => setShowPolicyModal(false)}
+                   className="px-5 py-2.5 bg-slate-900 text-white text-[8px] font-black uppercase tracking-[0.2em] rounded-lg hover:bg-slate-800 transition shadow-xl"
+                 >
+                    Apply Configurations
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
       
-      {/* Developer Diagnostics Section */}
-      <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm mt-8">
-         <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-               <Database size={18} />
-            </div>
-            <div>
-               <h3 className="font-bold text-slate-800 font-display">System Diagnostics</h3>
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Developer Utilities & Synthetic Data Management</p>
-            </div>
-         </div>
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button 
-              onClick={handleSeedData}
-              className="flex items-center justify-between gap-4 p-6 bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition shadow-xl shadow-slate-900/10 group active:scale-[0.98]"
-            >
-               <div className="text-left">
-                  <p className="text-xs font-black uppercase tracking-wider text-blue-400 mb-1">Population Injection</p>
-                  <p className="text-sm font-bold opacity-80">Seed 20 Records</p>
-               </div>
-               <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
-                  <Zap size={20} className="text-blue-400" />
-               </div>
-            </button>
-            <button 
-              onClick={handlePurgeCPD}
-              className="flex items-center justify-between gap-4 p-6 bg-white border border-slate-200 text-slate-900 rounded-2xl hover:border-orange-200 hover:bg-orange-50 transition group active:scale-[0.98]"
-            >
-               <div className="text-left">
-                  <p className="text-xs font-black uppercase tracking-wider text-orange-500 mb-1">Queue Purge</p>
-                  <p className="text-sm font-bold opacity-80">Remove 5 Pending Records</p>
-               </div>
-               <div className="w-10 h-10 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center group-hover:bg-orange-100 transition">
-                  <Trash2 size={20} />
-               </div>
-            </button>
-            <button 
-              onClick={handleSystemReset}
-              className="flex items-center justify-between gap-4 p-6 bg-white border border-slate-200 text-slate-900 rounded-2xl hover:border-red-200 hover:bg-red-50 transition group active:scale-[0.98]"
-            >
-               <div className="text-left">
-                  <p className="text-xs font-black uppercase tracking-wider text-red-500 mb-1">Registry Reset</p>
-                  <p className="text-sm font-bold opacity-80">Flush & Factory Default</p>
-               </div>
-               <div className="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition">
-                  <RefreshCw size={20} />
-               </div>
-            </button>
-         </div>
-      </div>
     </div>
   );
 }

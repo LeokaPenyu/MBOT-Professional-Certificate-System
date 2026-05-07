@@ -24,6 +24,7 @@ export default function App() {
   const [role, setRole] = useState<UserRole | null>(null);
   const [user, setUser] = useState<Applicant | null>(null);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isCroppingGlobal, setIsCroppingGlobal] = useState(false);
 
   useEffect(() => {
     const refreshUser = () => {
@@ -35,9 +36,17 @@ export default function App() {
       }
     };
 
+    const handleCroppingStatus = (e: any) => {
+      setIsCroppingGlobal(e.detail);
+    };
+
     refreshUser();
     window.addEventListener('mbot-user-update', refreshUser);
-    return () => window.removeEventListener('mbot-user-update', refreshUser);
+    window.addEventListener('mbot-cropping-status', handleCroppingStatus);
+    return () => {
+      window.removeEventListener('mbot-user-update', refreshUser);
+      window.removeEventListener('mbot-cropping-status', handleCroppingStatus);
+    };
   }, []);
 
   const handleLogin = (newRole: UserRole, newUser?: any) => {
@@ -200,87 +209,92 @@ export default function App() {
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[100px] -mr-48 -mt-48 pointer-events-none"></div>
                 
                 {/* Header */}
-                <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 px-10 flex items-center justify-between shrink-0 sticky top-0 z-20">
-                  <div>
-                    <h1 className="text-xl font-bold text-slate-800 font-display">
-                      {role === UserRole.SECRETARIAT ? 'Registry Oversight' : 'Personal Terminal'}
-                    </h1>
-                    <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">
-                      {new Date().toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-8">
-                    <div className="relative group hidden lg:block">
-                      <Search size={14} className="text-slate-300 absolute left-5 top-1/2 -translate-y-1/2 group-hover:text-blue-500 transition-colors" />
-                      <input 
-                        type="text" 
-                        placeholder="Search system..." 
-                        className="bg-slate-50 border-none rounded-2xl py-2.5 pl-12 pr-6 text-xs font-bold w-64 focus:ring-2 focus:ring-blue-500/10 outline-none transition-all placeholder:text-slate-300 tracking-wider"
-                      />
+                {!isCroppingGlobal && (
+                  <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 px-10 flex items-center justify-between shrink-0 sticky top-0 z-20">
+                    <div>
+                      <h1 className="text-xl font-bold text-slate-800 font-display">
+                        {role === UserRole.SECRETARIAT ? 'Registry Oversight' : 'Personal Terminal'}
+                      </h1>
+                      <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">
+                        {new Date().toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                      </p>
                     </div>
-                    
-                    <div className="relative">
-                      <button 
-                        onClick={() => setShowNotifications(!showNotifications)}
-                        className="relative group transition-transform active:scale-95"
-                      >
-                        <div className={cn(
-                          "w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 transition-all",
-                          showNotifications ? "bg-blue-50 text-blue-600" : "group-hover:text-blue-600 group-hover:bg-blue-50"
-                        )}>
-                          <Bell size={20} />
-                        </div>
-                        {(user?.notifications?.filter(n => !n.read).length || 0) > 0 && (
-                          <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-white ring-4 ring-blue-600/10 scale-100 group-hover:scale-110 transition-transform"></span>
-                        )}
-                      </button>
-
-                      {showNotifications && (
-                        <div className="absolute right-0 mt-4 w-80 bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-4">
-                          <div className="p-6 bg-slate-900 flex justify-between items-center">
-                            <h3 className="text-white font-black uppercase tracking-widest text-[10px]">Registry Alerts</h3>
-                            <span className="text-[9px] font-bold text-blue-400">{user?.notifications?.filter(n => !n.read).length || 0} New</span>
+                    <div className="flex items-center gap-8">
+                      <div className="relative group hidden lg:block">
+                        <Search size={14} className="text-slate-300 absolute left-5 top-1/2 -translate-y-1/2 group-hover:text-blue-500 transition-colors" />
+                        <input 
+                          type="text" 
+                          placeholder="Search system..." 
+                          className="bg-slate-50 border-none rounded-2xl py-2.5 pl-12 pr-6 text-xs font-bold w-64 focus:ring-2 focus:ring-blue-500/10 outline-none transition-all placeholder:text-slate-300 tracking-wider"
+                          onChange={(e) => {
+                            window.dispatchEvent(new CustomEvent('mbot-global-search', { detail: e.target.value }));
+                          }}
+                        />
+                      </div>
+                      
+                      <div className="relative">
+                        <button 
+                          onClick={() => setShowNotifications(!showNotifications)}
+                          className="relative group transition-transform active:scale-95"
+                        >
+                          <div className={cn(
+                            "w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 transition-all",
+                            showNotifications ? "bg-blue-50 text-blue-600" : "group-hover:text-blue-600 group-hover:bg-blue-50"
+                          )}>
+                            <Bell size={20} />
                           </div>
-                          <div className="max-h-[400px] overflow-y-auto">
-                            {!user?.notifications || user.notifications.length === 0 ? (
-                              <div className="p-10 text-center">
-                                <Bell className="mx-auto text-slate-100 mb-4" size={32} />
-                                <p className="text-[10px] font-black uppercase text-slate-400">All sets clear</p>
-                              </div>
-                            ) : (
-                              user.notifications.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(n => (
-                                <div 
-                                  key={n.id} 
-                                  onClick={() => markNotificationRead(n.id)}
-                                  className={cn(
-                                    "p-5 border-b border-slate-50 transition-colors hover:bg-slate-50 cursor-pointer",
-                                    !n.read && "bg-blue-50/30"
-                                  )}
-                                >
-                                  <div className="flex justify-between items-start mb-1">
-                                    <p className={cn("text-[11px] font-black uppercase tracking-tight", !n.read ? "text-blue-600" : "text-slate-900")}>
-                                      {n.title}
-                                    </p>
-                                    <span className="text-[8px] font-black text-slate-400">{new Date(n.date).toLocaleDateString()}</span>
-                                  </div>
-                                  <p className="text-[10px] text-slate-500 font-medium leading-relaxed">{n.message}</p>
+                          {(user?.notifications?.filter(n => !n.read).length || 0) > 0 && (
+                            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-white ring-4 ring-blue-600/10 scale-100 group-hover:scale-110 transition-transform"></span>
+                          )}
+                        </button>
+  
+                        {showNotifications && (
+                          <div className="absolute right-0 mt-4 w-80 bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-4">
+                            <div className="p-6 bg-slate-900 flex justify-between items-center">
+                              <h3 className="text-white font-black uppercase tracking-widest text-[10px]">Registry Alerts</h3>
+                              <span className="text-[9px] font-bold text-blue-400">{user?.notifications?.filter(n => !n.read).length || 0} New</span>
+                            </div>
+                            <div className="max-h-[400px] overflow-y-auto">
+                              {!user?.notifications || user.notifications.length === 0 ? (
+                                <div className="p-10 text-center">
+                                  <Bell className="mx-auto text-slate-100 mb-4" size={32} />
+                                  <p className="text-[10px] font-black uppercase text-slate-400">All sets clear</p>
                                 </div>
-                              ))
-                            )}
+                              ) : (
+                                user.notifications.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(n => (
+                                  <div 
+                                    key={n.id} 
+                                    onClick={() => markNotificationRead(n.id)}
+                                    className={cn(
+                                      "p-5 border-b border-slate-50 transition-colors hover:bg-slate-50 cursor-pointer",
+                                      !n.read && "bg-blue-50/30"
+                                    )}
+                                  >
+                                    <div className="flex justify-between items-start mb-1">
+                                      <p className={cn("text-[11px] font-black uppercase tracking-tight", !n.read ? "text-blue-600" : "text-slate-900")}>
+                                        {n.title}
+                                      </p>
+                                      <span className="text-[8px] font-black text-slate-400">{new Date(n.date).toLocaleDateString()}</span>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 font-medium leading-relaxed">{n.message}</p>
+                                  </div>
+                                ))
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
+                      
+                      <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shadow-sm hover:ring-2 hover:ring-blue-500/20 transition-all">
+                        {user?.profilePicture ? (
+                          <img src={user.profilePicture} alt="Profile" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                        ) : (
+                          <UserCircle className="text-slate-400" size={24} />
+                        )}
+                      </Link>
                     </div>
-                    
-                    <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shadow-sm hover:ring-2 hover:ring-blue-500/20 transition-all">
-                      {user?.profilePicture ? (
-                        <img src={user.profilePicture} alt="Profile" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                      ) : (
-                        <UserCircle className="text-slate-400" size={24} />
-                      )}
-                    </Link>
-                  </div>
-                </header>
+                  </header>
+                )}
 
                 {/* Page Content */}
                 <div className="flex-1 overflow-y-auto p-10 custom-scrollbar scroll-smooth">

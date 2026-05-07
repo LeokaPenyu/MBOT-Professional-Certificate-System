@@ -19,6 +19,13 @@ export default function AssessorHome() {
     const data = getApplicants();
     setApplicants(data);
     setIsLoading(false);
+
+    const handleGlobalSearch = (e: any) => {
+      setSearchTerm(e.detail);
+    };
+
+    window.addEventListener('mbot-global-search', handleGlobalSearch);
+    return () => window.removeEventListener('mbot-global-search', handleGlobalSearch);
   }, []);
 
   const notify = (msg: string) => {

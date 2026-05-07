@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Award, FileText, CheckCircle2, Clock, Calendar, Download, QrCode, Upload, Bell, CreditCard, MessageSquare, ShieldCheck, Mail, Phone, MapPin, User, AlertCircle, RefreshCcw, Eye, Shield, X, ChevronRight } from 'lucide-react';
+import { Award, FileText, CheckCircle2, Clock, Calendar, Download, QrCode, Upload, CreditCard, MessageSquare, ShieldCheck, Mail, Phone, MapPin, User, AlertCircle, RefreshCcw, Eye, Shield, X, ChevronRight } from 'lucide-react';
 import { getCurrentUser, saveApplicants, getApplicants, addNotification, updateUserProfile } from '../../lib/storage';
 import { Applicant, ApplicantStatus, CPDCategory, Notification as AppNotification } from '../../types';
 import { FEES, MBOT_FIELDS } from '../../constants';
@@ -233,59 +233,6 @@ export default function ApplicantHome() {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto py-8 animate-in fade-in slide-in-from-bottom-4 duration-700 relative">
-      {/* Top Navbar Actions */}
-      <div className="flex justify-end gap-4 static md:absolute md:top-8 md:right-0 z-50">
-        <div className="relative">
-          <button 
-            onClick={() => setShowNotifications(!showNotifications)}
-            className="w-12 h-12 bg-white rounded-2xl shadow-xl shadow-slate-200/50 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all border border-slate-100 relative group"
-          >
-            <Bell size={20} className={cn(unreadCount > 0 && "animate-tada")} />
-            {unreadCount > 0 && (
-              <span className="absolute top-3 right-3 w-4 h-4 bg-red-500 border-2 border-white rounded-full flex items-center justify-center text-[8px] font-black text-white">
-                {unreadCount}
-              </span>
-            )}
-          </button>
-          
-          {showNotifications && (
-            <div className="absolute right-0 mt-4 w-80 bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-4">
-              <div className="p-6 bg-slate-900 flex justify-between items-center">
-                <h3 className="text-white font-black uppercase tracking-widest text-[10px]">Notification Center</h3>
-                <span className="text-[9px] font-bold text-blue-400">{unreadCount} New</span>
-              </div>
-              <div className="max-h-[400px] overflow-y-auto">
-                {(!user.notifications || user.notifications.length === 0) ? (
-                  <div className="p-10 text-center">
-                    <Mail className="mx-auto text-slate-100 mb-4" size={32} />
-                    <p className="text-[10px] font-black uppercase text-slate-400">Registry is quiet</p>
-                  </div>
-                ) : (
-                  user.notifications.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(n => (
-                    <div 
-                      key={n.id} 
-                      onClick={() => markNotificationRead(n.id)}
-                      className={cn(
-                        "p-5 border-b border-slate-50 cursor-pointer transition-colors hover:bg-slate-50",
-                        !n.read && "bg-blue-50/30"
-                      )}
-                    >
-                      <div className="flex justify-between items-start mb-1">
-                        <p className={cn("text-[11px] font-black uppercase tracking-tight", !n.read ? "text-blue-600" : "text-slate-900")}>
-                          {n.title}
-                        </p>
-                        <span className="text-[8px] font-black text-slate-400">{new Date(n.date).toLocaleDateString()}</span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 font-medium leading-relaxed">{n.message}</p>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Header Info */}
       <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 blur-3xl -mr-32 -mt-32 transition-colors group-hover:bg-slate-100/50"></div>
@@ -298,7 +245,9 @@ export default function ApplicantHome() {
              disabled={true}
            />
            <div>
-             <h1 className="text-3xl font-bold text-slate-900 font-display tracking-tight">{user.fullName}</h1>
+             <h1 className="text-3xl font-bold text-slate-900 font-display tracking-tight flex items-center gap-3">
+               Welcome, {user.fullName.split(' ')[0]}
+             </h1>
              <p className="text-slate-400 mt-1 uppercase tracking-wider text-xs font-semibold flex items-center gap-2">
                <ShieldCheck size={14} className="text-blue-500" />
                National Professional Registry • <span className="text-blue-600">{user.status}</span>

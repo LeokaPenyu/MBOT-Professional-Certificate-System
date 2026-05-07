@@ -6,6 +6,7 @@ import { cn } from '../../lib/utils';
 
 export default function ApplicationQueue() {
   const [applicants, setApplicants] = useState<Applicant[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [remarks, setRemarks] = useState('');
@@ -18,13 +19,27 @@ export default function ApplicationQueue() {
 
   useEffect(() => {
     setApplicants(getApplicants());
+
+    const handleGlobalSearch = (e: any) => {
+      setSearchTerm(e.detail);
+    };
+
+    window.addEventListener('mbot-global-search', handleGlobalSearch);
+    return () => window.removeEventListener('mbot-global-search', handleGlobalSearch);
   }, []);
 
-  const pendingApplications = applicants.filter(a => [
-    ApplicantStatus.PROFESSIONAL_PENDING,
-    ApplicantStatus.ASSESSMENT_PASSED,
-    ApplicantStatus.CERTIFICATE_READY
-  ].includes(a.status));
+  const pendingApplications = applicants.filter(a => {
+    const isPending = [
+      ApplicantStatus.PROFESSIONAL_PENDING,
+      ApplicantStatus.ASSESSMENT_PASSED,
+      ApplicantStatus.CERTIFICATE_READY
+    ].includes(a.status);
+    
+    const matchesSearch = a.fullName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          a.field.toLowerCase().includes(searchTerm.toLowerCase());
+                          
+    return isPending && matchesSearch;
+  });
 
   const handleAction = (id: string, nextStatus: ApplicantStatus) => {
     const updated = applicants.map(a => {
@@ -72,6 +87,60 @@ export default function ApplicationQueue() {
 
   const handleHold = (id: string) => {
     notify("REGULATORY ACTION: Application flag raised for manual review.");
+  };
+
+  const handleBulkBatch = () => {
+    if (pendingApplications.length === 0) {
+      notify("No applications in queue to process.");
+      return;
+    }
+
+    const updated = applicants.map(a => {
+      // Find if this applicant is in the current filtered/pending view
+      const isPendingInView = pendingApplications.some(pa => pa.id === a.id);
+      if (!isPendingInView) return a;
+
+      let nextStatus: ApplicantStatus;
+      if (a.status === ApplicantStatus.PROFESSIONAL_PENDING) nextStatus = ApplicantStatus.ASSESSMENT_PASSED;
+      else if (a.status === ApplicantStatus.ASSESSMENT_PASSED) nextStatus = ApplicantStatus.CERTIFICATE_READY;
+      else if (a.status === ApplicantStatus.CERTIFICATE_READY) nextStatus = ApplicantStatus.PROFESSIONAL;
+      else return a;
+
+      let finalStatus: ApplicantStatus = nextStatus;
+      let additionalFields: Partial<Applicant> = {};
+
+      if (nextStatus === ApplicantStatus.PROFESSIONAL) {
+        const isTechnician = a.qtNumber !== undefined || a.status === ApplicantStatus.QUALIFIED_TECH;
+        finalStatus = isTechnician ? ApplicantStatus.CERTIFIED_TECH : ApplicantStatus.PROFESSIONAL;
+        
+        const year = new Date().getFullYear();
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        
+        if (isTechnician) {
+          additionalFields = { cTechNumber: `CT/${year}/${randomNum}` };
+        } else {
+          additionalFields = { pTechNumber: `PT/${year}/${randomNum}` };
+        }
+      }
+
+      const logEntry = {
+        stage: nextStatus,
+        date: new Date().toISOString(),
+        actor: 'Registry Officer (SO) [BATCH]',
+        comments: `Automated batch processing for active queue.`
+      };
+
+      return { 
+        ...a, 
+        status: finalStatus, 
+        ...additionalFields,
+        workflowLog: [...(a.workflowLog || []), logEntry]
+      };
+    });
+
+    setApplicants(updated);
+    saveApplicants(updated);
+    notify(`BATCH COMPLETE: ${pendingApplications.length} identities processed through the workflow.`);
   };
 
   return (
@@ -185,7 +254,7 @@ export default function ApplicationQueue() {
             <h3 className="text-2xl font-bold font-display tracking-tight">Bulk Batch Processing</h3>
             <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-lg">Initiate verification for applicants who have met all regulatory compliance standards across verified fields.</p>
          </div>
-         <button className="shrink-0 bg-white text-slate-900 px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-2xl hover:bg-slate-100 transition-all active:scale-95 relative z-10" onClick={() => alert("Bulk processing engine engaged.")}>
+         <button className="shrink-0 bg-white text-slate-900 px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-2xl hover:bg-slate-100 transition-all active:scale-95 relative z-10" onClick={handleBulkBatch}>
             Launch Batch Verify
          </button>
       </div>

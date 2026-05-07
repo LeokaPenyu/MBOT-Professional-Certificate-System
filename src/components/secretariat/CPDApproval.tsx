@@ -76,6 +76,13 @@ export default function CPDApproval() {
 
   useEffect(() => {
     setApplicants(getApplicants());
+
+    const handleGlobalSearch = (e: any) => {
+      setSearchTerm(e.detail);
+    };
+
+    window.addEventListener('mbot-global-search', handleGlobalSearch);
+    return () => window.removeEventListener('mbot-global-search', handleGlobalSearch);
   }, []);
 
   const notify = (msg: string) => {

@@ -66,6 +66,13 @@ export default function CPDTracker() {
 
   useEffect(() => {
     setUser(getCurrentUser());
+
+    const handleGlobalSearch = (e: any) => {
+      setSearchTerm(e.detail);
+    };
+
+    window.addEventListener('mbot-global-search', handleGlobalSearch);
+    return () => window.removeEventListener('mbot-global-search', handleGlobalSearch);
   }, []);
 
   const notify = (msg: string) => {

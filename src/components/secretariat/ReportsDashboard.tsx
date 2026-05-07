@@ -131,7 +131,21 @@ export default function ReportsDashboard() {
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      {/* Print-Only Header */}
+      <div className="hidden print:block mb-10 border-b-2 border-slate-900 pb-8">
+        <div className="flex justify-between items-end">
+          <div>
+            <h1 className="text-4xl font-black text-slate-900 font-display uppercase tracking-tighter">Registry Intelligence Audit</h1>
+            <p className="text-slate-500 text-sm font-bold mt-2 uppercase tracking-widest">Official Regulatory Compliance Report • MBOT CMS PRO</p>
+          </div>
+          <div className="text-right">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Report Produced</p>
+            <p className="text-sm font-bold text-slate-900">{new Date().toLocaleString('en-MY', { dateStyle: 'full', timeStyle: 'short' })}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 print:hidden">
         <div>
           <h1 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight flex items-center gap-3">
             <BarChart2 className="text-blue-600" size={28} />
@@ -140,12 +154,6 @@ export default function ReportsDashboard() {
           <p className="text-slate-500 text-sm font-medium">Strategic insights, fiscal tracking, and demographic analytics.</p>
         </div>
         <div className="flex gap-3">
-          <button 
-            onClick={() => window.print()}
-            className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition shadow-sm"
-          >
-            <Printer size={14} /> Print Audit
-          </button>
           <button 
             onClick={exportGeneralReport}
             className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition shadow-xl"
@@ -156,7 +164,7 @@ export default function ReportsDashboard() {
       </div>
 
       {/* Hero Analytics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 print:grid-cols-2">
         <MetricCard 
           title="Revenue (YTD)" 
           value="RM 142,500" 
@@ -193,7 +201,7 @@ export default function ReportsDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Registration Trends */}
-        <div className="lg:col-span-8 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col h-[500px]">
+        <div className="lg:col-span-8 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col h-[500px] break-inside-avoid">
           <div className="flex justify-between items-center mb-10">
             <div>
               <h3 className="font-bold text-xl text-slate-900 font-display">Registration Trajectory</h3>
@@ -226,7 +234,7 @@ export default function ReportsDashboard() {
         </div>
 
         {/* Status Distribution */}
-        <div className="lg:col-span-4 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col h-[500px]">
+        <div className="lg:col-span-4 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col h-[500px] break-inside-avoid">
           <h3 className="font-bold text-xl text-slate-900 mb-2 font-display">Registry Status</h3>
           <p className="text-xs text-slate-400 font-medium uppercase tracking-widest mb-10">Current Workforce state</p>
           <div className="flex-1 min-h-0 relative">
@@ -264,7 +272,7 @@ export default function ReportsDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Domain Distribution */}
-        <div className="lg:col-span-12 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
+        <div className="lg:col-span-12 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm break-inside-avoid">
           <div className="flex justify-between items-center mb-10">
             <div>
               <h3 className="font-bold text-xl text-slate-900 font-display">Technological Domain Heatmap</h3>
@@ -291,8 +299,8 @@ export default function ReportsDashboard() {
         </div>
 
         {/* Revenue/Fiscal Report */}
-        <div className="lg:col-span-12 bg-slate-900 rounded-[2.5rem] p-10 text-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[100px] -mr-48 -mt-48 transition-opacity"></div>
+        <div className="lg:col-span-12 bg-slate-900 rounded-[2.5rem] p-10 text-white overflow-hidden relative break-inside-avoid shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[100px] -mr-48 -mt-48 transition-opacity print:hidden"></div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-12">
               <div>

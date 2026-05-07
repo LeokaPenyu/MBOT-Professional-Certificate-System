@@ -29,6 +29,60 @@
   }
 }
 
+@media print {
+  aside, 
+  header, 
+  footer, 
+  .print-hide,
+  button,
+  select {
+    display: none !important;
+  }
+
+  body, 
+  main, 
+  .flex-1 {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    position: static !important;
+  }
+
+  .p-10 {
+    padding: 0 !important;
+  }
+
+  .shadow-sm, 
+  .shadow-xl, 
+  .shadow-md {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  .bg-slate-900 {
+    background: #0f172a !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .bg-blue-600 {
+    background: #2563eb !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .bg-slate-50 {
+    background: transparent !important;
+  }
+
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
 .markdown-body {
   @apply max-w-none;
 }

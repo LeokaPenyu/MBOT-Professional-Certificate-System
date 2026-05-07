@@ -163,6 +163,10 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
                   Onboard Account
                 </Link>
               </p>
+            ) : isAssessor ? (
+              <p className="text-xs text-slate-500 font-medium italic">
+                Authority access only. Unauthorized attempts are logged.
+              </p>
             ) : (
               <p className="text-xs text-slate-500 font-medium">
                 Don't have an account?{' '}
@@ -174,16 +178,10 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
             
             <div className="pt-4 border-t border-slate-50 space-y-2">
               <Link 
-                to={isSecretariat ? "/login?type=applicant" : "/login?type=secretariat"}
+                to={isStaff ? "/login?type=applicant" : "/login?type=secretariat"}
                 className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hover:text-slate-600 transition-colors"
               >
-                Switch to {isSecretariat ? 'Applicant' : 'Secretariat'} Gateway
-              </Link>
-              <Link 
-                to={isAssessor ? "/login?type=applicant" : "/login?type=assessor"}
-                className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hover:text-slate-600 transition-colors"
-              >
-                Switch to {isAssessor ? 'Applicant' : 'Assessor'} Gateway
+                Switch to {isStaff ? 'Applicant' : 'Secretariat'} Gateway
               </Link>
             </div>
           </div>
