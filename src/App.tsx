@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, UserCircle, Award, BookOpen, Settings, LogIn, Users, FileText, Bell, CheckCircle, Clock, ShieldCheck, Search } from 'lucide-react';
+import { LayoutDashboard, UserCircle, Award, BookOpen, Settings, LogIn, Users, FileText, Bell, CheckCircle, Clock, ShieldCheck, Search, TrendingUp } from 'lucide-react';
 import { UserRole, Applicant, ApplicantStatus } from './types';
 import { getCurrentUser, setCurrentUser, getApplicants, getCurrentRole, updateUserProfile } from './lib/storage';
 import { cn } from './lib/utils';
@@ -15,6 +15,8 @@ import ApplicantList from './components/secretariat/ApplicantList';
 import ApplicationQueue from './components/secretariat/ApplicationQueue';
 import QuestionBank from './components/secretariat/QuestionBank';
 import CPDApproval from './components/secretariat/CPDApproval';
+import ReportsDashboard from './components/secretariat/ReportsDashboard';
+import AssessorHome from './components/assessor/AssessorHome';
 import Login from './components/auth/Login';
 import Profile from './components/Profile';
 
@@ -144,12 +146,17 @@ export default function App() {
                         <NavItem to="/assessment" icon={<CheckCircle />} label="Assessments" />
                         <NavItem to="/cpd" icon={<BookOpen />} label="CPD Matrix" />
                       </>
+                    ) : role === UserRole.ASSESSOR ? (
+                      <>
+                        <NavItem to="/assessor" icon={<LayoutDashboard />} label="Evaluation Terminal" />
+                      </>
                     ) : (
                       <>
                         <NavItem to="/admin" icon={<LayoutDashboard />} label="Control Center" />
                         <NavItem to="/admin/applicants" icon={<Users />} label="Member Registry" />
                         <NavItem to="/admin/applications" icon={<FileText />} label="Verification Queue" />
                         <NavItem to="/admin/cpd" icon={<ShieldCheck />} label="CPD Audit Queue" />
+                        <NavItem to="/admin/reports" icon={<TrendingUp />} label="Intel & Reports" />
                         <NavItem to="/admin/questions" icon={<BookOpen />} label="Knowledge Vault" />
                       </>
                     )}
@@ -286,17 +293,23 @@ export default function App() {
                         <Route path="/cpd" element={<CPDTracker />} />
                         <Route path="/profile" element={<Profile />} />
                       </>
+                    ) : role === UserRole.ASSESSOR ? (
+                      <>
+                        <Route path="/assessor" element={<AssessorHome />} />
+                        <Route path="/profile" element={<Profile />} />
+                      </>
                     ) : (
                       <>
                         <Route path="/admin" element={<SecretariatHome />} />
                         <Route path="/admin/applicants" element={<ApplicantList />} />
                         <Route path="/admin/applications" element={<ApplicationQueue />} />
                         <Route path="/admin/cpd" element={<CPDApproval />} />
+                        <Route path="/admin/reports" element={<ReportsDashboard />} />
                         <Route path="/admin/questions" element={<QuestionBank />} />
                         <Route path="/profile" element={<Profile />} />
                       </>
                     )}
-                    <Route path="*" element={<Navigate to={role === UserRole.APPLICANT ? "/" : "/admin"} />} />
+                    <Route path="*" element={<Navigate to={role === UserRole.APPLICANT ? "/" : role === UserRole.ASSESSOR ? "/assessor" : "/admin"} />} />
                   </Routes>
                 </div>
 

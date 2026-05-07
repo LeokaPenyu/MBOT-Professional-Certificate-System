@@ -227,8 +227,8 @@ export default function SecretariatHome() {
             <div className="space-y-4">
                <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400">Reporting Engine</h4>
                <p className="text-lg font-bold font-display leading-snug">Generate performance audits for the board review.</p>
-               <button className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition" onClick={() => alert("Quarterly report generation started...")}>
-                  Generate Report <ChevronRight size={16} />
+               <button className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition" onClick={() => window.location.href = '/admin/reports'}>
+                  Access Intelligence Dashboard <ChevronRight size={16} />
                </button>
             </div>
          </div>

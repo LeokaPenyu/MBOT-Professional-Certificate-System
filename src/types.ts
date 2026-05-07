@@ -6,6 +6,7 @@
 export enum UserRole {
   APPLICANT = 'APPLICANT',
   SECRETARIAT = 'SECRETARIAT',
+  ASSESSOR = 'ASSESSOR',
 }
 
 export enum ApplicantStatus {

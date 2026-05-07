@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, MoreVertical, CheckCircle, User, ChevronRight, FileEdit, Trash2, Mail, MessageSquare, ShieldCheck, X, Save, AlertCircle, Trash } from 'lucide-react';
+import { Search, Filter, MoreVertical, CheckCircle, User, ChevronRight, FileEdit, Trash2, Mail, MessageSquare, ShieldCheck, X, Save, AlertCircle, Trash, History, Clock } from 'lucide-react';
 import { getApplicants, saveApplicants } from '../../lib/storage';
 import { Applicant, ApplicantStatus } from '../../types';
 import { MBOT_FIELDS } from '../../constants';
@@ -11,6 +11,7 @@ export default function ApplicantList() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [editingApplicant, setEditingApplicant] = useState<Applicant | null>(null);
+  const [viewingLogs, setViewingLogs] = useState<Applicant | null>(null);
 
   const notify = (msg: string) => {
     setStatusMsg(msg);
@@ -200,6 +201,13 @@ export default function ApplicantList() {
                       <td className="px-10 py-6 text-right">
                          <div className="flex justify-end gap-2 transition-all">
                             <button 
+                              onClick={() => setViewingLogs(applicant)}
+                              className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-slate-900 shadow-sm border border-slate-100 transition-all bg-white" 
+                              title="View Workflow Audit Log"
+                            >
+                               <History size={14} />
+                            </button>
+                            <button 
                               onClick={() => setEditingApplicant({...applicant})}
                               className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:bg-blue-50 hover:text-blue-600 shadow-sm border border-slate-100 transition-all bg-white" 
                               title="Modify Registry Record"
@@ -323,6 +331,63 @@ export default function ApplicantList() {
                     </button>
                  </div>
               </form>
+           </div>
+        </div>
+      )}
+
+      {viewingLogs && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[110] flex items-center justify-center p-4">
+           <div className="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden animate-in zoom-in duration-300 flex flex-col max-h-[80vh]">
+              <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+                 <div>
+                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight font-display italic">Audit Trail: {viewingLogs.fullName}</h2>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Full Lifecycle Documentation</p>
+                 </div>
+                 <button 
+                   onClick={() => setViewingLogs(null)}
+                   className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-900 shadow-sm border border-slate-100 transition-all hover:rotate-90"
+                 >
+                    <X size={20} />
+                 </button>
+              </div>
+
+              <div className="p-10 overflow-y-auto space-y-8 flex-1">
+                 {(!viewingLogs.workflowLog || viewingLogs.workflowLog.length === 0) ? (
+                    <div className="text-center py-20">
+                       <Clock size={40} className="mx-auto text-slate-100 mb-4" />
+                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">No audit entries detected for this entity.</p>
+                    </div>
+                 ) : (
+                    <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-slate-100 before:via-slate-100 before:to-transparent">
+                       {viewingLogs.workflowLog.map((log, i) => (
+                          <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                             <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                <CheckCircle size={14} className={cn(i === 0 ? "text-blue-500" : "text-slate-400")} />
+                             </div>
+                             <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                                <div className="flex items-center justify-between space-x-2 mb-1">
+                                   <div className="font-bold text-slate-900 text-sm tracking-tight">{log.stage}</div>
+                                   <time className="font-mono text-[9px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{new Date(log.date).toLocaleDateString()}</time>
+                                </div>
+                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-3">Operator: {log.actor}</div>
+                                <div className="text-[11px] text-slate-500 leading-relaxed font-medium bg-white/50 p-3 rounded-lg border border-slate-100/50 italic">
+                                   "{log.comments}"
+                                </div>
+                             </div>
+                          </div>
+                       ))}
+                    </div>
+                 )}
+              </div>
+
+              <div className="p-8 border-t border-slate-50 bg-slate-50/50 flex justify-end">
+                 <button 
+                   onClick={() => setViewingLogs(null)}
+                   className="px-8 py-4 bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-slate-800 transition shadow-xl"
+                 >
+                    Close Terminal
+                 </button>
+              </div>
            </div>
         </div>
       )}

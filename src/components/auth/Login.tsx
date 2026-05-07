@@ -10,6 +10,8 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
   const navigate = useNavigate();
   const roleType = searchParams.get('type') || 'applicant';
   const isSecretariat = roleType === 'secretariat';
+  const isAssessor = roleType === 'assessor';
+  const isStaff = isSecretariat || isAssessor;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,12 +27,12 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
     setTimeout(() => {
       const normalizedEmail = email.trim().toLowerCase();
       
-      if (isSecretariat) {
+      if (isStaff) {
         const staffList = getStaff();
         const staff = staffList.find(s => s.email.toLowerCase() === normalizedEmail);
         
         if (!staff) {
-          setError('No Account found for this secretariat email. Please check your credentials.');
+          setError('No Account found for this authority email. Please check your credentials.');
           setIsLoading(false);
           return;
         }
@@ -41,9 +43,10 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
           return;
         }
 
-        // Success for Secretariat
-        onLogin(UserRole.SECRETARIAT, staff);
-        navigate('/admin');
+        // Success for Staff
+        const finalRole = isAssessor ? UserRole.ASSESSOR : UserRole.SECRETARIAT;
+        onLogin(finalRole, staff);
+        navigate(isAssessor ? '/assessor' : '/admin');
       } else {
         // Applicant Login
         const applicants = getApplicants();
@@ -83,7 +86,7 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
               {isSecretariat ? <Briefcase size={24} /> : <Award size={24} />}
             </div>
             <h1 className="text-3xl font-bold font-display tracking-tight">
-              {isSecretariat ? 'Staff Portal' : 'Applicant Login'}
+              {isSecretariat ? 'Secretariat Portal' : isAssessor ? 'Assessor Portal' : 'Applicant Login'}
             </h1>
             <p className={cn(
               "mt-2 uppercase tracking-[0.3em] text-[10px] font-black",
@@ -108,7 +111,7 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="w-full pl-14 pr-6 py-4 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all placeholder:text-slate-300"
-                  placeholder={isSecretariat ? "name@mbot.gov.my" : "email@example.com"}
+                  placeholder={isStaff ? "official@mbot.gov.my" : "email@example.com"}
                 />
               </div>
             </div>
@@ -169,12 +172,18 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
               </p>
             )}
             
-            <div className="pt-4 border-t border-slate-50">
+            <div className="pt-4 border-t border-slate-50 space-y-2">
               <Link 
                 to={isSecretariat ? "/login?type=applicant" : "/login?type=secretariat"}
                 className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hover:text-slate-600 transition-colors"
               >
                 Switch to {isSecretariat ? 'Applicant' : 'Secretariat'} Gateway
+              </Link>
+              <Link 
+                to={isAssessor ? "/login?type=applicant" : "/login?type=assessor"}
+                className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hover:text-slate-600 transition-colors"
+              >
+                Switch to {isAssessor ? 'Applicant' : 'Assessor'} Gateway
               </Link>
             </div>
           </div>
