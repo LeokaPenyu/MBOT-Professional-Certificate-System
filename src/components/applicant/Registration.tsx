@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { UserCircle, Upload, CheckCircle2, Award, Clock, Briefcase, ShieldCheck } from 'lucide-react';
+import { UserCircle, Upload, CheckCircle2, Award, Clock, Briefcase, ShieldCheck, ChevronLeft } from 'lucide-react';
 import { MBOT_FIELDS } from '../../constants';
 import { Qualification, ApplicantStatus, Applicant, UserRole, Staff, Gender } from '../../types';
 import { getApplicants, saveApplicants, setCurrentUser, getStaff, saveStaff } from '../../lib/storage';
@@ -192,7 +192,13 @@ export default function Registration() {
 
   if (!isSecretariat && !regPath && !isSuccess) {
     return (
-      <div className="max-w-4xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="max-w-4xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-8 duration-700 relative">
+        <button 
+          onClick={() => navigate('/')}
+          className="absolute -top-4 left-0 z-20 flex items-center gap-2 px-4 py-2 text-slate-400 hover:text-slate-900 transition-colors font-black text-[10px] uppercase tracking-widest"
+        >
+          <ChevronLeft size={16} /> Back to Entry
+        </button>
         <div className="bg-white rounded-[3rem] shadow-2xl p-12 border border-slate-100">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-black font-display text-slate-900 uppercase tracking-tight mb-4">Select Registration Path</h1>
@@ -207,7 +213,7 @@ export default function Registration() {
               }}
               className="group p-10 bg-slate-50 border-2 border-transparent hover:border-blue-500 hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 bg-blue-700 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
                 <Briefcase size={32} />
               </div>
               <h3 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight mb-4">Qualified Technician</h3>
@@ -215,7 +221,7 @@ export default function Registration() {
               <ul className="space-y-3">
                 {['Lifetime Registration', 'No Yearly Renewal', 'Path to Certified Tech (Tc.)'].map((text, i) => (
                   <li key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <CheckCircle2 size={14} className="text-blue-500" /> {text}
+                    <CheckCircle2 size={14} className="text-blue-700" /> {text}
                   </li>
                 ))}
               </ul>
@@ -226,17 +232,17 @@ export default function Registration() {
                 setRegPath('GT');
                 setFormData({...formData, qualification: Qualification.BACHELOR});
               }}
-              className="group p-10 bg-slate-50 border-2 border-transparent hover:border-indigo-500 hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
+              className="group p-10 bg-slate-50 border-2 border-transparent hover:border-indigo-700 hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 bg-indigo-700 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
                 <Award size={32} />
               </div>
               <h3 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight mb-4">Graduate Technologist</h3>
               <p className="text-sm text-slate-500 leading-relaxed mb-6">Minimum requirement: <strong>Bachelor Degree Level 6 MQF</strong> recognized by the Board. Lifetime fee: <strong>RM50</strong>.</p>
               <ul className="space-y-3">
-                {['Digital Registry Record', 'No Yearly Renewal', 'Path to Professional Tech (Ts.)'].map((text, i) => (
+                {['Digital Registry Record', 'No Yearly Renewal', 'Path to Professional Certificate'].map((text, i) => (
                   <li key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <CheckCircle2 size={14} className="text-indigo-500" /> {text}
+                    <CheckCircle2 size={14} className="text-indigo-700" /> {text}
                   </li>
                 ))}
               </ul>
@@ -249,16 +255,24 @@ export default function Registration() {
 
   return (
     <div className="max-w-4xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+      <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden relative">
+        {!isSuccess && (
+          <button 
+            onClick={() => isSecretariat ? navigate('/') : setRegPath(null)}
+            className="absolute top-6 left-6 z-20 w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/10"
+          >
+            <ChevronLeft size={20} />
+          </button>
+        )}
         <div className={cn(
           "p-12 text-white relative h-64 flex flex-col justify-end",
-          isSecretariat ? "bg-slate-900" : "bg-blue-600"
+          isSecretariat ? "bg-indigo-950" : "bg-blue-700"
         )}>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-3xl -mr-32 -mt-32"></div>
           <div className="relative z-10">
             <div className={cn(
               "w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-lg",
-              isSecretariat ? "bg-indigo-600 text-white" : "bg-white text-blue-600"
+              isSecretariat ? "bg-indigo-700 text-white" : "bg-white text-blue-700"
             )}>
               {isSecretariat ? <ShieldCheck size={24} /> : <Award size={24} />}
             </div>
@@ -272,9 +286,9 @@ export default function Registration() {
         <form onSubmit={handleSubmit} className="p-12 space-y-10">
           {isSuccess ? (
             <div className="py-20 text-center space-y-6 animate-in fade-in zoom-in duration-500">
-              <div className="mx-auto w-24 h-24 bg-green-100 rounded-[2.5rem] flex items-center justify-center shadow-lg shadow-green-500/10 rotate-3 transition-transform hover:rotate-0">
-                <CheckCircle2 className="text-green-600 w-12 h-12" />
-              </div>
+                  <div className="mx-auto w-24 h-24 bg-green-100 rounded-[2.5rem] flex items-center justify-center shadow-lg shadow-green-500/10 rotate-3 transition-transform hover:rotate-0">
+                    <CheckCircle2 className="text-green-700 w-12 h-12" />
+                  </div>
               <div className="space-y-3">
                 <h2 className="text-3xl font-black text-slate-900 font-display tracking-tight">Operation Successful</h2>
                 <p className="text-slate-500 max-w-sm mx-auto font-medium">
@@ -285,11 +299,11 @@ export default function Registration() {
               </div>
               <div className="pt-8 flex flex-col items-center gap-4">
                 <div className="flex justify-center gap-2">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                  <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                  <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-blue-700 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="w-2 h-2 bg-blue-700 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="w-2 h-2 bg-blue-700 rounded-full animate-bounce"></div>
                 </div>
-                <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] animate-pulse">Redirecting to Terminal</p>
+                <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.3em] animate-pulse">Redirecting to Terminal</p>
               </div>
             </div>
           ) : (
@@ -614,7 +628,7 @@ export default function Registration() {
             disabled={isSubmitting}
             className={cn(
               "w-full py-6 text-white font-black rounded-full shadow-2xl transition-all active:scale-[0.98] uppercase tracking-[0.4em] text-[10px] flex items-center justify-center gap-3",
-              isSecretariat ? "bg-slate-900 shadow-slate-900/20 hover:bg-slate-800" : "bg-blue-600 shadow-blue-500/20 hover:bg-blue-700",
+              isSecretariat ? "bg-indigo-950 shadow-indigo-950/20 hover:bg-slate-800" : "bg-blue-700 shadow-blue-700/20 hover:bg-blue-800",
               isSubmitting && "opacity-50 cursor-not-allowed"
             )}
           >

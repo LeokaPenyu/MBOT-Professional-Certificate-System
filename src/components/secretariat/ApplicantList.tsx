@@ -228,7 +228,7 @@ export default function ApplicantList() {
                                     notify("REJECTED: Certification fee RM350 must be settled before issuance.");
                                     return;
                                   }
-                                  if(window.confirm(`REGULATORY OVERRIDE: Deploy final Professional Technologist certification for ${applicant.fullName}?`)) {
+                                  if(window.confirm(`REGULATORY OVERRIDE: Deploy final Professional Certificate for ${applicant.fullName}?`)) {
                                     handleStatusChange(applicant.id, ApplicantStatus.PROFESSIONAL);
                                   }
                                 } else if (applicant.status === ApplicantStatus.QUALIFIED_TECH || applicant.status === ApplicantStatus.GRADUATE) {

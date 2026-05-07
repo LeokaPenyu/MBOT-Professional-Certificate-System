@@ -94,7 +94,7 @@ export default function Assessment() {
       updateUser(updatedUser);
 
       const isTechnician = user.qtNumber !== undefined;
-      const targetTitle = isTechnician ? 'Certified Technician' : 'Professional Technologist';
+      const targetTitle = isTechnician ? 'Certified Technician' : 'Professional Certificate';
 
       addNotification(user.id, {
         title: passed ? "Assessment Passed!" : "Assessment Failed",
@@ -210,12 +210,12 @@ export default function Assessment() {
   }
 
   const isTechnician = user?.qtNumber !== undefined;
-  const assessmentTitle = isTechnician ? 'Qualified Technician Assessment' : 'Professional Technologist Assessment';
+  const assessmentTitle = isTechnician ? 'Qualified Technician Assessment' : 'Professional Certificate Assessment';
 
   if (isFinished) {
     const passed = score >= 70;
     const isTechnician = user.qtNumber !== undefined;
-    const targetTitle = isTechnician ? 'Certified Technician (Tc.)' : 'Professional Technologist (Ts.)';
+    const targetTitle = isTechnician ? 'Certified Technician (Tc.)' : 'Professional Certificate';
     
     return (
       <div className="max-w-xl mx-auto py-20 text-center animate-in fade-in zoom-in duration-500">

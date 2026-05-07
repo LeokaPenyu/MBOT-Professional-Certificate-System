@@ -25,7 +25,7 @@ export default function SecretariatHome() {
 
   const [systemPolicies, setSystemPolicies] = useState([
     { id: 'auto-triage', name: 'Auto-Triage Low Risk Profiles', enabled: true, description: 'Automatically move complete profiles with 5+ years experience to Review stage.' },
-    { id: 'enforce-audit', name: 'Mandatory Dual-Assessor Audit', enabled: false, description: 'Require two separate assessors for all Professional Technologist certifications.' },
+    { id: 'enforce-audit', name: 'Mandatory Dual-Assessor Audit', enabled: false, description: 'Require two separate assessors for all Professional Certificates.' },
     { id: 'strict-fees', name: 'Stricter Payment Validation', enabled: true, description: 'Block stage advancement if any prior fee components are flagged as pending.' },
     { id: 'audit-logging', name: 'Enhanced Global Traceability', enabled: true, description: 'Log every field-level change to the permanent audit record.' }
   ]);

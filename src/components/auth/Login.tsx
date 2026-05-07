@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { Award, Mail, Lock, AlertCircle, ArrowRight, UserCircle, Briefcase } from 'lucide-react';
+import { Award, Mail, Lock, AlertCircle, ArrowRight, UserCircle, Briefcase, ChevronLeft } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { UserRole } from '../../types';
 import { getApplicants, setCurrentUser, getStaff } from '../../lib/storage';
@@ -72,16 +72,23 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden animate-in fade-in zoom-in duration-500">
+      <div className="max-w-md w-full bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden animate-in fade-in zoom-in duration-500 relative">
+        <button 
+          onClick={() => navigate('/')}
+          className="absolute top-6 left-6 z-20 w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/10"
+        >
+          <ChevronLeft size={20} />
+        </button>
+
         <div className={cn(
           "p-12 text-white relative h-64 flex flex-col justify-end",
-          isSecretariat ? "bg-slate-900" : "bg-blue-600"
+          isSecretariat ? "bg-indigo-950" : "bg-blue-700"
         )}>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-3xl -mr-32 -mt-32"></div>
           <div className="relative z-10">
             <div className={cn(
               "w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-lg",
-              isSecretariat ? "bg-indigo-600 text-white" : "bg-white text-blue-600"
+              isSecretariat ? "bg-indigo-700 text-white" : "bg-white text-blue-700"
             )}>
               {isSecretariat ? <Briefcase size={24} /> : <Award size={24} />}
             </div>
@@ -90,7 +97,7 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
             </h1>
             <p className={cn(
               "mt-2 uppercase tracking-[0.3em] text-[10px] font-black",
-              isSecretariat ? "text-slate-400" : "text-blue-100"
+              isSecretariat ? "text-slate-400" : "text-blue-50"
             )}>
               Malaysia Board of Technologists
             </p>
@@ -144,7 +151,7 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
             disabled={isLoading}
             className={cn(
               "w-full py-5 text-white font-black rounded-full shadow-xl transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-2",
-              isSecretariat ? "bg-slate-900 shadow-slate-900/20" : "bg-blue-600 shadow-blue-500/20",
+              isSecretariat ? "bg-indigo-950 shadow-indigo-950/20" : "bg-blue-700 shadow-blue-700/20",
               isLoading && "opacity-50 cursor-not-allowed"
             )}
           >
@@ -159,7 +166,7 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
             {isSecretariat ? (
               <p className="text-xs text-slate-500 font-medium">
                 New Secretariat staff?{' '}
-                <Link to="/register?type=secretariat" className="text-slate-900 font-bold hover:underline">
+                <Link to="/register?type=secretariat" className="text-indigo-950 font-bold hover:underline">
                   Onboard Account
                 </Link>
               </p>
@@ -170,7 +177,7 @@ export default function Login({ onLogin }: { onLogin: (role: UserRole, user?: an
             ) : (
               <p className="text-xs text-slate-500 font-medium">
                 Don't have an account?{' '}
-                <Link to="/register" className="text-blue-600 font-bold hover:underline">
+                <Link to="/register" className="text-blue-700 font-bold hover:underline">
                   Register Now
                 </Link>
               </p>

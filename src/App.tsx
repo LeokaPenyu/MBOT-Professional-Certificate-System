@@ -85,19 +85,19 @@ export default function App() {
             <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
               <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-8 animate-in fade-in zoom-in duration-500">
                 <div className="text-center space-y-2">
-                  <div className="mx-auto w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
+                  <div className="mx-auto w-16 h-16 bg-blue-700 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
                     <Award className="text-white w-10 h-10" />
                   </div>
                   <h1 className="text-3xl font-bold text-slate-900 pt-4 font-display tracking-tight">MBOT CMS</h1>
-                  <p className="text-slate-500 text-sm">Professional Technologist Management</p>
+                  <p className="text-slate-500 text-sm">Professional Certificate Management</p>
                 </div>
                 
                 <div className="grid gap-4">
                   <Link 
                     to="/login?type=applicant"
-                    className="w-full flex items-center justify-center gap-3 p-5 bg-white border-2 border-slate-100 rounded-2xl hover:border-blue-600 hover:bg-blue-50 transition-all group shadow-sm bg-slate-50/50"
+                    className="w-full flex items-center justify-center gap-3 p-5 bg-white border-2 border-slate-100 rounded-2xl hover:border-blue-700 hover:bg-blue-50 transition-all group shadow-sm bg-slate-50/50"
                   >
-                    <UserCircle className="w-8 h-8 text-slate-300 group-hover:text-blue-600 transition-colors" />
+                    <UserCircle className="w-8 h-8 text-slate-300 group-hover:text-blue-700 transition-colors" />
                     <div className="text-left">
                       <p className="font-bold text-slate-900 leading-none">Applicant Access</p>
                       <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider font-bold">Certification & CPD</p>
@@ -106,9 +106,9 @@ export default function App() {
 
                   <Link 
                     to="/login?type=secretariat"
-                    className="w-full flex items-center justify-center gap-3 p-5 bg-white border-2 border-slate-100 rounded-2xl hover:border-slate-800 hover:bg-slate-50 transition-all group shadow-sm bg-slate-50/50"
+                    className="w-full flex items-center justify-center gap-3 p-5 bg-white border-2 border-slate-100 rounded-2xl hover:border-indigo-950 hover:bg-indigo-50 transition-all group shadow-sm bg-slate-50/50"
                   >
-                    <Settings className="w-8 h-8 text-slate-300 group-hover:text-slate-900 transition-colors" />
+                    <Settings className="w-8 h-8 text-slate-300 group-hover:text-indigo-950 transition-colors" />
                     <div className="text-left">
                       <p className="font-bold text-slate-900 leading-none">Secretariat Portal</p>
                       <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider font-bold">Administration & Review</p>
@@ -118,7 +118,7 @@ export default function App() {
                   <div className="pt-4 grid grid-cols-2 gap-4 border-t border-slate-50">
                     <Link 
                       to="/register"
-                      className="text-center text-[10px] font-black text-blue-600 hover:underline uppercase tracking-widest py-2"
+                      className="text-center text-[10px] font-black text-blue-700 hover:underline uppercase tracking-widest py-2"
                     >
                       New Application
                     </Link>
@@ -139,7 +139,7 @@ export default function App() {
               {/* Sidebar Navigation */}
               <aside className="w-64 bg-slate-900 flex flex-col shrink-0">
                 <div className="p-8 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-black text-white shadow-lg shadow-blue-500/20">M</div>
+                  <div className="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center font-black text-white shadow-lg shadow-blue-500/20">M</div>
                   <span className="text-white font-bold tracking-tight text-xl font-display">MBOT</span>
                 </div>
 

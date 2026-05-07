@@ -18,12 +18,26 @@ const STORAGE_KEYS = {
 
 export const getApplicants = (): Applicant[] => {
   const data = localStorage.getItem(STORAGE_KEYS.APPLICANTS);
+  const defaultData = generateDummyApplicants();
+  
   if (!data) {
-    const defaultData = generateDummyApplicants();
     saveApplicants(defaultData);
     return defaultData;
   }
-  return JSON.parse(data);
+  
+  const currentApplicants: Applicant[] = JSON.parse(data);
+  
+  // Ensure "queue-" dummy data is injected if missing from local storage
+  const queueIds = ['queue-001', 'queue-002', 'queue-003', 'queue-004', 'queue-005', 'queue-006', 'queue-007', 'queue-008'];
+  const missingQueueData = defaultData.filter(d => queueIds.includes(d.id) && !currentApplicants.some(c => c.id === d.id));
+  
+  if (missingQueueData.length > 0) {
+    const updated = [...missingQueueData, ...currentApplicants];
+    saveApplicants(updated);
+    return updated;
+  }
+  
+  return currentApplicants;
 };
 
 export const saveApplicants = (applicants: Applicant[]) => {
@@ -76,17 +90,52 @@ export const setCurrentUser = (id: string | null, role: UserRole | null = UserRo
 export const getQuestions = (): Question[] => {
   const data = localStorage.getItem(STORAGE_KEYS.QUESTIONS);
   
-  if (data) {
-    try {
-      return JSON.parse(data);
-    } catch (e) {
-      return [...INITIAL_QUESTIONS];
-    }
+  const refreshFromDefaults = () => {
+    saveQuestions(INITIAL_QUESTIONS);
+    return [...INITIAL_QUESTIONS];
+  };
+
+  if (!data) {
+    return refreshFromDefaults();
   }
   
-  // If no data, populate with defaults
-  saveQuestions(INITIAL_QUESTIONS);
-  return [...INITIAL_QUESTIONS];
+  try {
+    const currentQuestions: Question[] = JSON.parse(data);
+    
+    // Migration: Handle rename of AssessmentType value
+    // Older data might have 'Professional Technologist' string
+    let migrationOccurred = false;
+    const migrated = currentQuestions.map(q => {
+      let target = q.target as any;
+      if (target === 'Professional Technologist') {
+        target = AssessmentType.PROFESSIONAL_TECHNOLOGIST;
+        migrationOccurred = true;
+      }
+      return { ...q, target };
+    });
+
+    // If for some reason the vault is empty or significantly smaller than defaults, 
+    // we should consider adding back any missing default questions
+    const hasRequiredQuestions = migrated.length >= INITIAL_QUESTIONS.length;
+    
+    if (!hasRequiredQuestions) {
+      // Find missing default questions by ID
+      const missingDefaults = INITIAL_QUESTIONS.filter(def => !migrated.some(q => q.id === def.id));
+      if (missingDefaults.length > 0) {
+        const updated = [...migrated, ...missingDefaults];
+        saveQuestions(updated);
+        return updated;
+      }
+    }
+
+    if (migrationOccurred) {
+      saveQuestions(migrated);
+    }
+
+    return migrated;
+  } catch (e) {
+    return refreshFromDefaults();
+  }
 };
 
 export const saveQuestions = (questions: Question[]) => {

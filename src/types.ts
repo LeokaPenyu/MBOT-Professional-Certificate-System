@@ -19,7 +19,7 @@ export enum ApplicantStatus {
   CERTIFIED = 'Certified',
   CERTIFICATE_READY = 'Certificate Ready',
   SUSPENDED = 'Suspended',
-  PROFESSIONAL = 'Professional Technologist (Ts.)',
+  PROFESSIONAL = 'Professional Certificate',
   CERTIFIED_TECH = 'Certified Technician (Tc.)',
   GRADUATE = 'Graduate Technologist',
   QUALIFIED_TECH = 'Qualified Technician',
@@ -137,7 +137,7 @@ export interface Staff {
 }
 
 export enum AssessmentType {
-  PROFESSIONAL_TECHNOLOGIST = 'Professional Technologist',
+  PROFESSIONAL_TECHNOLOGIST = 'Professional Certificate',
   CERTIFIED_TECHNICIAN = 'Certified Technician',
 }
 

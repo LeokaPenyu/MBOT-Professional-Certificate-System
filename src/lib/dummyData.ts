@@ -121,7 +121,7 @@ export function generateDummyApplicants(): Applicant[] {
       field: 'Information and Computing Technology',
       yearsOfExperience: 12,
       status: ApplicantStatus.CERTIFIED,
-      registryAction: 'Professional Technologist',
+      registryAction: 'Professional Certificate',
       registrationDate: new Date().toISOString(),
       cpdRecords: [],
       assessments: [{ date: new Date().toISOString(), score: 88, passed: true }],
@@ -193,7 +193,7 @@ export function generateDummyApplicants(): Applicant[] {
       field: 'Biotechnology',
       yearsOfExperience: 10,
       status: ApplicantStatus.CERTIFIED,
-      registryAction: 'Professional Technologist',
+      registryAction: 'Professional Certificate',
       registrationDate: new Date().toISOString(),
       cpdRecords: [],
       assessments: [{ date: new Date().toISOString(), score: 92, passed: true }],
@@ -218,6 +218,164 @@ export function generateDummyApplicants(): Applicant[] {
       feesPaid: { application: true, lifetime: true },
       notifications: [],
       workflowLog: []
+    },
+    {
+      id: 'queue-001',
+      fullName: 'Mohd Ridzuan Bin Hashim',
+      email: 'ridzuan.hashim@provider.com',
+      icPassport: '881010-14-5221',
+      phone: '+6011-22334455',
+      qualification: Qualification.BACHELOR,
+      field: 'Information and Computing Technology',
+      yearsOfExperience: 6,
+      status: ApplicantStatus.CERTIFICATE_READY,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 2).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 1).toISOString(), score: 88, passed: true }],
+      feesPaid: { application: true, assessment: true, certification: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Payment Verified', date: new Date(Date.now() - 86400000 * 1).toISOString(), actor: 'Finance Dept', comments: 'Certification fee of RM 300 confirmed.' }
+      ]
+    },
+    {
+      id: 'queue-002',
+      fullName: 'Sarah Jane Abdullah',
+      email: 'sarah.jane@tech.my',
+      icPassport: '920101-10-5332',
+      phone: '+6012-99887766',
+      qualification: Qualification.MASTER,
+      field: 'Biotechnology',
+      yearsOfExperience: 8,
+      status: ApplicantStatus.CERTIFICATE_READY,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 5).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 1).toISOString(), score: 85, passed: true }],
+      feesPaid: { application: true, assessment: true, certification: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Payment Verified', date: new Date(Date.now() - 86400000 * 1).toISOString(), actor: 'Finance Dept', comments: 'Certification fee RM 300 received.' }
+      ]
+    },
+    {
+      id: 'queue-003',
+      fullName: 'Tan Boon Hock',
+      email: 'boonhock.tan@industry.com',
+      icPassport: '850707-07-5119',
+      phone: '+6017-11223344',
+      qualification: Qualification.PHD,
+      field: 'Mechanical and Manufacturing Technology',
+      yearsOfExperience: 15,
+      status: ApplicantStatus.CERTIFICATE_READY,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 10).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 4).toISOString(), score: 92, passed: true }],
+      feesPaid: { application: true, assessment: true, certification: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+          { stage: 'Payment Verified', date: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Finance Dept', comments: 'Certification fee of RM 300 confirmed.' }
+      ]
+    },
+    {
+      id: 'queue-004',
+      fullName: 'Aisha Binti Karim',
+      email: 'aisha.karim@mbot-verify.my',
+      icPassport: '900101-01-1122',
+      phone: '+6011-33445566',
+      qualification: Qualification.BACHELOR,
+      field: 'Green Technology',
+      yearsOfExperience: 7,
+      status: ApplicantStatus.PROFESSIONAL_PENDING,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 3).toISOString(),
+      cpdRecords: [],
+      assessments: [],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Payment Verified', date: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Registry Admin', comments: 'Processing fee received. Awaiting assessment validation.' }
+      ]
+    },
+    {
+      id: 'queue-005',
+      fullName: 'Lim Keng Huat',
+      email: 'keng.huat@tech-institute.edu.my',
+      icPassport: '820505-02-2233',
+      phone: '+6012-44556677',
+      qualification: Qualification.MASTER,
+      field: 'Information and Computing Technology',
+      yearsOfExperience: 11,
+      status: ApplicantStatus.ASSESSMENT_PASSED,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 8).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 1).toISOString(), score: 94, passed: true }],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Assessment Passed', date: new Date(Date.now() - 86400000 * 1).toISOString(), actor: 'Board Examiner', comments: 'Candidate demonstrated exceptional core competencies.' }
+      ]
+    },
+    {
+      id: 'queue-006',
+      fullName: 'Suresh Kumar A/L Mani',
+      email: 'suresh.kumar@mbot-auto.my',
+      icPassport: '881212-08-3344',
+      phone: '+6013-55667788',
+      qualification: Qualification.BACHELOR,
+      field: 'Automotive Technology',
+      yearsOfExperience: 9,
+      status: ApplicantStatus.PROFESSIONAL_PENDING,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 1).toISOString(),
+      cpdRecords: [],
+      assessments: [],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: []
+    },
+    {
+      id: 'queue-007',
+      fullName: 'Nurul Huda Binti Hassan',
+      email: 'huda.hassan@agro-tech.com.my',
+      icPassport: '950606-03-4455',
+      phone: '+6014-66778899',
+      qualification: Qualification.BACHELOR,
+      field: 'Agro-based Technology',
+      yearsOfExperience: 5,
+      status: ApplicantStatus.CERTIFICATE_READY,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 12).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 3).toISOString(), score: 81, passed: true }],
+      feesPaid: { application: true, assessment: true, certification: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Payment Verified', date: new Date(Date.now() - 86400000 * 1).toISOString(), actor: 'Finance Dept', comments: 'Certification fee RM 300 confirmed.' }
+      ]
+    },
+    {
+      id: 'queue-008',
+      fullName: 'David Teoh',
+      email: 'david.teoh@mbot-const.my',
+      icPassport: '840303-14-5566',
+      phone: '+6019-77889911',
+      qualification: Qualification.PHD,
+      field: 'Building and Construction Technology',
+      yearsOfExperience: 18,
+      status: ApplicantStatus.ASSESSMENT_PASSED,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 15).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 2).toISOString(), score: 90, passed: true }],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Assessment Passed', date: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Board Examiner', comments: 'Strategic leadership experience recognized.' }
+      ]
     }
   ];
 

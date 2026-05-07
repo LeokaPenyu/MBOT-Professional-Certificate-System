@@ -11,6 +11,7 @@ export default function ApplicationQueue() {
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [remarks, setRemarks] = useState('');
   const [activeTab, setActiveTab] = useState<'details' | 'artifacts' | 'history'>('details');
+  const [isInspecting, setIsInspecting] = useState(false);
 
   const notify = (msg: string) => {
     setStatusMsg(msg);
@@ -147,7 +148,7 @@ export default function ApplicationQueue() {
     <div className="space-y-6">
       <div>
          <h1 className="text-2xl font-bold text-slate-900 font-display uppercase tracking-tight">Verification Queue</h1>
-         <p className="text-slate-500 text-sm">Monitor and move Professional Technologist upgrade applications through the active workflow.</p>
+         <p className="text-slate-500 text-sm">Monitor and move Professional Certificate applications through the active workflow.</p>
       </div>
 
       {statusMsg && (
@@ -391,9 +392,92 @@ export default function ApplicationQueue() {
                                <p className="text-[9px] text-slate-500 uppercase tracking-widest mt-0.5">Verified Artifact • PDF</p>
                             </div>
                          </div>
-                         <button className="px-6 py-2 bg-blue-600 hover:bg-blue-500 transition-colors rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2">
+                         <button 
+                           onClick={() => {
+                             notify("INITIALIZING SECURE VIEWER...");
+                             setIsInspecting(true);
+                           }}
+                           className="px-6 py-2 bg-blue-600 hover:bg-blue-500 transition-colors rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2"
+                         >
                             <Eye size={12} /> Inspect File
                          </button>
+                      </div>
+                   </div>
+                 )}
+
+                 {isInspecting && (
+                   <div className="absolute inset-0 z-[60] bg-slate-900 flex flex-col animate-in fade-in zoom-in duration-300">
+                      <div className="p-6 border-b border-white/10 flex justify-between items-center">
+                         <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+                               <ShieldCheck size={20} />
+                            </div>
+                            <div>
+                               <p className="text-[10px] font-black text-white uppercase tracking-widest">MBOT Document Audit Hub</p>
+                               <p className="text-[9px] text-slate-500 font-bold">Secure Session • PDF Encryption 256-bit</p>
+                            </div>
+                         </div>
+                         <button 
+                           onClick={() => setIsInspecting(false)}
+                           className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+                         >
+                            <X size={20} />
+                         </button>
+                      </div>
+                      <div className="flex-1 p-12 overflow-y-auto bg-slate-950 flex flex-col items-center">
+                         {/* Mock PDF Content */}
+                         <div className="w-full max-w-2xl bg-white shadow-2xl rounded-sm p-16 space-y-8 min-h-[1000px]">
+                            <div className="flex justify-between items-start border-b-4 border-slate-900 pb-8">
+                               <div className="text-2xl font-black uppercase tracking-tighter text-slate-900">Curriculum Vitae</div>
+                               <div className="text-right">
+                                  <p className="text-[10px] font-black uppercase text-slate-400">Registry Reference</p>
+                                  <p className="text-sm font-bold text-slate-900">{selectedApplicant.id}</p>
+                               </div>
+                            </div>
+
+                            <div className="space-y-4">
+                               <h4 className="text-xs font-black uppercase tracking-widest text-blue-600">Professional Summary</h4>
+                               <p className="text-[11px] leading-relaxed text-slate-600 font-medium">
+                                 Dedicated professional in the field of {selectedApplicant.field} with {selectedApplicant.yearsOfExperience} years of industrial experience. 
+                                 Expertise in technical infrastructure management and regulatory compliance. seeking upgrade to Professional Certificate status.
+                               </p>
+                            </div>
+
+                            <div className="space-y-4">
+                               <h4 className="text-xs font-black uppercase tracking-widest text-blue-600">Educational Background</h4>
+                               <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                  <p className="text-[11px] font-bold text-slate-900">{selectedApplicant.qualification} in {selectedApplicant.field}</p>
+                                  <p className="text-[9px] font-black text-slate-400 uppercase mt-1">Verified via Malaysian Qualifications Agency (MQA)</p>
+                               </div>
+                            </div>
+
+                            <div className="space-y-4">
+                               <h4 className="text-xs font-black uppercase tracking-widest text-blue-600">Key Projects & Competencies</h4>
+                               <ul className="grid grid-cols-2 gap-3">
+                                  {['System Architecture', 'Technical Audit', 'Infrastructure Deployment', 'Project Management'].map((skill, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-[10px] font-bold text-slate-700">
+                                       <CheckCircle2 size={12} className="text-green-500" />
+                                       {skill}
+                                    </li>
+                                  ))}
+                               </ul>
+                            </div>
+
+                            <div className="pt-20 border-t border-slate-100 flex justify-between items-end grayscale opacity-50">
+                               <div className="space-y-1">
+                                  <div className="w-32 h-px bg-slate-400 mb-4" />
+                                  <p className="text-[8px] font-black uppercase tracking-widest text-slate-400 italic">Digitally Signed by</p>
+                                  <p className="text-[10px] font-bold text-slate-900 uppercase">{selectedApplicant.fullName}</p>
+                               </div>
+                               <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center text-slate-300">
+                                  <ShieldCheck size={32} />
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div className="p-6 bg-slate-900 border-t border-white/5 flex justify-center gap-4">
+                         <button onClick={() => setIsInspecting(false)} className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Close Viewer</button>
+                         <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Download Audit Copy</button>
                       </div>
                    </div>
                  )}
@@ -411,10 +495,24 @@ export default function ApplicationQueue() {
                                  <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight">{log.stage}</span>
                                  <span className="text-[9px] font-bold text-slate-400">{new Date(log.date).toLocaleString()}</span>
                               </div>
-                              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 transition-all hover:bg-white hover:shadow-lg">
-                                 <p className="text-[10px] text-slate-500 font-medium leading-relaxed italic">"{log.comments}"</p>
-                                 <p className="mt-3 text-[8px] font-black uppercase tracking-widest text-blue-600">Officer: {log.actor}</p>
-                              </div>
+                              <div className={cn(
+                                 "p-4 rounded-2xl border transition-all hover:shadow-lg",
+                                 log.stage === ApplicantStatus.UNDER_REVIEW ? "bg-orange-50 border-orange-100" : "bg-slate-50 border-slate-100 hover:bg-white"
+                               )}>
+                                  <p className={cn(
+                                    "text-[10px] font-medium leading-relaxed italic",
+                                    log.stage === ApplicantStatus.UNDER_REVIEW ? "text-orange-900" : "text-slate-500"
+                                  )}>"{log.comments}"</p>
+                                  <div className="flex items-center justify-between mt-3">
+                                    <p className={cn(
+                                      "text-[8px] font-black uppercase tracking-widest",
+                                      log.stage === ApplicantStatus.UNDER_REVIEW ? "text-orange-600" : "text-blue-600"
+                                    )}>Officer: {log.actor}</p>
+                                    {log.stage === ApplicantStatus.UNDER_REVIEW && (
+                                      <span className="bg-orange-200 text-orange-700 px-2 py-0.5 rounded text-[7px] font-black uppercase">Technical Deficiency</span>
+                                    )}
+                                  </div>
+                               </div>
                            </div>
                         </div>
                       ))}
@@ -428,30 +526,37 @@ export default function ApplicationQueue() {
                  )}
               </div>
 
-              <div className="p-10 bg-slate-50 border-t border-slate-100 space-y-6">
-                 <div>
-                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Internal Remarks / Deficiency Notice</label>
-                    <textarea 
-                      value={remarks}
-                      onChange={(e) => setRemarks(e.target.value)}
-                      placeholder="Enter internal evaluation notes or deficiency reports..."
-                      className="w-full px-6 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none text-[11px] font-medium transition-all"
-                      rows={2}
-                    />
-                 </div>
-                 <div className="flex gap-4">
-                    <button 
-                      onClick={() => handleAction(selectedApplicant.id, ApplicantStatus.UNDER_REVIEW)}
-                      className="flex-1 py-4 bg-orange-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all flex items-center justify-center gap-2"
-                    >
-                       <ShieldAlert size={14} /> Mark for Review
-                    </button>
-                    <button 
-                      onClick={() => handleAction(selectedApplicant.id, ApplicantStatus.ASSESSMENT_PASSED)}
-                      className="flex-1 py-4 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
-                    >
-                       <Check size={14} /> Validate Identity
-                    </button>
+              <div className="p-8 bg-slate-50 border-t border-slate-100 mt-auto">
+                 <div className="bg-white rounded-[2rem] border border-slate-200 shadow-sm p-6 overflow-hidden">
+                    <div className="flex flex-col lg:flex-row gap-6">
+                      <div className="flex-1 space-y-3">
+                         <div className="flex items-center justify-between">
+                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] block px-1">Evaluation & Deficiency Notice</label>
+                            {remarks.length > 0 && <span className="text-[9px] font-bold text-blue-500 animate-in fade-in slide-in-from-right-2">{remarks.length} chars</span>}
+                         </div>
+                         <textarea 
+                           value={remarks}
+                           onChange={(e) => setRemarks(e.target.value)}
+                           placeholder="Type findings here to be recorded in audit trail..."
+                           className="w-full px-5 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500/20 outline-none text-[11px] font-bold text-slate-700 transition-all resize-none shadow-inner placeholder:text-slate-300"
+                           rows={2}
+                         />
+                      </div>
+                      <div className="flex lg:flex-col gap-3 w-full lg:w-48 justify-end">
+                         <button 
+                           onClick={() => handleAction(selectedApplicant.id, ApplicantStatus.UNDER_REVIEW)}
+                           className="flex-1 py-4 px-6 bg-white border border-slate-200 text-orange-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-50 hover:border-orange-200 transition-all flex items-center justify-center gap-3 active:scale-95"
+                         >
+                            <ShieldAlert size={14} /> Hold Review
+                         </button>
+                         <button 
+                           onClick={() => handleAction(selectedApplicant.id, ApplicantStatus.ASSESSMENT_PASSED)}
+                           className="flex-1 py-4 px-6 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-600/20 active:scale-95"
+                         >
+                            <Check size={14} /> Verify Pass
+                         </button>
+                      </div>
+                    </div>
                  </div>
               </div>
            </div>
