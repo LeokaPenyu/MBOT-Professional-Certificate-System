@@ -1,6 +1,0 @@
-- Clean code
-- Reusable functions
-- Responsive design
-- Modular architecture
-- Consistent UI
-- Avoid duplicate code
