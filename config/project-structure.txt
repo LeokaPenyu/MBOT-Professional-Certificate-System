@@ -1,0 +1,10 @@
+src/
+├── components/
+├── pages/
+├── services/
+├── layouts/
+├── hooks/
+├── context/
+├── firebase/
+├── utils/
+└── types/

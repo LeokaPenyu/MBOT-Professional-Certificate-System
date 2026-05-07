@@ -1,0 +1,7 @@
+Use React functional components only.
+Use TailwindCSS only.
+Use responsive design.
+Use reusable components.
+Maintain modern enterprise dashboard UI.
+Continue existing architecture.
+Do not rebuild from scratch.
