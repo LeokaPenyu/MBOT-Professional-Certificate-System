@@ -376,6 +376,102 @@ export function generateDummyApplicants(): Applicant[] {
       workflowLog: [
         { stage: 'Assessment Passed', date: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Board Examiner', comments: 'Strategic leadership experience recognized.' }
       ]
+    },
+    {
+      id: 'queue-009',
+      fullName: 'Siti Aminah Binti Yusof',
+      email: 'aminah.yusof@mbot-verify.my',
+      icPassport: '951212-01-5566',
+      phone: '+6011-88992233',
+      qualification: Qualification.BACHELOR,
+      field: 'Biotechnology',
+      yearsOfExperience: 4,
+      status: ApplicantStatus.PROFESSIONAL_PENDING,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 1).toISOString(),
+      cpdRecords: [],
+      assessments: [],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: []
+    },
+    {
+      id: 'queue-010',
+      fullName: 'Jason Low',
+      email: 'jason.low@tech-industry.com',
+      icPassport: '900505-14-6677',
+      phone: '+6012-77889900',
+      qualification: Qualification.MASTER,
+      field: 'Manufacturing and Industrial Technology',
+      yearsOfExperience: 9,
+      status: ApplicantStatus.ASSESSMENT_PASSED,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 4).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 2).toISOString(), score: 82, passed: true }],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Assessment Passed', date: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Board Examiner', comments: 'Strong technical grasp of industrial safety.' }
+      ]
+    },
+    {
+      id: 'queue-011',
+      fullName: 'Ranjit Singh',
+      email: 'ranjit.singh@const-corp.my',
+      icPassport: '850808-10-7788',
+      phone: '+6013-66778899',
+      qualification: Qualification.BACHELOR,
+      field: 'Building and Construction Technology',
+      yearsOfExperience: 12,
+      status: ApplicantStatus.CERTIFICATE_READY,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 7).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 3).toISOString(), score: 89, passed: true }],
+      feesPaid: { application: true, assessment: true, certification: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Payment Verified', date: new Date(Date.now() - 86400000 * 1).toISOString(), actor: 'Finance Dept', comments: 'Upgrade fee confirmed.' }
+      ]
+    },
+    {
+      id: 'queue-012',
+      fullName: 'Zul Azri Bin Mokhtar',
+      email: 'zul.azri@cyber-sec.my',
+      icPassport: '930101-03-8899',
+      phone: '+6011-55667788',
+      qualification: Qualification.BACHELOR,
+      field: 'Cyber Security Technology',
+      yearsOfExperience: 6,
+      status: ApplicantStatus.PROFESSIONAL_PENDING,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 2).toISOString(),
+      cpdRecords: [],
+      assessments: [],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: []
+    },
+    {
+      id: 'queue-013',
+      fullName: 'Mei Ling Tan',
+      email: 'meiling.tan@green-energy.my',
+      icPassport: '910707-14-9900',
+      phone: '+6019-44556677',
+      qualification: Qualification.PHD,
+      field: 'Green Technology',
+      yearsOfExperience: 10,
+      status: ApplicantStatus.ASSESSMENT_PASSED,
+      registryAction: 'Professional Certificate',
+      registrationDate: new Date(Date.now() - 86400000 * 5).toISOString(),
+      cpdRecords: [],
+      assessments: [{ date: new Date(Date.now() - 86400000 * 1).toISOString(), score: 95, passed: true }],
+      feesPaid: { application: true, assessment: true, lifetime: true },
+      notifications: [],
+      workflowLog: [
+        { stage: 'Assessment Passed', date: new Date(Date.now() - 86400000 * 1).toISOString(), actor: 'Board Examiner', comments: 'Excellent research contributions cited.' }
+      ]
     }
   ];
 

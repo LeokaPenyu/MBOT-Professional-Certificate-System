@@ -263,7 +263,7 @@ export default function ApplicationQueue() {
       {/* Detail Modal */}
       {selectedApplicant && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
-           <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 flex flex-col">
+           <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 flex flex-col relative">
               <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
                  <div className="flex items-center gap-6">
                     <div className="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-2xl italic">
@@ -394,12 +394,12 @@ export default function ApplicationQueue() {
                          </div>
                          <button 
                            onClick={() => {
-                             notify("INITIALIZING SECURE VIEWER...");
-                             setIsInspecting(true);
+                             notify("ACCESSING SECURE AUDIT VAULT...");
+                             setTimeout(() => setIsInspecting(true), 500);
                            }}
-                           className="px-6 py-2 bg-blue-600 hover:bg-blue-500 transition-colors rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2"
+                           className="px-6 py-3 bg-blue-600 hover:bg-blue-700 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95"
                          >
-                            <Eye size={12} /> Inspect File
+                            <Eye size={14} className="animate-pulse" /> Inspect Evidence
                          </button>
                       </div>
                    </div>

@@ -28,7 +28,11 @@ export const getApplicants = (): Applicant[] => {
   const currentApplicants: Applicant[] = JSON.parse(data);
   
   // Ensure "queue-" dummy data is injected if missing from local storage
-  const queueIds = ['queue-001', 'queue-002', 'queue-003', 'queue-004', 'queue-005', 'queue-006', 'queue-007', 'queue-008'];
+  const queueIds = [
+    'queue-001', 'queue-002', 'queue-003', 'queue-004', 
+    'queue-005', 'queue-006', 'queue-007', 'queue-008',
+    'queue-009', 'queue-010', 'queue-011', 'queue-012', 'queue-013'
+  ];
   const missingQueueData = defaultData.filter(d => queueIds.includes(d.id) && !currentApplicants.some(c => c.id === d.id));
   
   if (missingQueueData.length > 0) {

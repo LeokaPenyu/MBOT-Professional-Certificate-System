@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Award, FileText, CheckCircle2, Clock, Calendar, Download, QrCode, Upload, CreditCard, MessageSquare, ShieldCheck, Mail, Phone, MapPin, User, AlertCircle, RefreshCcw, Eye, Shield, X, ChevronRight } from 'lucide-react';
+import { Award, FileText, CheckCircle2, Clock, Calendar, Download, QrCode, Upload, CreditCard, MessageSquare, ShieldCheck, Mail, Phone, MapPin, User, AlertCircle, RefreshCcw, Eye, Shield, X, ChevronRight, BookOpen } from 'lucide-react';
 import { getCurrentUser, saveApplicants, getApplicants, addNotification, updateUserProfile } from '../../lib/storage';
 import { Applicant, ApplicantStatus, CPDCategory, Notification as AppNotification } from '../../types';
 import { FEES, MBOT_FIELDS } from '../../constants';
@@ -232,374 +232,359 @@ export default function ApplicantHome() {
   const totalCpdHours = user.cpdRecords?.filter(r => r.status === 'Approved').reduce((acc, r) => acc + r.hours, 0) || 0;
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto py-8 animate-in fade-in slide-in-from-bottom-4 duration-700 relative">
-      {/* Header Info */}
-      <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 blur-3xl -mr-32 -mt-32 transition-colors group-hover:bg-slate-100/50"></div>
-        <div className="relative z-10 flex items-center gap-8">
-           <ProfilePhotoUploader 
-             currentImage={user.profilePicture}
-             onImageCropped={handlePfpUpdate}
-             initials={user.fullName.charAt(0)}
-             className="w-24 h-24"
-             disabled={true}
-           />
-           <div>
-             <h1 className="text-3xl font-bold text-slate-900 font-display tracking-tight flex items-center gap-3">
-               Welcome, {user.fullName.split(' ')[0]}
-             </h1>
-             <p className="text-slate-400 mt-1 uppercase tracking-wider text-xs font-semibold flex items-center gap-2">
-               <ShieldCheck size={14} className="text-blue-500" />
-               National Professional Registry • <span className="text-blue-600">{user.status}</span>
-             </p>
-           </div>
-        </div>
-        
-        <div className="relative z-10 flex gap-4">
-           {[ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) && (
-             <button 
-                onClick={generateCertificate}
-                className="flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl shadow-lg hover:bg-slate-800 transition-all text-sm font-semibold active:scale-95 animate-in zoom-in duration-500"
-             >
-                <Download size={16} /> Download Certificate
-             </button>
-           )}
+    <div className="space-y-10 max-w-7xl mx-auto py-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 relative">
+      {/* Dynamic Background Accents */}
+      <div className="absolute top-0 -left-20 w-96 h-96 bg-blue-400/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-20 -right-20 w-[500px] h-[500px] bg-indigo-400/5 blur-[150px] rounded-full pointer-events-none"></div>
 
+      {/* Modern Header Section */}
+      <div className="relative group overflow-hidden bg-white/40 backdrop-blur-xl border border-white/60 rounded-[3rem] p-10 shadow-2xl shadow-blue-900/5 transition-all duration-500 hover:shadow-blue-900/10 hover:border-white/80">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 blur-[80px] -mr-40 -mt-40 transition-all duration-700 group-hover:bg-blue-500/10"></div>
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10">
+          <div className="flex items-center gap-10">
+            <div className="relative">
+               <div className="absolute -inset-2 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
+               <ProfilePhotoUploader 
+                 currentImage={user.profilePicture}
+                 onImageCropped={handlePfpUpdate}
+                 initials={user.fullName.charAt(0)}
+                 className="w-28 h-28 relative z-10 ring-4 ring-white shadow-xl"
+                 disabled={true}
+               />
+               <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 border-4 border-white rounded-full flex items-center justify-center text-white shadow-lg">
+                 <CheckCircle2 size={12} />
+               </div>
+            </div>
+            <div>
+              <h1 className="text-4xl font-black text-slate-900 font-display tracking-tight leading-tight">
+                Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{user.fullName.split(' ')[0]}</span>
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 mt-4">
+                <span className="px-5 py-2 bg-slate-900 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10">
+                  {user.status}
+                </span>
+                <span className="text-slate-400 text-xs font-bold flex items-center gap-2 px-1">
+                  <ShieldCheck size={14} className="text-blue-500" />
+                  Registry ID: {user.pTechNumber || user.gtNumber || 'AUTHENTICATED'}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-4 w-full lg:w-auto">
+            {[ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) && (
+              <button 
+                onClick={generateCertificate}
+                className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-10 py-5 bg-blue-600 text-white rounded-[2rem] shadow-xl shadow-blue-500/20 hover:bg-blue-700 hover:-translate-y-1 transition-all text-sm font-black uppercase tracking-widest active:scale-95"
+              >
+                <Download size={18} /> DOWNLOAD CERTIFICATE
+              </button>
+            )}
+            <button 
+              onClick={() => navigate('/cpd')}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-10 py-5 bg-white border border-slate-200 text-slate-900 rounded-[2rem] shadow-sm hover:shadow-xl hover:border-blue-200 transition-all text-sm font-black uppercase tracking-widest active:scale-95"
+            >
+              <Award size={18} /> Manage CPD
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column: Workflow and Feed */}
-        <div className="lg:col-span-8 space-y-8">
-           {/* Interactive Workflow Tracker */}
-           <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
-              <div className="flex justify-between items-center mb-8">
-                 <div>
-                    <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Certification Progress</h2>
-                    <p className="text-xl font-bold text-slate-900 font-display">Registration Track</p>
-                 </div>
-                 <div className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-semibold border border-blue-100">
-                    {user.status}
-                 </div>
-              </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* Left Track: Progress & Timeline */}
+        <div className="lg:col-span-8 space-y-10">
+          {/* Enhanced Progress Architecture */}
+          <div className="bg-white/60 backdrop-blur-md rounded-[3.5rem] p-10 border border-white/80 shadow-2xl shadow-slate-200/50">
+             <div className="flex justify-between items-end mb-12">
+                <div>
+                   <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mb-3">Status Pipeline</p>
+                   <h2 className="text-3xl font-black text-slate-900 font-display tracking-tighter">Certification Journey</h2>
+                </div>
+                <div className="text-right">
+                   <p className="text-3xl font-black text-slate-900 font-display italic">
+                     {steps.filter(s => s.completed).length}/{steps.length}
+                   </p>
+                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Milestones</p>
+                </div>
+             </div>
 
-              <div className="relative py-4">
-                <div className="absolute top-1/2 left-[10%] w-[80%] h-px bg-slate-100 -translate-y-1/2"></div>
-                <div className="flex justify-between relative px-2">
-                   {workflowStages.map((stage, idx) => (
-                     <div key={idx} className="flex flex-col items-center group/stage relative">
-                        <button 
+             <div className="relative pt-12 pb-20">
+               {/* Progress Line Background */}
+               <div className="absolute top-[72px] left-[5%] w-[90%] h-1 bg-slate-100 rounded-full"></div>
+               {/* Active Progress Overlay */}
+               <div 
+                 className="absolute top-[72px] left-[5%] h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(37,99,235,0.3)]"
+                 style={{ width: `${(steps.filter(s => s.completed).length - 1) * 33.33 + 5}%` }}
+               ></div>
+
+               <div className="flex justify-between relative px-2">
+                  {workflowStages.map((stage, idx) => {
+                    const isCompleted = steps[idx]?.completed;
+                    const isCurrent = !isCompleted && (idx === 0 || steps[idx-1]?.completed);
+                    
+                    return (
+                      <div key={idx} className="flex flex-col items-center relative group">
+                        <motion.button 
+                           whileHover={{ scale: 1.1 }}
+                           whileTap={{ scale: 0.95 }}
                            onClick={() => setActiveStage(stage.key)}
                            className={cn(
-                             "w-10 h-10 rounded-xl flex items-center justify-center border transition-all duration-300 relative z-10",
-                             stage.status === 'complete' ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-100" :
-                             stage.status === 'current' ? "bg-white border-blue-500 text-blue-600 shadow-sm" :
-                             "bg-slate-50 border-slate-200 text-slate-300"
+                             "w-16 h-16 rounded-3xl flex items-center justify-center border-4 transition-all duration-500 relative z-10",
+                             isCompleted 
+                               ? "bg-slate-900 border-white text-white shadow-2xl shadow-slate-900/20" 
+                               : isCurrent 
+                                 ? "bg-white border-blue-600 text-blue-600 shadow-xl shadow-blue-500/10 scale-110" 
+                                 : "bg-slate-50 border-slate-100 text-slate-300"
                            )}
                         >
-                           {stage.status === 'complete' ? <CheckCircle2 size={16} /> : stage.icon}
-                        </button>
-                        <p className={cn(
-                          "absolute top-14 text-[10px] font-semibold uppercase tracking-wider text-center w-24 group-hover/stage:text-blue-600 transition-colors",
-                          stage.status === 'complete' || stage.status === 'current' ? "text-slate-900" : "text-slate-400"
-                        )}>
-                           {stage.label}
-                        </p>
-                     </div>
-                   ))}
+                           {isCompleted ? <ShieldCheck size={24} /> : stage.icon}
+                        </motion.button>
+                        
+                        <div className="absolute top-20 text-center w-32">
+                           <p className={cn(
+                             "text-[10px] font-black uppercase tracking-widest mb-1",
+                             isCompleted || isCurrent ? "text-slate-900" : "text-slate-300"
+                           )}>
+                              {stage.label}
+                           </p>
+                           {isCurrent && (
+                             <motion.span 
+                               initial={{ opacity: 0 }}
+                               animate={{ opacity: 1 }}
+                               className="text-[8px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full"
+                             >
+                               ACTIVE
+                             </motion.span>
+                           )}
+                        </div>
+                      </div>
+                    );
+                  })}
                </div>
+             </div>
 
-               {activeStage && (
-                 <motion.div 
-                   initial={{ opacity: 0, y: 10 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   className="mt-12 p-8 bg-slate-50 rounded-[2rem] border border-slate-100 relative"
-                 >
-                    <button 
-                      onClick={() => setActiveStage(null)}
-                      className="absolute top-6 right-6 text-slate-400 hover:text-slate-900"
-                    >
-                       <X className="w-4 h-4" />
-                    </button>
-                    <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2">Stage Details: {activeStage}</h4>
-                    <p className="text-sm font-bold text-slate-900 mb-2">
-                       {workflowStages.find(s => s.key === activeStage)?.label} Review
-                    </p>
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium mb-4">
-                       {workflowStages.find(s => s.key === activeStage)?.description}. 
-                       Status: <span className="text-blue-600 font-bold">{workflowStages.find(s => s.key === activeStage)?.status.toUpperCase()}</span>
-                    </p>
-                    {activeStage === ApplicantStatus.REGISTERED && (
-                       <button onClick={() => navigate('/profile')} className="text-[10px] font-black text-blue-600 uppercase hover:underline">View Registration Artifacts →</button>
-                    )}
-                 </motion.div>
-               )}
-              </div>
-
-               {/* Assessment Action */}
-              {[ApplicantStatus.ASSESSMENT_PASSED, ApplicantStatus.CERTIFICATE_READY].includes(user.status) && (
-                 <div className="mt-16 p-8 rounded-3xl bg-green-600 text-white flex flex-col md:flex-row items-center gap-8 shadow-xl shadow-green-100 transition-all animate-in zoom-in duration-500">
-                    <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
-                       <CheckCircle2 size={32} />
-                    </div>
-                    <div className="flex-1 text-center md:text-left">
-                       <h3 className="text-xl font-bold font-display leading-tight">Assessment Completed</h3>
-                       <p className="text-green-50 text-xs font-medium mt-1">Validation transcript successfully recorded in national registry.</p>
-                    </div>
-                    <button 
-                       disabled
-                       className="px-8 py-4 bg-white/20 text-white rounded-2xl font-bold text-sm cursor-not-allowed opacity-50 flex items-center gap-2"
-                    >
-                       <ShieldCheck size={14} /> Module Finalized
-                    </button>
-                 </div>
-              )}
-
-              {user.status === ApplicantStatus.ASSESSMENT_PENDING && (
-                <div className={cn(
-                  "mt-16 p-8 rounded-3xl text-white flex flex-col md:flex-row items-center gap-8 shadow-xl transition-all",
-                  user.feesPaid?.assessment 
-                    ? "bg-blue-600 shadow-blue-100" 
-                    : "bg-slate-800 shadow-slate-200"
-                )}>
-                   <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
-                      {user.feesPaid?.assessment ? <Award size={32} /> : <CreditCard size={32} />}
+             {activeStage && (
+                <motion.div 
+                  layoutId="stage-details"
+                  className="mt-8 p-10 bg-slate-900 rounded-[3rem] text-white relative shadow-2xl"
+                >
+                   <button onClick={() => setActiveStage(null)} className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors">
+                      <X size={20} />
+                   </button>
+                   <div className="flex items-center gap-6 mb-8">
+                      <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-xl">
+                        {workflowStages.find(s => s.key === activeStage)?.icon}
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black text-blue-400 uppercase tracking-[0.3em] mb-1">Module Definition</h4>
+                        <p className="text-2xl font-black font-display">{workflowStages.find(s => s.key === activeStage)?.label}</p>
+                      </div>
                    </div>
-                   <div className="flex-1 text-center md:text-left">
-                      <h3 className="text-xl font-bold font-display leading-tight">
-                        {user.feesPaid?.assessment ? "Assessment Module Ready" : "Assessment Locked"}
+                   <p className="text-sm font-medium text-slate-300 leading-relaxed max-w-xl">
+                     {workflowStages.find(s => s.key === activeStage)?.description}. Current infrastructure status indicates synchronization with the Federal Registry is 
+                     <span className="text-blue-400 font-black px-1">ACTIVE</span>.
+                   </p>
+                </motion.div>
+             )}
+          </div>
+
+          {/* Conditional Action Panels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Assessment Banner Refined */}
+            {user.status === ApplicantStatus.ASSESSMENT_PENDING && (
+              <div className={cn(
+                "p-10 rounded-[3.5rem] flex flex-col justify-between h-full transition-all group",
+                user.feesPaid?.assessment 
+                  ? "bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-2xl shadow-blue-900/20" 
+                  : "bg-white border border-slate-100 shadow-xl"
+              )}>
+                 <div className="space-y-6">
+                    <div className={cn(
+                      "w-16 h-16 rounded-3xl flex items-center justify-center transition-transform group-hover:scale-110",
+                      user.feesPaid?.assessment ? "bg-white/20 backdrop-blur-xl" : "bg-slate-100 text-slate-400"
+                    )}>
+                      <Award size={32} />
+                    </div>
+                    <div>
+                      <h3 className={cn("text-2xl font-black font-display tracking-tight", user.feesPaid?.assessment ? "text-white" : "text-slate-900")}>
+                        Knowledge Terminal
                       </h3>
-                      <p className="text-blue-100/80 text-xs font-medium mt-1">
+                      <p className={cn("text-xs font-medium mt-2 leading-relaxed", user.feesPaid?.assessment ? "text-blue-100" : "text-slate-500")}>
                         {user.feesPaid?.assessment 
-                          ? "Verify your technical competency to proceed." 
-                          : "Administrative settlement required to initialize technical validation."}
+                          ? "The technical evaluation platform is available for your session." 
+                          : "Administrative fees must be cleared to activate the assessment module."}
                       </p>
-                   </div>
+                    </div>
+                 </div>
+                 <div className="mt-10">
                    {user.feesPaid?.assessment ? (
                      <button 
                         onClick={() => navigate('/assessment')}
-                        className="px-8 py-4 bg-white text-blue-600 rounded-2xl font-bold text-sm hover:bg-slate-50 transition shadow-sm active:scale-95"
+                        className="w-full py-5 bg-white text-blue-600 rounded-3xl text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-50 shadow-lg active:scale-95"
                      >
-                        Start Assessment
+                        Enter Evaluation
                      </button>
                    ) : (
                      <button 
-                        onClick={() => {
-                          const element = document.getElementById('payment-section');
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth' });
-                          }
-                        }}
-                        className="px-8 py-4 bg-orange-500 text-white rounded-2xl font-bold text-sm hover:bg-orange-600 transition shadow-sm active:scale-95 flex items-center gap-2"
+                        onClick={() => document.getElementById('payment-section')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="w-full py-5 bg-slate-900 text-white rounded-3xl text-xs font-black uppercase tracking-widest transition-all hover:bg-slate-800 shadow-xl active:scale-95 flex items-center justify-center gap-3"
                      >
-                        <CreditCard size={16} /> Pay to Unlock
+                        <CreditCard size={16} /> Resolve Dues
                      </button>
                    )}
-                </div>
-              )}
-           </div>
+                 </div>
+              </div>
+            )}
 
-           {/* Assessor Feedback & History */}
-           <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm relative">
-              <div className="flex justify-between items-center mb-10">
-                 <h2 className="text-sm font-bold text-slate-800">Application Timeline</h2>
-                 <MessageSquare size={18} className="text-slate-300" />
+            {/* Assessment Completed Refined */}
+            {[ApplicantStatus.ASSESSMENT_PASSED, ApplicantStatus.CERTIFICATE_READY].includes(user.status) && (
+              <div className="p-10 rounded-[3.5rem] bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex flex-col justify-between shadow-2xl shadow-emerald-500/20 group">
+                 <div className="space-y-6">
+                    <div className="w-16 h-16 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-xl transition-transform group-hover:scale-110">
+                      <CheckCircle2 size={32} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black font-display tracking-tight">Competency Verified</h3>
+                      <p className="text-emerald-50 text-xs font-medium mt-2 leading-relaxed">
+                        Assessors have validated your technical expertise. Your profile is now awaiting professional title allocation.
+                      </p>
+                    </div>
+                 </div>
+                 <div className="mt-10">
+                    <div className="w-full py-5 bg-white/20 rounded-3xl text-xs font-black uppercase tracking-widest text-white border border-white/20 text-center flex items-center justify-center gap-3">
+                       <ShieldCheck size={16} /> Integrity Check Pass
+                    </div>
+                 </div>
               </div>
-              
-              <div className="space-y-8">
-                 {user.workflowLog?.slice().reverse().map((log, idx) => (
-                   <div key={idx} className="flex gap-4 group relative">
-                      <div className="flex flex-col items-center">
-                         <div className={cn("w-2 h-2 rounded-full mt-1 border border-white ring-2", idx === 0 ? "bg-blue-600 ring-blue-50" : "bg-slate-200 ring-slate-50")}></div>
-                         {idx !== (user.workflowLog?.length || 0) - 1 && <div className="w-px flex-1 bg-slate-100 mt-2"></div>}
-                      </div>
-                      <div className="pb-2 flex-1">
-                         <div className="flex justify-between items-center mb-2">
-                            <span className="text-xs font-bold text-slate-900">{log.stage}</span>
-                            <span className="text-[10px] font-medium text-slate-400">{new Date(log.date).toLocaleDateString()}</span>
-                         </div>
-                         <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 group-hover:bg-white group-hover:shadow-md transition-all">
-                            <p className="text-xs text-slate-600 leading-relaxed italic">"{log.comments}"</p>
-                            <p className="mt-2 text-[10px] font-semibold text-blue-500">{log.actor}</p>
-                         </div>
-                      </div>
-                   </div>
-                 ))}
-                 {!user.workflowLog?.length && (
-                   <div className="text-center py-10 opacity-40">
-                      <AlertCircle className="mx-auto mb-4" size={32} />
-                      <p className="text-[10px] font-black uppercase tracking-widest">No feedback trail found</p>
-                   </div>
-                 )}
-              </div>
-           </div>
+            )}
+
+            {/* CPD Quick Stats card */}
+            <div className="p-10 rounded-[3.5rem] bg-white border border-slate-100 shadow-xl flex flex-col justify-between group hover:border-blue-200 transition-all">
+               <div className="space-y-6">
+                  <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <BookOpen size={30} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-black text-slate-900 font-display tracking-tight">CPD Ledger</h3>
+                    <div className="flex items-end gap-3 mt-4">
+                      <p className="text-5xl font-black text-slate-900 font-display">{totalCpdHours}</p>
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest pb-3">/ 30 HOURS</p>
+                    </div>
+                  </div>
+               </div>
+               <div className="mt-10">
+                  <button 
+                     onClick={() => navigate('/cpd')}
+                     className="w-full py-5 bg-slate-50 text-slate-900 rounded-3xl text-xs font-black uppercase tracking-widest transition-all hover:bg-slate-100 flex items-center justify-center gap-3 active:scale-95"
+                  >
+                     Log Activities <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
+               </div>
+            </div>
+          </div>
         </div>
 
-        {/* Right Column: Cards */}
-        <div className="lg:col-span-4 space-y-8">
-           {/* Payment Module */}
-           <div id="payment-section" className="bg-slate-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-2xl -mr-16 -mt-16"></div>
-              <div className="flex justify-between items-center mb-8 relative z-10">
-                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Finance</p>
-                 <CreditCard size={20} className="text-slate-600" />
-              </div>
-              
-              <div className="space-y-6 relative z-10">
-                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-4">Account Dues</p>
-                    {!user.feesPaid?.assessment && (
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="text-sm font-bold">Assessment Fee</p>
-                          <p className="text-[9px] font-medium text-slate-500">Technical competency validation</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-lg font-bold">RM600</p>
-                          <button 
-                            disabled={isProcessingPayment}
-                            onClick={() => handlePayment('assessment', 600)}
-                            className="mt-3 px-5 py-2 bg-blue-600 text-[10px] font-bold uppercase rounded-full hover:bg-blue-500 transition-all active:scale-95"
-                          >
-                            Pay RM600
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {user.status === ApplicantStatus.ASSESSMENT_PASSED && !user.feesPaid?.certification && (
-                      <div className="flex justify-between items-center pt-4 mt-4 border-t border-white/5">
-                        <div>
-                          <p className="text-sm font-bold">Certification Fee</p>
-                          <p className="text-[9px] font-medium text-slate-500">Processing & Certificate Issuance</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-lg font-bold">RM350</p>
-                          <button 
-                            disabled={isProcessingPayment}
-                            onClick={() => handlePayment('certification', 350)}
-                            className="mt-3 px-5 py-2 bg-green-500 text-[10px] font-bold uppercase rounded-full hover:bg-green-400 transition-all font-sans active:scale-95"
-                          >
-                            Pay RM350
-                          </button>
-                        </div>
-                      </div>
-                    )}
+        {/* Right Section: Sidebar Elements */}
+        <div className="lg:col-span-4 space-y-10">
+          {/* Finance Hub */}
+          <div id="payment-section" className="bg-slate-900 rounded-[3.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-slate-900/30">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[100px] -mr-32 -mt-32"></div>
+            <div className="flex justify-between items-center mb-10 relative z-10">
+               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Finance Hub</p>
+               <CreditCard size={20} className="text-slate-700" />
+            </div>
 
-                    {totalCpdHours >= 30 && !user.feesPaid?.renewal && (
-                      <div className="flex justify-between items-center pt-4 mt-4 border-t border-white/5">
-                        <div>
-                          <p className="text-sm font-bold">Annual Renewal Fee</p>
-                          <p className="text-[9px] font-medium text-slate-500">30/30 CPD Hours Achieved</p>
+            <div className="space-y-6 relative z-10">
+               {/* Custom Dues List */}
+               <div className="space-y-3">
+                  {!user.feesPaid?.assessment && (
+                    <div className="p-6 bg-white/5 border border-white/10 rounded-[2rem] group hover:bg-white/10 transition-colors">
+                        <div className="flex justify-between items-start mb-4">
+                           <p className="text-xs font-bold uppercase tracking-tight">Assessment Module</p>
+                           <p className="text-xl font-black text-blue-400">RM 600</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-lg font-bold">RM200</p>
-                          <button 
-                            disabled={isProcessingPayment}
-                            onClick={() => handlePayment('renewal', 200)}
-                            className="mt-3 px-5 py-2 bg-orange-600 text-[10px] font-bold uppercase rounded-full hover:bg-orange-500 transition-all font-sans active:scale-95"
-                          >
-                            Pay RM200
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
-                    {user.renewalDate && (
-                      <div className="flex justify-between items-center pt-4 mt-4 border-t border-white/5">
-                        <div>
-                          <p className="text-sm font-bold">Registry Valid Until</p>
-                          <p className="text-[9px] font-medium text-slate-500">Professional Standing Cycle</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-black text-blue-400">{new Date(user.renewalDate).toLocaleDateString()}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {(user.feesPaid?.assessment && 
-                      (user.status !== ApplicantStatus.ASSESSMENT_PASSED || user.feesPaid?.certification) &&
-                      (totalCpdHours < 30 || user.feesPaid?.renewal)) && (
-                      <div className="text-center py-2">
-                         <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 mx-auto mb-3">
-                            <CheckCircle2 size={18} />
-                         </div>
-                         <p className="text-xs font-bold">Account Balanced</p>
-                      </div>
-                    )}
-                 </div>
-              </div>
-           </div>
-
-           {/* Registration Artifacts Panel */}
-           <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
-              <div className="flex justify-between items-center mb-6">
-                 <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest leading-none">Registry Documentation</h3>
-                 <ShieldCheck size={16} className="text-blue-500" />
-              </div>
-              
-              <div className="space-y-4">
-                 <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 group hover:border-blue-200 transition-all cursor-pointer" onClick={() => navigate('/profile')}>
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm">
-                          <User size={14} />
-                       </div>
-                       <div>
-                          <p className="text-[11px] font-bold text-slate-900">Personal Details</p>
-                          <p className="text-[9px] text-slate-400 font-medium">Identity & Basis Records</p>
-                       </div>
+                        <button 
+                          disabled={isProcessingPayment}
+                          onClick={() => handlePayment('assessment', 600)}
+                          className="w-full py-4 bg-blue-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+                        >
+                           Process Payment
+                        </button>
                     </div>
-                    <ChevronRight size={14} className="text-slate-300 group-hover:translate-x-1 transition-transform" />
-                 </div>
+                  )}
 
-                 <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 group hover:border-blue-200 transition-all cursor-pointer" onClick={() => navigate('/profile')}>
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center text-slate-400 shadow-sm">
-                          <FileText size={14} />
-                       </div>
-                       <div>
-                          <p className="text-[11px] font-bold text-slate-900">Academic Background</p>
-                          <p className="text-[9px] text-slate-400 font-medium">Technological Domain Evidence</p>
-                       </div>
+                  {user.status === ApplicantStatus.ASSESSMENT_PASSED && !user.feesPaid?.certification && (
+                    <div className="p-6 bg-white/5 border border-white/10 rounded-[2rem] group hover:bg-white/10 transition-colors">
+                        <div className="flex justify-between items-start mb-4">
+                           <p className="text-xs font-bold uppercase tracking-tight">Title Allocation</p>
+                           <p className="text-xl font-black text-emerald-400">RM 350</p>
+                        </div>
+                        <button 
+                          disabled={isProcessingPayment}
+                          onClick={() => handlePayment('certification', 350)}
+                          className="w-full py-4 bg-emerald-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-lg active:scale-95"
+                        >
+                           Settle Record
+                        </button>
                     </div>
-                    <ChevronRight size={14} className="text-slate-300 group-hover:translate-x-1 transition-transform" />
-                 </div>
+                  )}
 
-                 <button 
-                  onClick={() => setShowIdModal(true)}
-                  className="w-full py-4 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 active:scale-95"
-                 >
-                    View Registry ID
-                 </button>
-              </div>
-           </div>
+                  {((user.feesPaid?.assessment || false) && (user.status !== ApplicantStatus.ASSESSMENT_PASSED || (user.feesPaid?.certification || false))) && (
+                    <div className="p-10 text-center border-2 border-dashed border-white/5 rounded-[2rem]">
+                       <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-emerald-500 mx-auto mb-4">
+                          <CheckCircle2 size={24} />
+                       </div>
+                       <p className="text-xs font-bold text-white mb-1 uppercase tracking-widest">ledger balanced</p>
+                       <p className="text-[10px] font-medium text-slate-500 italic">No outstanding administrative dues</p>
+                    </div>
+                  )}
+               </div>
+            </div>
+          </div>
 
-           {/* Certificate Preview/QR Panel */}
-           <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm text-center group">
-              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-8">Digital Identity Verified</h3>
-              
-              <div className="relative inline-block">
-                 <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 transition-all group-hover:shadow-lg">
-                    <QRCodeSVG 
-                      value={[ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) ? `https://ais-ver-6789.verify.mbot.com/id/${user.icPassport}` : `https://ais-reg-6789.registry.mbot.com/preaudit/${user.id}`} 
-                      size={160} 
-                      className={cn(![ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) && "opacity-10 grayscale")}
-                    />
-                    {![ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) && (
-                      <div className="absolute inset-0 flex items-center justify-center flex-col p-8 text-center rounded-3xl">
-                         <Clock size={32} className="text-slate-400 mb-2 opacity-50" />
-                         <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Awaiting Title</p>
-                      </div>
+          {/* Registry Identification Metadata */}
+          <div className="bg-white rounded-[3.5rem] p-10 border border-slate-100 shadow-xl overflow-hidden group">
+            <div className="flex justify-between items-center mb-10">
+               <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Registry Identifier</h3>
+               <QrCode size={18} className="text-slate-300" />
+            </div>
+
+            <div className="flex flex-col items-center">
+               <div className="p-10 bg-slate-50 rounded-[3rem] border border-slate-100 relative group-hover:shadow-2xl transition-all duration-700">
+                  <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/[0.02] transition-colors rounded-[3rem]"></div>
+                  <QRCodeSVG 
+                    value={user.id}
+                    size={160}
+                    level="H"
+                    className={cn(
+                      "relative z-10 transition-all duration-700",
+                      ![ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) && "opacity-20 grayscale blur-[1px]"
                     )}
-                 </div>
-              </div>
+                  />
+                  {![ApplicantStatus.CERTIFIED, ApplicantStatus.PROFESSIONAL, ApplicantStatus.CERTIFIED_TECH].includes(user.status) && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-20">
+                       <Clock size={32} className="text-slate-400/50 mb-3" />
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest max-w-[100px]">PENDING FINAL VERIFICATION</p>
+                    </div>
+                  )}
+               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-50">
-                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">ID: {user.pTechNumber || user.gtNumber || user.qtNumber || 'PENDING'}</p>
-              </div>
-           </div>
+               <div className="mt-10 text-center space-y-2">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">MBOT Registry Ref</p>
+                  <p className="text-2xl font-black text-slate-950 font-display italic tracking-tight">{user.pTechNumber || user.gtNumber || 'UNASSIGNED'}</p>
+               </div>
+
+               <button 
+                 onClick={() => setShowIdModal(true)}
+                 className="w-full mt-10 py-5 bg-slate-900 text-white rounded-[2rem] text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition shadow-xl shadow-slate-900/10 active:scale-95"
+               >
+                  Generate Digital Card
+               </button>
+            </div>
+          </div>
         </div>
       </div>
+
       {/* ID Card Modal */}
       {showIdModal && (
         <div className="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-6 animate-in fade-in duration-300">
