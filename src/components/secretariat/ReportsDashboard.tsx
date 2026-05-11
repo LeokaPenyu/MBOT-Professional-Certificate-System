@@ -74,7 +74,7 @@ export default function ReportsDashboard() {
     });
   }, []);
 
-  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f472b6'];
+  const COLORS = ['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f472b6'];
 
   const exportGeneralReport = () => {
     const applicants = getApplicants();
@@ -132,31 +132,31 @@ export default function ReportsDashboard() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Print-Only Header */}
-      <div className="hidden print:block mb-10 border-b-2 border-slate-900 pb-8">
+      <div className="hidden print:block mb-10 border-b-2 border-brand-secondary pb-8">
         <div className="flex justify-between items-end">
           <div>
-            <h1 className="text-4xl font-black text-slate-900 font-display uppercase tracking-tighter">Registry Intelligence Audit</h1>
-            <p className="text-slate-500 text-sm font-bold mt-2 uppercase tracking-widest">Official Regulatory Compliance Report • MBOT CMS PRO</p>
+            <h1 className="text-4xl font-black text-text-primary font-display uppercase tracking-tighter">Registry Intelligence Audit</h1>
+            <p className="text-text-secondary text-sm font-bold mt-2 uppercase tracking-widest">Official Regulatory Compliance Report • MBOT CMS PRO</p>
           </div>
           <div className="text-right">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Report Produced</p>
-            <p className="text-sm font-bold text-slate-900">{new Date().toLocaleString('en-MY', { dateStyle: 'full', timeStyle: 'short' })}</p>
+            <p className="text-[10px] font-black text-text-muted uppercase tracking-widest">Report Produced</p>
+            <p className="text-sm font-bold text-text-primary">{new Date().toLocaleString('en-MY', { dateStyle: 'full', timeStyle: 'short' })}</p>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 print:hidden">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight flex items-center gap-3">
-            <BarChart2 className="text-blue-600" size={28} />
+          <h1 className="text-2xl font-black text-text-primary font-display uppercase tracking-tight flex items-center gap-3">
+            <BarChart2 className="text-brand-primary" size={28} />
             Registry Intelligence Engine
           </h1>
-          <p className="text-slate-500 text-sm font-medium">Strategic insights, fiscal tracking, and demographic analytics.</p>
+          <p className="text-text-secondary text-sm font-medium">Strategic insights, fiscal tracking, and demographic analytics.</p>
         </div>
         <div className="flex gap-3">
           <button 
             onClick={exportGeneralReport}
-            className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition shadow-xl"
+            className="flex items-center gap-2 px-6 py-3 bg-brand-secondary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition shadow-xl"
           >
             <Download size={14} /> Export Dataset
           </button>
@@ -201,13 +201,13 @@ export default function ReportsDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Registration Trends */}
-        <div className="lg:col-span-8 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col h-[500px] break-inside-avoid">
+        <div className="lg:col-span-8 bg-white rounded-[2.5rem] p-10 border border-brand-primary/10 shadow-sm flex flex-col h-[500px] break-inside-avoid">
           <div className="flex justify-between items-center mb-10">
             <div>
-              <h3 className="font-bold text-xl text-slate-900 font-display">Registration Trajectory</h3>
-              <p className="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1">Monthly New Applicant Volume</p>
+              <h3 className="font-bold text-xl text-text-primary font-display">Registration Trajectory</h3>
+              <p className="text-xs text-text-muted font-medium uppercase tracking-widest mt-1">Monthly New Applicant Volume</p>
             </div>
-            <select className="px-4 py-2 bg-slate-50 border-none rounded-xl text-[10px] font-black uppercase tracking-widest outline-none transition-colors focus:ring-2 focus:ring-blue-500/10 cursor-pointer">
+            <select className="px-4 py-2 bg-bg-elevated border-none rounded-xl text-[10px] font-black uppercase tracking-widest outline-none transition-colors focus:ring-2 focus:ring-brand-primary/10 cursor-pointer text-text-primary">
               <option>Last 12 Months</option>
               <option>Last Quarter</option>
             </select>
@@ -217,8 +217,8 @@ export default function ReportsDashboard() {
               <AreaChart data={data.registrationTrend}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -227,16 +227,16 @@ export default function ReportsDashboard() {
                 <Tooltip 
                   contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
                 />
-                <Area type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorCount)" />
+                <Area type="monotone" dataKey="count" stroke="#0ea5e9" strokeWidth={3} fillOpacity={1} fill="url(#colorCount)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Status Distribution */}
-        <div className="lg:col-span-4 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col h-[500px] break-inside-avoid">
-          <h3 className="font-bold text-xl text-slate-900 mb-2 font-display">Registry Status</h3>
-          <p className="text-xs text-slate-400 font-medium uppercase tracking-widest mb-10">Current Workforce state</p>
+        <div className="lg:col-span-4 bg-white rounded-[2.5rem] p-10 border border-brand-primary/10 shadow-sm flex flex-col h-[500px] break-inside-avoid">
+          <h3 className="font-bold text-xl text-text-primary mb-2 font-display">Registry Status</h3>
+          <p className="text-xs text-text-muted font-medium uppercase tracking-widest mb-10">Current Workforce state</p>
           <div className="flex-1 min-h-0 relative">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -255,15 +255,15 @@ export default function ReportsDashboard() {
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <p className="text-3xl font-black text-slate-900 leading-none">{data.statusDistribution.reduce((acc, curr) => acc + curr.value, 0)}</p>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Entities</p>
+              <p className="text-3xl font-black text-text-primary leading-none">{data.statusDistribution.reduce((acc, curr) => acc + curr.value, 0)}</p>
+              <p className="text-[10px] font-black text-text-muted uppercase tracking-widest">Total Entities</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 mt-8">
             {data.statusDistribution.slice(0, 4).map((item, index) => (
               <div key={item.name} className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                <span className="text-[9px] font-black uppercase text-slate-500 truncate">{item.name}</span>
+                <span className="text-[9px] font-black uppercase text-text-secondary truncate">{item.name}</span>
               </div>
             ))}
           </div>
@@ -272,13 +272,13 @@ export default function ReportsDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Domain Distribution */}
-        <div className="lg:col-span-12 bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm break-inside-avoid">
+        <div className="lg:col-span-12 bg-white rounded-[2.5rem] p-10 border border-brand-primary/10 shadow-sm break-inside-avoid">
           <div className="flex justify-between items-center mb-10">
             <div>
-              <h3 className="font-bold text-xl text-slate-900 font-display">Technological Domain Heatmap</h3>
-              <p className="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1">Cross-sector compliance and workforce density</p>
+              <h3 className="font-bold text-xl text-text-primary font-display">Technological Domain Heatmap</h3>
+              <p className="text-xs text-text-muted font-medium uppercase tracking-widest mt-1">Cross-sector compliance and workforce density</p>
             </div>
-            <button className="text-[10px] font-black uppercase text-blue-600 tracking-widest flex items-center gap-2">
+            <button className="text-[10px] font-black uppercase text-brand-primary tracking-widest flex items-center gap-2">
               All Fields <ChevronRight size={14} />
             </button>
           </div>
@@ -292,24 +292,24 @@ export default function ReportsDashboard() {
                   cursor={{ fill: '#f8fafc' }}
                   contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
                 />
-                <Bar dataKey="value" fill="#3b82f6" radius={[0, 8, 8, 0]} barSize={24} />
+                <Bar dataKey="value" fill="#0ea5e9" radius={[0, 8, 8, 0]} barSize={24} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Revenue/Fiscal Report */}
-        <div className="lg:col-span-12 bg-slate-900 rounded-[2.5rem] p-10 text-white overflow-hidden relative break-inside-avoid shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[100px] -mr-48 -mt-48 transition-opacity print:hidden"></div>
+        <div className="lg:col-span-12 bg-brand-secondary rounded-[2.5rem] p-10 text-white overflow-hidden relative break-inside-avoid shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 blur-[100px] -mr-48 -mt-48 transition-opacity print:hidden"></div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-12">
               <div>
                 <h3 className="text-xl font-bold font-display">Revenue Intelligence Matrix</h3>
-                <p className="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1">Sustenance and Fiscal Projections</p>
+                <p className="text-xs text-white/50 font-medium uppercase tracking-widest mt-1">Sustenance and Fiscal Projections</p>
               </div>
               <div className="flex gap-8 items-center">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-brand-primary"></div>
                   <span className="text-[9px] font-black tracking-widest uppercase">Assessment</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -331,7 +331,7 @@ export default function ReportsDashboard() {
                   <Tooltip 
                     contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px' }}
                   />
-                  <Bar dataKey="assessment" stackId="a" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="assessment" stackId="a" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="certification" stackId="a" fill="#6366f1" />
                   <Bar dataKey="renewal" stackId="a" fill="#10b981" />
                 </BarChart>
@@ -346,29 +346,29 @@ export default function ReportsDashboard() {
 
 function MetricCard({ title, value, trend, trendUp, icon, color }: any) {
   const colorMap: any = {
-    blue: "bg-blue-50 text-blue-600",
-    green: "bg-green-50 text-green-600",
+    blue: "bg-brand-primary/5 text-brand-primary",
+    green: "bg-emerald-50 text-emerald-600",
     indigo: "bg-indigo-50 text-indigo-600",
     orange: "bg-orange-50 text-orange-600"
   };
 
   return (
-    <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all group group cursor-default">
+    <div className="bg-white rounded-3xl p-8 border border-brand-primary/10 shadow-sm flex flex-col justify-between hover:shadow-md transition-all group group cursor-default">
       <div className="flex justify-between items-start mb-6">
         <div className={cn("p-3 rounded-2xl transition-transform group-hover:scale-110", colorMap[color])}>
           {icon}
         </div>
         <div className={cn(
           "flex items-center gap-1 text-[10px] font-black uppercase px-2 py-1 rounded-full",
-          trendUp ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
+          trendUp ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
         )}>
           {trendUp ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
           {trend}
         </div>
       </div>
       <div>
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{title}</p>
-        <p className="text-3xl font-black text-slate-900 font-display tracking-tight">{value}</p>
+        <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">{title}</p>
+        <p className="text-3xl font-black text-text-primary font-display tracking-tight">{value}</p>
       </div>
     </div>
   );

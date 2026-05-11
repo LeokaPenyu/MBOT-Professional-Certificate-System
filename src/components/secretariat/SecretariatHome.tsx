@@ -59,7 +59,7 @@ export default function SecretariatHome() {
   const handleSeedData = () => {
     seedApplicants(20);
     refreshDashboard();
-    alert("SYSTEM ALERT: 20 synthetic records injected into national registry.");
+    alert("Alert: 20 records added.");
   };
 
   const handleSystemReset = () => {
@@ -67,7 +67,7 @@ export default function SecretariatHome() {
       const resetData = generateDummyApplicants();
       saveApplicants(resetData);
       refreshDashboard();
-      alert("SYSTEM RECOVERY: Registry successfully flushed and re-initialized.");
+      alert("Success: Data reset.");
     }
   };
 
@@ -87,7 +87,7 @@ export default function SecretariatHome() {
     
     saveApplicants(updated);
     refreshDashboard();
-    alert(`QUEUE OPTIMIZATION: ${count} pending CPD records have been purged from the audit stream.`);
+    alert(`Cleaned: ${count} records removed.`);
   };
 
   const handleExportAudit = () => {
@@ -148,7 +148,7 @@ export default function SecretariatHome() {
       saveApplicants(updated);
       refreshDashboard();
       setIsOptimizing(false);
-      setOptimizationResult(`OPTIMIZATION COMPLETE: ${optimizedCount} applications escalated to prioritized review channels.`);
+      setOptimizationResult(`Done: ${optimizedCount} records updated.`);
       setTimeout(() => setOptimizationResult(null), 5000);
     }, 2000);
   };
@@ -182,28 +182,28 @@ export default function SecretariatHome() {
           label="Total Applicants" 
           value={stats.total} 
           trend="+5% this month"
-          color="bg-blue-100 text-blue-600"
+          color="bg-brand-primary/10 text-brand-primary"
         />
         <KPIButton 
           icon={<Clock size={20} />} 
           label="Pending Assessments" 
           value={stats.pending} 
           trend="Action required"
-          color="bg-orange-500 text-white shadow-lg shadow-orange-200"
+          color="bg-amber-100 text-amber-600"
         />
         <KPIButton 
           icon={<CheckCircle size={20} />} 
           label="Certificates Issued" 
           value={stats.certified} 
           trend="+12 this week"
-          color="bg-green-100 text-green-600"
+          color="bg-emerald-100 text-emerald-600"
         />
         <KPIButton 
           icon={<ShieldCheck size={20} />} 
           label="Approval Required" 
           value={stats.renewalsDue} 
           trend="Certification Audit"
-          color="bg-indigo-600 text-white shadow-lg shadow-indigo-100"
+          color="bg-brand-primary text-white shadow-lg shadow-brand-primary/20"
         />
       </div>
 
@@ -245,7 +245,7 @@ export default function SecretariatHome() {
 
          {/* Mini Audit Log Section */}
          <div className="lg:col-span-4 bg-white rounded-2xl p-8 border border-slate-100 shadow-sm overflow-hidden flex flex-col h-[400px]">
-            <h3 className="font-bold text-lg text-slate-800 mb-6 font-display">System Activity</h3>
+            <h3 className="font-bold text-lg text-slate-800 mb-6 font-display">Activity</h3>
             <div className="space-y-6 overflow-y-auto flex-1 pr-2 custom-scrollbar">
                {DUMMY_AUDIT_LOGS.slice(0, 5).map(log => (
                  <ActivityItem 
@@ -261,18 +261,18 @@ export default function SecretariatHome() {
               onClick={() => setShowAuditModal(true)}
               className="w-full mt-8 py-3 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-xl transition border border-dashed border-blue-200"
             >
-               View Activity Matrix
+               View History
             </button>
          </div>
       </div>
 
       {/* Control Center Tools */}
-      <div className="bg-slate-800 rounded-3xl p-10 text-white overflow-hidden relative shadow-xl">
-         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-3xl -mr-32 -mt-32"></div>
+      <div className="bg-brand-secondary rounded-3xl p-10 text-white overflow-hidden relative shadow-xl">
+         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-3xl -mr-32 -mt-32"></div>
          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-10">
             <div className="space-y-4">
-               <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400">Policy Management</h4>
-               <p className="text-lg font-bold font-display leading-snug">Update operating procedures and Act 768 guidelines.</p>
+               <h4 className="text-xs font-bold uppercase tracking-wider text-white/60">Policy Management</h4>
+               <p className="text-lg font-bold font-display leading-snug text-white">Update operating procedures and Act 768 guidelines.</p>
                <button 
                  onClick={() => setShowPolicyModal(true)}
                  className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition"
@@ -281,25 +281,25 @@ export default function SecretariatHome() {
                </button>
             </div>
             <div className="space-y-4">
-               <h4 className="text-xs font-bold uppercase tracking-wider text-green-400">Queue Optimizer</h4>
-               <p className="text-lg font-bold font-display leading-snug">Average time: 4.2 days. Optimize verification paths.</p>
+               <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-300">Queue Optimizer</h4>
+               <p className="text-lg font-bold font-display leading-snug text-white">Average time: 4.2 days. Optimize verification paths.</p>
                <button 
                  disabled={isOptimizing}
                  onClick={handleRunOptimizer}
                  className={cn(
-                   "flex items-center gap-2 text-sm font-medium transition",
-                   isOptimizing ? "text-green-400 animate-pulse" : "text-white/60 hover:text-white"
+                    "flex items-center gap-2 text-sm font-medium transition",
+                    isOptimizing ? "text-emerald-300 animate-pulse" : "text-white/60 hover:text-white"
                  )}
                >
                   {isOptimizing ? 'Optimizing AI Engines...' : 'Run Analytics'} <ChevronRight size={16} />
                </button>
                {optimizationResult && (
-                 <p className="text-[9px] font-black text-green-400 uppercase tracking-widest animate-in slide-in-from-left-2">{optimizationResult}</p>
+                 <p className="text-[9px] font-black text-emerald-300 uppercase tracking-widest animate-in slide-in-from-left-2">{optimizationResult}</p>
                )}
             </div>
             <div className="space-y-4">
-               <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400">Reporting Engine</h4>
-               <p className="text-lg font-bold font-display leading-snug">Generate performance audits for the board review.</p>
+               <h4 className="text-xs font-bold uppercase tracking-wider text-sky-200">Reporting Engine</h4>
+               <p className="text-lg font-bold font-display leading-snug text-white">Generate performance audits for the board review.</p>
                <button className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition" onClick={() => window.location.href = '/admin/reports'}>
                   Access Intelligence Dashboard <ChevronRight size={16} />
                </button>
@@ -315,9 +315,9 @@ export default function SecretariatHome() {
               <div>
                 <h2 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight flex items-center gap-3">
                   <ShieldAlert className="text-blue-600" size={28} />
-                  System Audit Logs
+                  History Logs
                 </h2>
-                <p className="text-slate-500 text-xs mt-1 uppercase tracking-widest font-bold">Comprehensive Security Traceability</p>
+                <p className="text-slate-500 text-xs mt-1 uppercase tracking-widest font-bold">See all changes</p>
               </div>
               <button 
                 onClick={() => setShowAuditModal(false)}
@@ -383,9 +383,9 @@ export default function SecretariatHome() {
                  <div>
                     <h2 className="text-lg font-black text-slate-900 font-display uppercase tracking-tight flex items-center gap-3">
                        <ShieldAlert className="text-blue-600" size={20} />
-                       Governance Terminal
+                       Settings
                     </h2>
-                    <p className="text-slate-400 text-[9px] mt-0.5 uppercase tracking-widest font-bold">Act 768 Policy Overrides</p>
+                    <p className="text-slate-400 text-[9px] mt-0.5 uppercase tracking-widest font-bold">Change Rules</p>
                  </div>
                  <button 
                    onClick={() => setShowPolicyModal(false)}

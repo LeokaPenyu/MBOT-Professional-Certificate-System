@@ -83,11 +83,11 @@ export default function ApplicationQueue() {
     saveApplicants(updated);
     setRemarks('');
     setSelectedApplicant(null);
-    notify(`WORKFLOW COMMITTED: Identity shifted to ${nextStatus}`);
+    notify(`Workflow: Application moved.`);
   };
 
   const handleHold = (id: string) => {
-    notify("REGULATORY ACTION: Application flag raised for manual review.");
+    notify("Flagged for review.");
   };
 
   const handleBulkBatch = () => {
@@ -141,20 +141,20 @@ export default function ApplicationQueue() {
 
     setApplicants(updated);
     saveApplicants(updated);
-    notify(`BATCH COMPLETE: ${pendingApplications.length} identities processed through the workflow.`);
+    notify(`Batch done: ${pendingApplications.length} members processed.`);
   };
 
   return (
     <div className="space-y-6">
       <div>
-         <h1 className="text-2xl font-bold text-slate-900 font-display uppercase tracking-tight">Verification Queue</h1>
-         <p className="text-slate-500 text-sm">Monitor and move Professional Certificate applications through the active workflow.</p>
+         <h1 className="text-2xl font-bold text-text-primary font-display uppercase tracking-tight">Waitlist</h1>
+         <p className="text-text-secondary text-sm">Review and approve pending applications.</p>
       </div>
 
       {statusMsg && (
         <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] animate-in slide-in-from-top duration-500">
-           <div className="bg-slate-900 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
-              <CheckCircle size={18} className="text-green-400" />
+           <div className="bg-brand-secondary border border-white/10 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
+              <CheckCircle size={18} className="text-emerald-400" />
               <span className="text-xs font-semibold uppercase tracking-wider">{statusMsg}</span>
            </div>
         </div>
@@ -170,31 +170,31 @@ export default function ApplicationQueue() {
             </div>
          ) : (
             pendingApplications.map(applicant => (
-              <div key={applicant.id} className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 transition-all flex flex-col lg:flex-row items-start lg:items-center gap-8 group">
+              <div key={applicant.id} className="bg-white rounded-3xl p-8 border border-brand-primary/10 shadow-sm hover:shadow-xl hover:shadow-brand-primary/5 transition-all flex flex-col lg:flex-row items-start lg:items-center gap-8 group">
                  <div className="flex items-center gap-6 min-w-[280px]">
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 transition-transform group-hover:scale-110">
-                       <User size={20} className="text-blue-600" />
+                    <div className="w-12 h-12 rounded-xl bg-bg-elevated border border-brand-primary/10 flex items-center justify-center text-text-primary transition-transform group-hover:scale-110">
+                       <User size={20} className="text-brand-primary" />
                     </div>
                     <div className="space-y-1">
-                       <h3 className="font-bold text-slate-900 tracking-tight">{applicant.fullName}</h3>
-                       <p className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">{applicant.field}</p>
+                       <h3 className="font-bold text-text-primary tracking-tight">{applicant.fullName}</h3>
+                       <p className="text-[11px] text-text-muted font-semibold uppercase tracking-wider">{applicant.field}</p>
                     </div>
                  </div>
 
                  <div className="flex-1 flex flex-wrap gap-4">
-                    <div className="px-4 py-2 bg-slate-50 rounded-xl flex items-center gap-2 border border-slate-100">
-                       <Calendar size={14} className="text-slate-400" />
-                       <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Applied: {new Date(applicant.registrationDate).toLocaleDateString('en-MY')}</span>
+                    <div className="px-4 py-2 bg-bg-elevated rounded-xl flex items-center gap-2 border border-brand-primary/10">
+                       <Calendar size={14} className="text-text-muted" />
+                       <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider">Applied: {new Date(applicant.registrationDate).toLocaleDateString('en-MY')}</span>
                     </div>
                     <div className={cn(
                       "px-4 py-2 rounded-xl flex items-center gap-2 border",
                       applicant.status === ApplicantStatus.PROFESSIONAL_PENDING ? "bg-orange-50 text-orange-600 border-orange-100" :
-                      applicant.status === ApplicantStatus.ASSESSMENT_PASSED ? "bg-blue-50 text-blue-600 border-blue-100" :
-                      "bg-green-50 text-green-600 border-green-100"
+                      applicant.status === ApplicantStatus.ASSESSMENT_PASSED ? "bg-brand-primary/5 text-brand-primary border-brand-primary/10" :
+                      "bg-emerald-50 text-emerald-600 border-emerald-100"
                     )}>
                        <div className={cn("w-1.5 h-1.5 rounded-full", 
                          applicant.status === ApplicantStatus.PROFESSIONAL_PENDING ? "bg-orange-500" :
-                         applicant.status === ApplicantStatus.ASSESSMENT_PASSED ? "bg-blue-500" : "bg-green-500"
+                         applicant.status === ApplicantStatus.ASSESSMENT_PASSED ? "bg-brand-primary" : "bg-emerald-500"
                        )} />
                        <span className="text-[10px] font-bold uppercase tracking-wider">{applicant.status}</span>
                     </div>
@@ -203,7 +203,7 @@ export default function ApplicationQueue() {
                  <div className="flex items-center gap-3 w-full lg:w-auto">
                     <button 
                       onClick={() => handleHold(applicant.id)}
-                      className="w-11 h-11 bg-white border border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-200 rounded-xl transition-all flex items-center justify-center shadow-sm"
+                      className="w-11 h-11 bg-white border border-brand-primary/10 text-text-muted hover:text-red-500 hover:border-red-200 rounded-xl transition-all flex items-center justify-center shadow-sm"
                       title="Place Application on Hold"
                     >
                        <ShieldAlert size={18} />
@@ -211,7 +211,7 @@ export default function ApplicationQueue() {
 
                     <button 
                       onClick={() => setSelectedApplicant(applicant)}
-                      className="w-11 h-11 bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-400 rounded-xl transition-all flex items-center justify-center shadow-sm"
+                      className="w-11 h-11 bg-white border border-brand-primary/10 text-text-muted hover:text-brand-primary hover:border-brand-primary/40 rounded-xl transition-all flex items-center justify-center shadow-sm"
                       title="Inspect Profile"
                     >
                        <Eye size={18} />
@@ -220,7 +220,7 @@ export default function ApplicationQueue() {
                     {applicant.status === ApplicantStatus.PROFESSIONAL_PENDING && (
                       <button 
                         onClick={() => handleAction(applicant.id, ApplicantStatus.ASSESSMENT_PASSED)}
-                        className="flex-1 lg:flex-none px-6 py-3 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-slate-800 transition-all flex items-center justify-center gap-3 shadow-lg shadow-slate-900/10"
+                        className="flex-1 lg:flex-none px-6 py-3 bg-brand-secondary text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-slate-800 transition-all flex items-center justify-center gap-3 shadow-lg shadow-brand-secondary/10"
                       >
                          Confirm Pass <ArrowRight size={14} />
                       </button>
@@ -229,7 +229,7 @@ export default function ApplicationQueue() {
                     {applicant.status === ApplicantStatus.ASSESSMENT_PASSED && (
                       <button 
                         onClick={() => handleAction(applicant.id, ApplicantStatus.CERTIFICATE_READY)}
-                        className="flex-1 lg:flex-none px-6 py-3 bg-blue-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-600/20"
+                        className="flex-1 lg:flex-none px-6 py-3 bg-brand-primary text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-brand-primary-dark transition-all flex items-center justify-center gap-3 shadow-lg shadow-brand-primary/20"
                       >
                          Approve Payment <ArrowRight size={14} />
                       </button>
@@ -238,7 +238,7 @@ export default function ApplicationQueue() {
                     {applicant.status === ApplicantStatus.CERTIFICATE_READY && (
                       <button 
                         onClick={() => handleAction(applicant.id, ApplicantStatus.PROFESSIONAL)}
-                        className="flex-1 lg:flex-none px-6 py-3 bg-green-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-green-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20"
+                        className="flex-1 lg:flex-none px-6 py-3 bg-emerald-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-emerald-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-600/20"
                       >
                          Issue Final Cert <CheckCircle2 size={14} />
                       </button>
@@ -249,14 +249,14 @@ export default function ApplicationQueue() {
          )}
       </div>
 
-      <div className="mt-16 bg-slate-900 rounded-3xl p-10 text-white flex flex-col md:flex-row items-center gap-10 overflow-hidden relative border border-white/5 shadow-xl">
-         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent"></div>
+      <div className="mt-16 bg-brand-secondary rounded-3xl p-10 text-white flex flex-col md:flex-row items-center gap-10 overflow-hidden relative border border-white/5 shadow-xl">
+         <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/20 to-transparent"></div>
          <div className="flex-1 space-y-3 text-center md:text-left relative z-10">
-            <h3 className="text-2xl font-bold font-display tracking-tight">Bulk Batch Processing</h3>
-            <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-lg">Initiate verification for applicants who have met all regulatory compliance standards across verified fields.</p>
+            <h3 className="text-2xl font-bold font-display tracking-tight">Batch Approval</h3>
+            <p className="text-sm text-white/60 font-medium leading-relaxed max-w-lg">Approve everyone who is ready.</p>
          </div>
-         <button className="shrink-0 bg-white text-slate-900 px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-2xl hover:bg-slate-100 transition-all active:scale-95 relative z-10" onClick={handleBulkBatch}>
-            Launch Batch Verify
+         <button className="shrink-0 bg-white text-brand-secondary px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-2xl hover:bg-slate-100 transition-all active:scale-95 relative z-10" onClick={handleBulkBatch}>
+            Start Batch
          </button>
       </div>
 

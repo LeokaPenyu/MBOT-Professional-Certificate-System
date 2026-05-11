@@ -82,51 +82,69 @@ export default function App() {
         
         {!role ? (
           <Route path="*" element={
-            <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-              <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-8 animate-in fade-in zoom-in duration-500">
-                <div className="text-center space-y-2">
-                  <div className="mx-auto w-16 h-16 bg-blue-700 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
-                    <Award className="text-white w-10 h-10" />
+            <div className="min-h-screen bg-bg-main flex items-center justify-center p-4 relative overflow-hidden">
+               {/* Background Glows */}
+               <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-primary/10 blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+               <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-secondary/10 blur-[120px] translate-x-1/2 translate-y-1/2"></div>
+
+              <div className="max-w-md w-full glass-card p-10 space-y-10 animate-in fade-in zoom-in duration-700 relative z-10">
+                <div className="text-center space-y-4">
+                  <div className="mx-auto w-20 h-20 bg-gradient-to-tr from-brand-primary to-brand-secondary rounded-3xl flex items-center justify-center shadow-2xl shadow-brand-primary/40 transform rotate-6 hover:rotate-0 transition-transform duration-500">
+                    <Award className="text-white w-12 h-12" />
                   </div>
-                  <h1 className="text-3xl font-bold text-slate-900 pt-4 font-display tracking-tight">MBOT CMS</h1>
-                  <p className="text-slate-500 text-sm">Professional Certificate Management</p>
+                  <div className="pt-4">
+                    <h1 className="text-4xl font-extrabold text-text-primary font-display tracking-tightest">MBOT CMS</h1>
+                    <p className="text-text-secondary text-sm font-medium mt-2">Professional Certificate System</p>
+                  </div>
                 </div>
                 
-                <div className="grid gap-4">
+                <div className="grid gap-5">
                   <Link 
                     to="/login?type=applicant"
-                    className="w-full flex items-center justify-center gap-3 p-5 bg-white border-2 border-slate-100 rounded-2xl hover:border-blue-700 hover:bg-blue-50 transition-all group shadow-sm bg-slate-50/50"
+                    className="w-full flex items-center justify-between p-6 bg-white border border-brand-primary/10 rounded-2xl hover:bg-white/50 hover:border-brand-primary/50 transition-all group shadow-xl"
                   >
-                    <UserCircle className="w-8 h-8 text-slate-300 group-hover:text-blue-700 transition-colors" />
-                    <div className="text-left">
-                      <p className="font-bold text-slate-900 leading-none">Applicant Access</p>
-                      <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider font-bold">Certification & CPD</p>
+                    <div className="flex items-center gap-5">
+                      <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center group-hover:bg-brand-primary/20 transition-colors">
+                        <UserCircle className="w-7 h-7 text-brand-primary px-px" />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-bold text-text-primary text-lg leading-none">Applicant Access</p>
+                      </div>
+                    </div>
+                    <div className="w-8 h-8 rounded-full border border-brand-primary/20 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary transition-all">
+                      <LayoutDashboard className="w-4 h-4 text-brand-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </Link>
 
                   <Link 
                     to="/login?type=secretariat"
-                    className="w-full flex items-center justify-center gap-3 p-5 bg-white border-2 border-slate-100 rounded-2xl hover:border-indigo-950 hover:bg-indigo-50 transition-all group shadow-sm bg-slate-50/50"
+                    className="w-full flex items-center justify-between p-6 bg-white border border-brand-primary/10 rounded-2xl hover:bg-white/50 hover:border-brand-secondary/50 transition-all group shadow-xl"
                   >
-                    <Settings className="w-8 h-8 text-slate-300 group-hover:text-indigo-950 transition-colors" />
-                    <div className="text-left">
-                      <p className="font-bold text-slate-900 leading-none">Secretariat Portal</p>
-                      <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider font-bold">Administration & Review</p>
+                    <div className="flex items-center gap-5">
+                      <div className="w-12 h-12 rounded-xl bg-brand-secondary/10 flex items-center justify-center group-hover:bg-brand-secondary/20 transition-colors">
+                        <Settings className="w-7 h-7 text-brand-secondary px-px" />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-bold text-text-primary text-lg leading-none">Secretariat Portal</p>
+                      </div>
+                    </div>
+                    <div className="w-8 h-8 rounded-full border border-brand-primary/20 flex items-center justify-center group-hover:bg-brand-secondary group-hover:border-brand-secondary transition-all">
+                      <LayoutDashboard className="w-4 h-4 text-brand-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </Link>
 
-                  <div className="pt-4 grid grid-cols-2 gap-4 border-t border-slate-50">
+                  <div className="pt-6 grid grid-cols-2 gap-6 border-t border-white/5">
                     <Link 
                       to="/register"
-                      className="text-center text-[10px] font-black text-blue-700 hover:underline uppercase tracking-widest py-2"
+                      className="text-center text-[11px] font-bold text-brand-primary hover:text-white hover:bg-brand-primary hover:shadow-lg hover:shadow-brand-primary/30 transition-all uppercase tracking-widest py-3 bg-brand-primary/5 rounded-xl border border-brand-primary/10 hover:-translate-y-1 active:scale-95"
                     >
-                      New Application
+                      Apply Now
                     </Link>
                     <Link 
                       to="/register?type=secretariat"
-                      className="text-center text-[10px] font-black text-slate-400 hover:underline uppercase tracking-widest py-2 border-l border-slate-100"
+                      className="text-center text-[11px] font-bold text-text-muted hover:text-white hover:bg-slate-800 hover:shadow-lg transition-all uppercase tracking-widest py-3 bg-white/5 rounded-xl border border-white/10 hover:-translate-y-1 active:scale-95"
                     >
-                      Staff Onboarding
+                      Staff Entry
                     </Link>
                   </div>
                 </div>
@@ -135,46 +153,47 @@ export default function App() {
           } />
         ) : (
           <Route path="*" element={
-            <div className="flex bg-slate-50 text-slate-900 font-sans h-screen overflow-hidden">
+            <div className="flex bg-bg-main text-text-primary font-sans h-screen overflow-hidden">
               {/* Sidebar Navigation */}
-              <aside className="w-64 bg-slate-900 flex flex-col shrink-0">
-                <div className="p-8 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center font-black text-white shadow-lg shadow-blue-500/20">M</div>
-                  <span className="text-white font-bold tracking-tight text-xl font-display">MBOT</span>
+              <aside className="w-72 bg-slate-900 border-r border-brand-primary/10 flex flex-col shrink-0 z-30 text-white overflow-y-auto">
+                <div className="p-10 flex items-center gap-4 shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-2xl flex items-center justify-center font-black text-white shadow-xl shadow-brand-primary/20">M</div>
+                  <span className="text-white font-extrabold tracking-tight text-2xl font-display uppercase italic">MBOT</span>
                 </div>
 
-                <div className="px-4 py-2 flex flex-col h-full">
-                  <div className="mb-8 px-4">
-                    <div className="h-px bg-slate-800 w-full" />
+                <div className="px-6 py-2 flex flex-col h-full min-h-0">
+                  <div className="mb-6 px-4">
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">Main Menu</p>
+                    <div className="h-px bg-white/5 w-full" />
                   </div>
 
-                  <nav className="space-y-1">
+                  <nav className="space-y-2">
                     {role === UserRole.APPLICANT ? (
                       <>
                         <NavItem to="/" icon={<LayoutDashboard />} label="Dashboard" />
                         <NavItem to="/assessment" icon={<CheckCircle />} label="Assessments" />
-                        <NavItem to="/cpd" icon={<BookOpen />} label="CPD Matrix" />
+                        <NavItem to="/cpd" icon={<BookOpen />} label="CPD Tracker" />
                       </>
                     ) : role === UserRole.ASSESSOR ? (
                       <>
-                        <NavItem to="/assessor" icon={<LayoutDashboard />} label="Evaluation Terminal" />
+                        <NavItem to="/assessor" icon={<LayoutDashboard />} label="Assessments" />
                       </>
                     ) : (
                       <>
-                        <NavItem to="/admin" icon={<LayoutDashboard />} label="Control Center" />
-                        <NavItem to="/admin/applicants" icon={<Users />} label="Member Registry" />
-                        <NavItem to="/admin/applications" icon={<FileText />} label="Verification Queue" />
-                        <NavItem to="/admin/cpd" icon={<ShieldCheck />} label="CPD Audit Queue" />
-                        <NavItem to="/admin/reports" icon={<TrendingUp />} label="Intel & Reports" />
-                        <NavItem to="/admin/questions" icon={<BookOpen />} label="Knowledge Vault" />
+                        <NavItem to="/admin" icon={<LayoutDashboard />} label="Home" />
+                        <NavItem to="/admin/applicants" icon={<Users />} label="Members" />
+                        <NavItem to="/admin/applications" icon={<FileText />} label="Queue" />
+                        <NavItem to="/admin/cpd" icon={<ShieldCheck />} label="CPD Approval" />
+                        <NavItem to="/admin/reports" icon={<TrendingUp />} label="Reports" />
+                        <NavItem to="/admin/questions" icon={<BookOpen />} label="Questions" />
                       </>
                     )}
                   </nav>
 
-                  <div className="mt-auto pt-4 mb-4 border-t border-slate-800">
-                    <Link to="/profile" className="bg-slate-800/50 p-4 rounded-3xl border border-slate-800 hover:bg-slate-800 transition-all block group">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center font-bold text-white text-xs uppercase overflow-hidden border border-slate-600">
+                  <div className="mt-auto pt-6 mb-8 border-t border-brand-primary/10">
+                    <Link to="/profile" className="bg-white/5 p-5 rounded-3xl border border-brand-primary/10 hover:bg-white/10 transition-all block group">
+                      <div className="flex items-center gap-4 mb-5">
+                        <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center font-bold text-slate-900 text-sm uppercase overflow-hidden border border-brand-primary/10 ring-2 ring-transparent group-hover:ring-brand-primary/50 transition-all">
                           {user?.profilePicture ? (
                             <img src={user.profilePicture} alt="Avatar" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                           ) : (
@@ -182,11 +201,11 @@ export default function App() {
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-bold text-white leading-tight truncate group-hover:text-blue-400 transition-colors">
-                            {user ? user.fullName : 'MBOT STAFF'}
+                          <p className="text-sm font-bold text-text-primary leading-tight truncate">
+                            {user ? user.fullName : 'SYSTEM ADMIN'}
                           </p>
-                          <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold mt-0.5">
-                            {role === UserRole.SECRETARIAT ? 'GOV AUTHORITY' : 'TECHNOLOGIST'}
+                          <p className="text-[10px] text-brand-primary uppercase tracking-[0.1em] font-black mt-1">
+                            {role === UserRole.SECRETARIAT ? 'Staff' : 'Member'}
                           </p>
                         </div>
                       </div>
@@ -195,9 +214,9 @@ export default function App() {
                           e.preventDefault();
                           handleLogout();
                         }}
-                        className="w-full py-2.5 text-[10px] font-bold text-slate-400 border border-slate-700/50 rounded-xl hover:bg-red-500 hover:text-white hover:border-red-500 transition-all uppercase tracking-wider"
+                        className="w-full py-3 text-[10px] font-black text-slate-400 border border-brand-primary/10 rounded-xl hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all uppercase tracking-widest"
                       >
-                        Terminate Session
+                        Log Out
                       </button>
                     </Link>
                   </div>
@@ -205,27 +224,32 @@ export default function App() {
               </aside>
 
               {/* Main Content Area */}
-              <main className="flex-1 flex flex-col bg-slate-50 min-w-0 h-screen overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[100px] -mr-48 -mt-48 pointer-events-none"></div>
+              <main className="flex-1 flex flex-col bg-bg-main min-w-0 h-screen overflow-hidden relative border-l border-brand-primary/10">
+                {/* Visual Elements */}
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-primary/10 blur-[120px] -mr-96 -mt-96 pointer-events-none rounded-full"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-secondary/10 blur-[120px] -ml-40 -mb-40 pointer-events-none rounded-full"></div>
                 
                 {/* Header */}
                 {!isCroppingGlobal && (
-                  <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 px-10 flex items-center justify-between shrink-0 sticky top-0 z-20">
+                  <header className="h-24 glass-panel border-b border-brand-primary/10 px-12 flex items-center justify-between shrink-0 sticky top-0 z-30">
                     <div>
-                      <h1 className="text-xl font-bold text-slate-800 font-display">
-                        {role === UserRole.SECRETARIAT ? 'Registry Oversight' : 'Personal Terminal'}
+                      <h1 className="text-2xl font-black text-text-primary font-display tracking-tight leading-none uppercase italic">
+                        {role === UserRole.SECRETARIAT ? 'Admin Panel' : 'My Dashboard'}
                       </h1>
-                      <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">
-                        {new Date().toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                      </p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <div className="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></div>
+                        <p className="text-[10px] font-bold text-text-muted uppercase tracking-[0.2em]">
+                          {new Date().toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-8">
-                      <div className="relative group hidden lg:block">
-                        <Search size={14} className="text-slate-300 absolute left-5 top-1/2 -translate-y-1/2 group-hover:text-blue-500 transition-colors" />
+                    <div className="flex items-center gap-10">
+                      <div className="relative group hidden xl:block">
+                        <Search size={16} className="text-text-muted absolute left-5 top-1/2 -translate-y-1/2 group-focus-within:text-brand-primary transition-colors" />
                         <input 
                           type="text" 
-                          placeholder="Search system..." 
-                          className="bg-slate-50 border-none rounded-2xl py-2.5 pl-12 pr-6 text-xs font-bold w-64 focus:ring-2 focus:ring-blue-500/10 outline-none transition-all placeholder:text-slate-300 tracking-wider"
+                          placeholder="SEARCH..." 
+                          className="bg-white border border-brand-primary/10 rounded-2xl py-3.5 pl-14 pr-8 text-[11px] font-black text-text-primary w-80 focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary/30 outline-none transition-all placeholder:text-text-muted tracking-widest"
                           onChange={(e) => {
                             window.dispatchEvent(new CustomEvent('mbot-global-search', { detail: e.target.value }));
                           }}
@@ -238,27 +262,27 @@ export default function App() {
                           className="relative group transition-transform active:scale-95"
                         >
                           <div className={cn(
-                            "w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 transition-all",
-                            showNotifications ? "bg-blue-50 text-blue-600" : "group-hover:text-blue-600 group-hover:bg-blue-50"
+                            "w-12 h-12 glass-card flex items-center justify-center text-text-secondary transition-all",
+                            showNotifications ? "bg-brand-primary/20 text-brand-primary border-brand-primary/30" : "hover:text-white hover:bg-white/5"
                           )}>
-                            <Bell size={20} />
+                            <Bell size={22} strokeWidth={2.5} />
                           </div>
                           {(user?.notifications?.filter(n => !n.read).length || 0) > 0 && (
-                            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-white ring-4 ring-blue-600/10 scale-100 group-hover:scale-110 transition-transform"></span>
+                            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-brand-primary rounded-full border-2 border-bg-main ring-4 ring-brand-primary/10 scale-100 group-hover:scale-110 transition-transform"></span>
                           )}
                         </button>
   
                         {showNotifications && (
-                          <div className="absolute right-0 mt-4 w-80 bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-4">
-                            <div className="p-6 bg-slate-900 flex justify-between items-center">
-                              <h3 className="text-white font-black uppercase tracking-widest text-[10px]">Registry Alerts</h3>
-                              <span className="text-[9px] font-bold text-blue-400">{user?.notifications?.filter(n => !n.read).length || 0} New</span>
+                          <div className="absolute right-0 mt-6 w-96 glass-card shadow-3xl overflow-hidden z-[100] animate-in fade-in slide-in-from-top-4 scale-100 origin-top-right">
+                            <div className="p-8 bg-gradient-to-r from-brand-primary to-brand-secondary flex justify-between items-center">
+                              <h3 className="text-white font-black uppercase tracking-[0.2em] text-[11px]">Notifications</h3>
+                              <span className="text-[10px] font-black text-white/80 bg-black/20 px-3 py-1 rounded-full uppercase">{user?.notifications?.filter(n => !n.read).length || 0} New</span>
                             </div>
-                            <div className="max-h-[400px] overflow-y-auto">
+                            <div className="max-h-[450px] overflow-y-auto custom-scrollbar">
                               {!user?.notifications || user.notifications.length === 0 ? (
-                                <div className="p-10 text-center">
-                                  <Bell className="mx-auto text-slate-100 mb-4" size={32} />
-                                  <p className="text-[10px] font-black uppercase text-slate-400">All sets clear</p>
+                                <div className="p-16 text-center">
+                                  <Bell className="mx-auto text-white/5 mb-6" size={48} />
+                                  <p className="text-[11px] font-black uppercase text-text-muted tracking-[0.2em]">All Systems Nominal</p>
                                 </div>
                               ) : (
                                 user.notifications.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(n => (
@@ -266,17 +290,17 @@ export default function App() {
                                     key={n.id} 
                                     onClick={() => markNotificationRead(n.id)}
                                     className={cn(
-                                      "p-5 border-b border-slate-50 transition-colors hover:bg-slate-50 cursor-pointer",
-                                      !n.read && "bg-blue-50/30"
+                                      "p-6 border-b border-white/5 transition-all hover:bg-white/5 cursor-pointer",
+                                      !n.read && "bg-brand-primary/5"
                                     )}
                                   >
-                                    <div className="flex justify-between items-start mb-1">
-                                      <p className={cn("text-[11px] font-black uppercase tracking-tight", !n.read ? "text-blue-600" : "text-slate-900")}>
+                                    <div className="flex justify-between items-start mb-2">
+                                      <p className={cn("text-[12px] font-black uppercase tracking-tight", !n.read ? "text-brand-primary" : "text-white")}>
                                         {n.title}
                                       </p>
-                                      <span className="text-[8px] font-black text-slate-400">{new Date(n.date).toLocaleDateString()}</span>
+                                      <span className="text-[9px] font-black text-text-muted uppercase tracking-widest">{new Date(n.date).toLocaleDateString()}</span>
                                     </div>
-                                    <p className="text-[10px] text-slate-500 font-medium leading-relaxed">{n.message}</p>
+                                    <p className="text-[11px] text-text-secondary font-medium leading-relaxed opacity-80">{n.message}</p>
                                   </div>
                                 ))
                               )}
@@ -285,11 +309,11 @@ export default function App() {
                         )}
                       </div>
                       
-                      <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shadow-sm hover:ring-2 hover:ring-blue-500/20 transition-all">
+                      <Link to="/profile" className="w-12 h-12 rounded-2xl glass-card overflow-hidden flex items-center justify-center hover:ring-2 hover:ring-brand-primary/50 transition-all group">
                         {user?.profilePicture ? (
-                          <img src={user.profilePicture} alt="Profile" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                          <img src={user.profilePicture} alt="Profile" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" referrerPolicy="no-referrer" />
                         ) : (
-                          <UserCircle className="text-slate-400" size={24} />
+                          <UserCircle className="text-text-muted group-hover:text-brand-primary transition-colors" size={28} />
                         )}
                       </Link>
                     </div>
@@ -297,7 +321,7 @@ export default function App() {
                 )}
 
                 {/* Page Content */}
-                <div className="flex-1 overflow-y-auto p-10 custom-scrollbar scroll-smooth">
+                <div className="flex-1 overflow-y-auto p-12 custom-scrollbar scroll-smooth">
                   <Routes>
                     {role === UserRole.APPLICANT ? (
                       <>
@@ -328,16 +352,19 @@ export default function App() {
                 </div>
 
                 {/* Bottom Action Bar */}
-                <footer className="h-12 bg-white border-t border-slate-50 px-10 flex items-center justify-between shrink-0 text-[10px] text-slate-400 uppercase tracking-wider font-bold">
-                  <div className="flex gap-10">
-                    <span className="flex items-center gap-2">
-                       <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                       System: Authenticated
+                <footer className="h-16 glass-panel border-t border-brand-primary/10 px-12 flex items-center justify-between shrink-0 text-[10px] text-text-muted uppercase tracking-[0.2em] font-black">
+                  <div className="flex gap-12">
+                    <span className="flex items-center gap-2 text-brand-primary">
+                       <div className="w-2 h-2 bg-brand-primary rounded-full animate-pulse shadow-[0_0_10px_rgba(14,165,233,0.5)]"></div>
+                       SECURE CONNECTION
                     </span>
-                    <span>Node: MY-KUL-SEC-01</span>
-                    <span>Terminal Hash: 0xFCA{Math.floor(Math.random() * 999)}</span>
+                    <span className="hidden sm:inline">MBOT CMS 2025</span>
                   </div>
-                  <span>MBOT CMS PRO v2.4.0 • CLOUD RUN</span>
+                  <div className="flex items-center gap-6">
+                    <span className="text-text-secondary">v2.1.0</span>
+                    <div className="w-1.5 h-1.5 bg-brand-primary/20 rounded-full"></div>
+                    <span className="text-brand-primary/40">ONLINE</span>
+                  </div>
                 </footer>
               </main>
             </div>
@@ -357,14 +384,22 @@ function NavItem({ to, icon, label }: { to: string; icon: React.ReactNode; label
     <Link 
       to={to} 
       className={cn(
-        "flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-sm",
+        "flex items-center gap-4 px-5 py-4 rounded-2xl transition-all font-bold text-sm group",
         isActive 
-          ? "bg-slate-800 text-white shadow-sm" 
-          : "text-slate-400 hover:text-white hover:bg-slate-800"
+          ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 border-l-4 border-brand-primary" 
+          : "text-slate-400 hover:text-white hover:bg-white/5"
       )}
     >
-      {React.cloneElement(icon as React.ReactElement, { size: 18 })}
-      <span>{label}</span>
+      <div className={cn(
+        "transition-colors",
+        isActive ? "text-white" : "text-slate-400 group-hover:text-white"
+      )}>
+        {React.cloneElement(icon as React.ReactElement, { size: 20, strokeWidth: isActive ? 2.5 : 2 })}
+      </div>
+      <span className="tracking-wide">{label}</span>
+      {isActive && (
+        <div className="ml-auto w-1.5 h-1.5 bg-brand-primary rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
+      )}
     </Link>
   );
 }

@@ -58,7 +58,7 @@ export default function ApplicantList() {
       return a;
     });
     saveUpdatedApplicants(updated);
-    notify(`REGISTRY UPDATE: Status changed to ${newStatus}`);
+    notify(`Registry Update: Status changed.`);
   };
 
   const deleteApplicant = (id: string) => {
@@ -67,7 +67,7 @@ export default function ApplicantList() {
       saveApplicants(updated);
       return updated;
     });
-    notify("REGISTRY UPDATE: Profile successfully decommissioned and purged.");
+    notify("Registry Update: Member removed.");
   };
 
   const updateApplicantInfo = (e: React.FormEvent) => {
@@ -77,7 +77,7 @@ export default function ApplicantList() {
     const updated = applicants.map(a => a.id === editingApplicant.id ? editingApplicant : a);
     saveUpdatedApplicants(updated);
     setEditingApplicant(null);
-    notify("REGISTRY UPDATE: Record successfully committed to database.");
+    notify("Registry Update: Saved.");
   };
 
   const filtered = applicants.filter(a => {
@@ -92,28 +92,28 @@ export default function ApplicantList() {
     <div className="space-y-8 animate-in fade-in duration-700">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-           <h1 className="text-2xl font-bold text-slate-900 font-display uppercase tracking-tight">Professional Registry</h1>
-           <p className="text-slate-500 text-sm font-medium">Manage, verify, and audit registered technological professionals.</p>
+           <h1 className="text-2xl font-bold text-slate-900 font-display uppercase tracking-tight">Member List</h1>
+           <p className="text-slate-500 text-sm font-medium">Manage and view all members.</p>
         </div>
       </div>
 
       {statusMsg && (
         <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] animate-in slide-in-from-top duration-500">
-           <div className="bg-slate-900 border border-slate-800 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-4">
-              <CheckCircle size={18} className="text-green-400" />
+           <div className="bg-brand-secondary border border-white/10 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-4">
+              <CheckCircle size={18} className="text-emerald-400" />
               <span className="text-[10px] font-black uppercase tracking-[0.2em]">{statusMsg}</span>
            </div>
         </div>
       )}
 
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-        <div className="p-8 bg-white border-b border-slate-50 flex flex-col lg:flex-row gap-6 items-center justify-between">
+        <div className="p-8 bg-white border-b border-brand-primary/5 flex flex-col lg:flex-row gap-6 items-center justify-between">
            <div className="relative w-full max-w-xl group">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-text-muted/50 w-5 h-5 group-focus-within:text-brand-primary transition-colors" />
               <input 
                 type="text" 
-                placeholder="Search registry by name, IC, or GT number..."
-                className="w-full pl-16 pr-6 py-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/20 text-xs font-semibold tracking-wider transition-all placeholder:text-slate-300"
+                placeholder="Search..."
+                className="w-full pl-16 pr-6 py-4 bg-bg-elevated/50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary/20 text-xs font-semibold tracking-wider transition-all placeholder:text-text-muted/30 text-text-primary"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
               />
@@ -121,45 +121,45 @@ export default function ApplicantList() {
            <div className="flex gap-3 w-full lg:w-auto">
               <div className="relative flex-1 lg:flex-none">
                  <select 
-                   className="w-full lg:w-64 px-6 py-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/20 text-[10px] font-black uppercase tracking-widest text-slate-500 appearance-none cursor-pointer"
+                   className="w-full lg:w-64 px-6 py-4 bg-bg-elevated/50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary/20 text-[10px] font-black uppercase tracking-widest text-text-secondary appearance-none cursor-pointer"
                    value={statusFilter}
                    onChange={e => setStatusFilter(e.target.value)}
                  >
-                   <option value="All">All Registration States</option>
+                   <option value="All">All Status</option>
                    {Object.values(ApplicantStatus).map(s => <option key={s} value={s}>{s}</option>)}
                  </select>
-                 <Filter className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" size={16} />
+                 <Filter className="absolute right-6 top-1/2 -translate-y-1/2 text-text-muted/50 pointer-events-none" size={16} />
               </div>
            </div>
         </div>
 
         <div className="overflow-x-auto flex-1">
            <table className="w-full text-left min-w-[900px]">
-              <thead className="bg-slate-50/50 text-xs uppercase font-semibold text-slate-400 tracking-wider border-b border-slate-100">
+              <thead className="bg-bg-elevated/50 text-xs uppercase font-semibold text-text-muted tracking-wider border-b border-brand-primary/10">
                  <tr>
-                    <th className="px-10 py-6">Professional Profile</th>
-                    <th className="px-10 py-6">Core Competency</th>
-                    <th className="px-10 py-6">Regulatory Status</th>
-                    <th className="px-10 py-6 text-right">Registry Actions</th>
+                    <th className="px-10 py-6">Member</th>
+                    <th className="px-10 py-6">Field</th>
+                    <th className="px-10 py-6">Status</th>
+                    <th className="px-10 py-6 text-right">Actions</th>
                  </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50">
+              <tbody className="divide-y divide-brand-primary/5">
                  {filtered.map(applicant => (
-                   <tr key={applicant.id} className="hover:bg-slate-50/50 transition-colors group">
+                   <tr key={applicant.id} className="hover:bg-bg-elevated/30 transition-colors group">
                       <td className="px-10 py-6">
                          <div className="flex items-center gap-5">
-                            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center font-bold text-xs border border-slate-200/50">
+                            <div className="w-10 h-10 rounded-xl bg-bg-elevated text-text-muted flex items-center justify-center font-bold text-xs border border-brand-primary/10">
                                {applicant.fullName.charAt(0)}
                             </div>
                             <div className="space-y-0.5">
-                               <p className="font-bold text-slate-900 text-sm tracking-tight">{applicant.fullName}</p>
-                               <p className="text-[11px] text-slate-400 font-medium">{applicant.email}</p>
+                               <p className="font-bold text-text-primary text-sm tracking-tight">{applicant.fullName}</p>
+                               <p className="text-[11px] text-text-muted font-medium">{applicant.email}</p>
                             </div>
                          </div>
                       </td>
                       <td className="px-10 py-6">
-                         <p className="text-xs font-bold text-slate-800 mb-1">{applicant.field}</p>
-                         <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">{applicant.qualification}</p>
+                         <p className="text-xs font-bold text-text-secondary mb-1">{applicant.field}</p>
+                         <p className="text-[11px] text-text-muted font-semibold uppercase tracking-wider">{applicant.qualification}</p>
                       </td>
                       <td className="px-10 py-6">
                          <div className="flex flex-col gap-2">
@@ -205,18 +205,18 @@ export default function ApplicantList() {
                             ) : null}
                          </div>
                       </td>
-                      <td className="px-10 py-6 text-right">
+                       <td className="px-10 py-6 text-right">
                          <div className="flex justify-end gap-2 transition-all">
                             <button 
                               onClick={() => setViewingLogs(applicant)}
-                              className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-slate-900 shadow-sm border border-slate-100 transition-all bg-white" 
+                              className="w-9 h-9 rounded-lg flex items-center justify-center text-text-muted hover:bg-bg-elevated hover:text-text-primary shadow-sm border border-brand-primary/10 transition-all bg-white" 
                               title="View Workflow Audit Log"
                             >
                                <History size={14} />
                             </button>
                             <button 
                               onClick={() => setEditingApplicant({...applicant})}
-                              className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:bg-blue-50 hover:text-blue-600 shadow-sm border border-slate-100 transition-all bg-white" 
+                              className="w-9 h-9 rounded-lg flex items-center justify-center text-text-muted hover:bg-brand-primary/10 hover:text-brand-primary shadow-sm border border-brand-primary/10 transition-all bg-white" 
                               title="Modify Registry Record"
                             >
                                <FileEdit size={14} />
@@ -241,7 +241,7 @@ export default function ApplicantList() {
                               }}
                               className={cn(
                                 "w-9 h-9 rounded-lg flex items-center justify-center shadow-sm border transition-all",
-                                applicant.status === ApplicantStatus.CERTIFICATE_READY ? "bg-green-600 text-white border-green-600 hover:bg-green-700" : "bg-white border-slate-100 text-slate-400 hover:text-green-600 hover:bg-green-50"
+                                applicant.status === ApplicantStatus.CERTIFICATE_READY ? "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700" : "bg-white border-brand-primary/10 text-text-muted hover:text-emerald-600 hover:bg-emerald-50"
                               )}
                               title="Escalate/Approve Status"
                             >
@@ -249,7 +249,7 @@ export default function ApplicantList() {
                             </button>
                             <button 
                               onClick={() => deleteApplicant(applicant.id)}
-                              className="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-500 shadow-sm border border-slate-100 transition-all bg-white" 
+                              className="w-9 h-9 rounded-lg flex items-center justify-center text-text-muted hover:bg-red-50 hover:text-red-500 shadow-sm border border-brand-primary/10 transition-all bg-white" 
                               title="Purge Registry Record"
                             >
                                <Trash2 size={14} />
@@ -277,8 +277,8 @@ export default function ApplicantList() {
            <div className="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden animate-in zoom-in duration-300">
               <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
                  <div>
-                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight font-display italic">Registry Data Terminal</h2>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Profile Synchronization Interface</p>
+                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight font-display italic">Edit Member</h2>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Update details</p>
                  </div>
                  <button 
                    onClick={() => setEditingApplicant(null)}
@@ -334,7 +334,7 @@ export default function ApplicantList() {
 
                  <div className="pt-6">
                     <button type="submit" className="w-full py-6 bg-slate-900 text-white text-[11px] font-black uppercase tracking-[0.3em] rounded-[2rem] hover:bg-slate-800 transition shadow-2xl flex items-center justify-center gap-3 active:scale-95">
-                       <Save size={18} /> Commit Registry Changes
+                       <Save size={18} /> Save Changes
                     </button>
                  </div>
               </form>
@@ -347,8 +347,8 @@ export default function ApplicantList() {
            <div className="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden animate-in zoom-in duration-300 flex flex-col max-h-[80vh]">
               <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
                  <div>
-                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight font-display italic">Audit Trail: {viewingLogs.fullName}</h2>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Full Lifecycle Documentation</p>
+                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight font-display italic">History: {viewingLogs.fullName}</h2>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Timeline of changes</p>
                  </div>
                  <button 
                    onClick={() => setViewingLogs(null)}

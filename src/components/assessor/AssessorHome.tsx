@@ -79,8 +79,8 @@ export default function AssessorHome() {
             exit={{ y: -50, opacity: 0 }}
             className="fixed top-8 left-1/2 -translate-x-1/2 z-[100]"
           >
-             <div className="bg-slate-900 border border-slate-800 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-4">
-                <CheckCircle size={18} className="text-green-400" />
+             <div className="bg-brand-secondary border border-white/10 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-4">
+                <CheckCircle size={18} className="text-emerald-400" />
                 <span className="text-[10px] font-black uppercase tracking-[0.2em]">{statusMsg}</span>
              </div>
           </motion.div>
@@ -89,12 +89,12 @@ export default function AssessorHome() {
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div>
-           <h1 className="text-3xl font-bold text-slate-900 font-display uppercase tracking-tight">Assessor Terminal</h1>
-           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Professional Review • Technical Evaluation Queue</p>
+           <h1 className="text-3xl font-bold text-text-primary font-display uppercase tracking-tight">Assessor Terminal</h1>
+           <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mt-1">Professional Review • Technical Evaluation Queue</p>
         </div>
         
-        <div className="flex items-center gap-4 bg-white p-2 rounded-2xl border border-slate-100 shadow-sm">
-           <div className="flex items-center px-6 py-3 bg-slate-900 text-white rounded-xl gap-3">
+        <div className="flex items-center gap-4 bg-white p-2 rounded-2xl border border-brand-primary/10 shadow-sm">
+           <div className="flex items-center px-6 py-3 bg-brand-primary text-white rounded-xl gap-3">
               <RefreshCcw size={14} className="animate-spin-slow" />
               <span className="text-[10px] font-bold uppercase tracking-wider">{filtered.length} Evaluations Pending</span>
            </div>
@@ -102,13 +102,13 @@ export default function AssessorHome() {
       </div>
 
       <div className="relative group">
-         <Search size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-blue-600 transition-colors" />
+         <Search size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-text-muted group-hover:text-brand-primary transition-colors" />
          <input 
            type="text" 
            value={searchTerm}
            onChange={e => setSearchTerm(e.target.value)}
            placeholder="Search evaluations by candidate name or domain..." 
-           className="w-full pl-16 pr-8 py-5 bg-white border border-slate-100 rounded-3xl focus:ring-2 focus:ring-blue-500/10 outline-none text-sm transition-all font-bold placeholder:text-slate-300 shadow-sm"
+           className="w-full pl-16 pr-8 py-5 bg-white border border-brand-primary/10 rounded-3xl focus:ring-2 focus:ring-brand-primary/10 outline-none text-sm transition-all font-bold placeholder:text-text-muted/50 shadow-sm text-text-primary"
          />
       </div>
 
@@ -124,17 +124,17 @@ export default function AssessorHome() {
             <div className="p-10">
                <div className="flex justify-between items-start mb-8">
                   <div className="flex items-center gap-6">
-                     <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-900 font-black text-2xl italic shadow-inner group-hover:bg-slate-900 group-hover:text-white transition-all duration-500">
+                     <div className="w-16 h-16 rounded-2xl bg-bg-elevated flex items-center justify-center text-text-primary font-black text-2xl italic shadow-inner group-hover:bg-brand-primary group-hover:text-white transition-all duration-500">
                         {candidate.fullName.charAt(0)}
                      </div>
                      <div>
-                        <h3 className="text-xl font-black text-slate-900 uppercase italic tracking-tight">{candidate.fullName}</h3>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1 mb-2">{candidate.field}</p>
+                        <h3 className="text-xl font-black text-text-primary uppercase italic tracking-tight">{candidate.fullName}</h3>
+                        <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mt-1 mb-2">{candidate.field}</p>
                         <div className="flex gap-2">
-                           <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-blue-100">
+                           <span className="px-3 py-1 bg-brand-primary/10 text-brand-primary rounded-full text-[9px] font-black uppercase tracking-widest border border-brand-primary/20">
                               {candidate.qualification}
                            </span>
-                           <span className="px-3 py-1 bg-slate-50 text-slate-500 rounded-full text-[9px] font-black uppercase tracking-widest border border-slate-100">
+                           <span className="px-3 py-1 bg-bg-elevated text-text-secondary rounded-full text-[9px] font-black uppercase tracking-widest border border-brand-primary/5">
                               {candidate.yearsOfExperience} YRS EXP
                            </span>
                         </div>
@@ -143,30 +143,30 @@ export default function AssessorHome() {
                   <div className="text-right">
                      <span className={cn(
                         "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border",
-                        candidate.status === ApplicantStatus.PROFESSIONAL_PENDING ? "bg-amber-50 text-amber-600 border-amber-100" : "bg-blue-50 text-blue-600 border-blue-100"
+                        candidate.status === ApplicantStatus.PROFESSIONAL_PENDING ? "bg-amber-50 text-amber-600 border-amber-100" : "bg-brand-primary/10 text-brand-primary border-brand-primary/20"
                      )}>
                         {candidate.status}
                      </span>
                   </div>
                </div>
 
-               <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 space-y-6">
+               <div className="bg-bg-elevated/50 border border-brand-primary/10 rounded-3xl p-8 space-y-6">
                   <div className="grid grid-cols-2 gap-6">
                      <div className="space-y-1">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Submission Date</p>
-                        <p className="text-xs font-bold text-slate-900">{new Date(candidate.registrationDate).toLocaleDateString()}</p>
+                        <p className="text-[10px] font-black text-text-muted uppercase tracking-widest">Submission Date</p>
+                        <p className="text-xs font-bold text-text-primary">{new Date(candidate.registrationDate).toLocaleDateString()}</p>
                      </div>
                      <div className="space-y-1">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Candidate ID</p>
-                        <p className="font-mono text-xs font-bold text-slate-900 truncate">#{candidate.id.toUpperCase().slice(0, 8)}</p>
+                        <p className="text-[10px] font-black text-text-muted uppercase tracking-widest">Candidate ID</p>
+                        <p className="font-mono text-xs font-bold text-text-primary truncate">#{candidate.id.toUpperCase().slice(0, 8)}</p>
                      </div>
                   </div>
                   
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-200/50">
-                    <button className="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-widest hover:translate-x-1 transition-transform">
+                  <div className="flex items-center justify-between pt-4 border-t border-brand-primary/10">
+                    <button className="flex items-center gap-2 text-[10px] font-black text-brand-primary uppercase tracking-widest hover:translate-x-1 transition-transform">
                        <FileText size={14} /> Review CV / Portfolio <ExternalLink size={12} />
                     </button>
-                    <button className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                    <button className="flex items-center gap-2 text-[10px] font-black text-text-muted uppercase tracking-widest hover:text-text-primary transition-colors">
                        Full Lifecycle Audit
                     </button>
                   </div>
@@ -177,14 +177,14 @@ export default function AssessorHome() {
                     onClick={() => updateApplicantStatus(candidate.id, 
                       candidate.status === ApplicantStatus.PROFESSIONAL_PENDING ? ApplicantStatus.CERTIFIED : ApplicantStatus.ASSESSMENT_PASSED, 
                       "Comprehensive technical evaluation completed. Candidate demonstrates required competencies.")}
-                    className="py-5 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-3 hover:bg-slate-800 transition active:scale-95 shadow-xl shadow-slate-200"
+                    className="py-5 bg-brand-primary text-white rounded-2xl flex items-center justify-center gap-3 hover:bg-brand-secondary transition active:scale-95 shadow-xl shadow-brand-primary/20"
                   >
-                     <CheckCircle size={18} className="text-green-400" />
+                     <CheckCircle size={18} className="text-emerald-400" />
                      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Approve Candidate</span>
                   </button>
                   <button 
                     onClick={() => updateApplicantStatus(candidate.id, ApplicantStatus.ASSESSMENT_FAILED, "Evaluation identifying significant competency gaps. Recommend further industry experience.")}
-                    className="py-5 bg-white border border-slate-200 text-slate-900 rounded-2xl flex items-center justify-center gap-3 hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition active:scale-95"
+                    className="py-5 bg-white border border-brand-primary/20 text-text-primary rounded-2xl flex items-center justify-center gap-3 hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition active:scale-95"
                   >
                      <XCircle size={18} />
                      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Reject Submission</span>

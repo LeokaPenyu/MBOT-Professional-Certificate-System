@@ -223,8 +223,8 @@ export default function CPDApproval() {
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div>
-           <h1 className="text-3xl font-bold text-slate-900 font-display uppercase tracking-tight">CPD Verification Terminal</h1>
-           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Audit Trail • Regulatory Compliance Queue</p>
+           <h1 className="text-3xl font-bold text-slate-900 font-display uppercase tracking-tight">CPD Approval</h1>
+           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Review and approve CPD records.</p>
         </div>
         
         <div className="flex items-center gap-4 bg-white p-2 rounded-2xl border border-slate-100 shadow-sm">
@@ -232,7 +232,7 @@ export default function CPDApproval() {
              onClick={() => setShowExportModal(true)}
              className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-slate-50 transition active:scale-95 shadow-sm"
            >
-              <Download size={14} /> Export Audit Report
+              <Download size={14} /> Download Report
            </button>
            <div className="flex items-center px-6 py-3 bg-slate-900 text-white rounded-xl gap-3">
               <RefreshCcw size={14} className="animate-spin-slow" />
@@ -412,15 +412,15 @@ export default function CPDApproval() {
                <AlertCircle size={32} />
             </div>
             <div>
-               <h4 className="text-sm font-black text-slate-900 uppercase italic">Regulatory Integrity Audit</h4>
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Manual verification is mandatory for all Technical and Certification artifacts.</p>
+               <h4 className="text-sm font-black text-slate-900 uppercase italic">Careful Review Required</h4>
+               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Please check all documents manually before approving.</p>
             </div>
          </div>
          <button 
            onClick={() => notify("SYNCING: Professional registry synchronized and compliance flags updated.")}
            className="px-10 py-5 bg-slate-900 text-white rounded-3xl font-black text-[10px] uppercase tracking-[0.3em] hover:bg-slate-800 transition active:scale-95 shadow-2xl"
          >
-            Sync Registry Data
+            Update Records
          </button>
       </div>
 

@@ -199,10 +199,10 @@ export default function Registration() {
         >
           <ChevronLeft size={16} /> Back to Entry
         </button>
-        <div className="bg-white rounded-[3rem] shadow-2xl p-12 border border-slate-100">
+        <div className="bg-white rounded-[3rem] shadow-2xl p-12 border border-brand-primary/10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-black font-display text-slate-900 uppercase tracking-tight mb-4">Select Registration Path</h1>
-            <p className="text-slate-500 font-medium">Initialize your professional record across the MBOT ecosystem.</p>
+            <h1 className="text-4xl font-black font-display text-text-primary uppercase tracking-tight mb-4">Select Your Category</h1>
+            <p className="text-text-secondary font-medium">Start your journey with MBOT.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -211,17 +211,17 @@ export default function Registration() {
                 setRegPath('QT');
                 setFormData({...formData, qualification: Qualification.DIPLOMA});
               }}
-              className="group p-10 bg-slate-50 border-2 border-transparent hover:border-blue-500 hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
+              className="group p-10 bg-bg-elevated border-2 border-transparent hover:border-brand-primary hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 bg-blue-700 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 bg-brand-primary rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
                 <Briefcase size={32} />
               </div>
-              <h3 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight mb-4">Qualified Technician</h3>
-              <p className="text-sm text-slate-500 leading-relaxed mb-6">Minimum requirement: <strong>SKM Level 3 MQF</strong> or <strong>Diploma Level 4 MQF</strong> recognized by the Board. Lifetime fee: <strong>RM30</strong>.</p>
+              <h3 className="text-2xl font-black text-text-primary font-display uppercase tracking-tight mb-4">Qualified Technician</h3>
+              <p className="text-sm text-text-secondary leading-relaxed mb-6">Minimum requirement: <strong>SKM Level 3 MQF</strong> or <strong>Diploma Level 4 MQF</strong> recognized by the Board. Lifetime fee: <strong>RM30</strong>.</p>
               <ul className="space-y-3">
                 {['Lifetime Registration', 'No Yearly Renewal', 'Path to Certified Tech (Tc.)'].map((text, i) => (
-                  <li key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <CheckCircle2 size={14} className="text-blue-700" /> {text}
+                  <li key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-text-muted">
+                    <CheckCircle2 size={14} className="text-brand-primary" /> {text}
                   </li>
                 ))}
               </ul>
@@ -232,17 +232,17 @@ export default function Registration() {
                 setRegPath('GT');
                 setFormData({...formData, qualification: Qualification.BACHELOR});
               }}
-              className="group p-10 bg-slate-50 border-2 border-transparent hover:border-indigo-700 hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
+              className="group p-10 bg-bg-elevated border-2 border-transparent hover:border-brand-secondary hover:bg-white rounded-[2.5rem] transition-all text-left shadow-sm hover:shadow-xl"
             >
-              <div className="w-16 h-16 bg-indigo-700 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 bg-brand-secondary rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform">
                 <Award size={32} />
               </div>
-              <h3 className="text-2xl font-black text-slate-900 font-display uppercase tracking-tight mb-4">Graduate Technologist</h3>
-              <p className="text-sm text-slate-500 leading-relaxed mb-6">Minimum requirement: <strong>Bachelor Degree Level 6 MQF</strong> recognized by the Board. Lifetime fee: <strong>RM50</strong>.</p>
+              <h3 className="text-2xl font-black text-text-primary font-display uppercase tracking-tight mb-4">Graduate Technologist</h3>
+              <p className="text-sm text-text-secondary leading-relaxed mb-6">Minimum requirement: <strong>Bachelor Degree Level 6 MQF</strong> recognized by the Board. Lifetime fee: <strong>RM50</strong>.</p>
               <ul className="space-y-3">
                 {['Digital Registry Record', 'No Yearly Renewal', 'Path to Professional Certificate'].map((text, i) => (
-                  <li key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <CheckCircle2 size={14} className="text-indigo-700" /> {text}
+                  <li key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-text-muted">
+                    <CheckCircle2 size={14} className="text-brand-secondary" /> {text}
                   </li>
                 ))}
               </ul>
@@ -255,7 +255,7 @@ export default function Registration() {
 
   return (
     <div className="max-w-4xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden relative">
+      <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-brand-primary/10 border border-brand-primary/10 overflow-hidden relative">
         {!isSuccess && (
           <button 
             onClick={() => isSecretariat ? navigate('/') : setRegPath(null)}
@@ -266,20 +266,20 @@ export default function Registration() {
         )}
         <div className={cn(
           "p-12 text-white relative h-64 flex flex-col justify-end",
-          isSecretariat ? "bg-indigo-950" : "bg-blue-700"
+          isSecretariat ? "bg-brand-secondary" : "bg-brand-primary"
         )}>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-3xl -mr-32 -mt-32"></div>
           <div className="relative z-10">
             <div className={cn(
               "w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-lg",
-              isSecretariat ? "bg-indigo-700 text-white" : "bg-white text-blue-700"
+              isSecretariat ? "bg-brand-primary text-white" : "bg-white text-brand-primary"
             )}>
               {isSecretariat ? <ShieldCheck size={24} /> : <Award size={24} />}
             </div>
             <h1 className="text-4xl font-bold font-display tracking-tight">
-              {isSecretariat ? 'Staff Onboarding' : 'Access Portal'}
+              {isSecretariat ? 'Staff Sign Up' : 'Sign Up'}
             </h1>
-            <p className="text-slate-400 mt-2 uppercase tracking-[0.3em] text-[10px] font-black">Malaysian Board of Technologists</p>
+            <p className="text-white/60 mt-2 uppercase tracking-[0.3em] text-[10px] font-black">Malaysian Board of Technologists</p>
           </div>
         </div>
 
@@ -290,20 +290,20 @@ export default function Registration() {
                     <CheckCircle2 className="text-green-700 w-12 h-12" />
                   </div>
               <div className="space-y-3">
-                <h2 className="text-3xl font-black text-slate-900 font-display tracking-tight">Operation Successful</h2>
-                <p className="text-slate-500 max-w-sm mx-auto font-medium">
+                <h2 className="text-3xl font-black text-text-primary font-display tracking-tight">Success!</h2>
+                <p className="text-text-secondary max-w-sm mx-auto font-medium">
                   {isSecretariat 
-                    ? 'Staff onboarding sequence completed. Your credentials are being initialized in the core registry.' 
-                    : 'Registration finalized. Your profile is now active in the national database.'}
+                    ? 'Staff account created.' 
+                    : 'Registration done. Your profile is now active.'}
                 </p>
               </div>
               <div className="pt-8 flex flex-col items-center gap-4">
                 <div className="flex justify-center gap-2">
-                  <div className="w-2 h-2 bg-blue-700 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                  <div className="w-2 h-2 bg-blue-700 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                  <div className="w-2 h-2 bg-blue-700 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-brand-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="w-2 h-2 bg-brand-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="w-2 h-2 bg-brand-primary rounded-full animate-bounce"></div>
                 </div>
-                <p className="text-[10px] font-black text-blue-700 uppercase tracking-[0.3em] animate-pulse">Redirecting to Terminal</p>
+                <p className="text-[10px] font-black text-brand-primary uppercase tracking-[0.3em] animate-pulse">Redirecting to Terminal</p>
               </div>
             </div>
           ) : (
@@ -317,29 +317,29 @@ export default function Registration() {
                 </div>
               )}
               <div>
-                <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-8 border-b border-slate-100 pb-2">
-                  Identity {isSecretariat ? 'Records' : 'Basis'}
+                <h2 className="text-xs font-black text-text-muted uppercase tracking-[0.2em] mb-8 border-b border-brand-primary/10 pb-2">
+                  Your Details
                 </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
               <div className="space-y-3">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Full Legal Name</label>
+                <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">Full Legal Name</label>
                 <input 
                   required
                   type="text" 
                   value={formData.fullName}
                   onChange={e => setFormData({...formData, fullName: e.target.value})}
-                  className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all placeholder:text-slate-300"
+                  className="w-full px-6 py-3.5 bg-bg-elevated border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm transition-all placeholder:text-text-muted/50 text-text-primary"
                   placeholder="As per Identity Document"
                 />
               </div>
               <div className="space-y-3">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">{isSecretariat ? 'Staff ID' : 'IC / Passport'}</label>
+                <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">{isSecretariat ? 'Staff ID' : 'IC / Passport'}</label>
                 <input 
                   required
                   type="text" 
                   value={isSecretariat ? formData.staffId : formData.icPassport}
                   onChange={e => setFormData({...formData, [isSecretariat ? 'staffId' : 'icPassport']: e.target.value})}
-                  className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all placeholder:text-slate-300"
+                  className="w-full px-6 py-3.5 bg-bg-elevated border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm transition-all placeholder:text-text-muted/50 text-text-primary"
                   placeholder={isSecretariat ? "MBOT-XXXX-2024" : "9XXXXX-XX-XXXX"}
                 />
               </div>
@@ -351,7 +351,7 @@ export default function Registration() {
                     <select 
                       value={formData.gender}
                       onChange={e => setFormData({...formData, gender: e.target.value as Gender})}
-                      className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm appearance-none font-medium"
+                      className="w-full px-6 py-3.5 bg-slate-100/50 border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm appearance-none font-medium"
                     >
                       <option value={Gender.MALE}>Male</option>
                       <option value={Gender.FEMALE}>Female</option>
@@ -364,7 +364,7 @@ export default function Registration() {
                       type="date" 
                       value={formData.dateOfBirth}
                       onChange={e => setFormData({...formData, dateOfBirth: e.target.value})}
-                      className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm font-medium"
+                      className="w-full px-6 py-3.5 bg-slate-100/50 border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm font-medium"
                     />
                   </div>
                   <div className="md:col-span-2 space-y-3">
@@ -374,30 +374,30 @@ export default function Registration() {
                       rows={2}
                       value={formData.address}
                       onChange={e => setFormData({...formData, address: e.target.value})}
-                      className="w-full px-8 py-5 bg-slate-50 border-none rounded-[1.5rem] focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all placeholder:text-slate-300 font-medium"
+                      className="w-full px-8 py-5 bg-slate-100/50 border-none rounded-[1.5rem] focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm transition-all placeholder:text-slate-300 font-medium"
                       placeholder="Complete mailing address"
                     />
                   </div>
                 </>
               )}
               <div className="space-y-3">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">
-                  {isSecretariat ? 'Official Email address' : 'Digital Mail'}
+                <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">
+                  {isSecretariat ? 'Staff Email' : 'Email'}
                 </label>
                 <input 
                   required
                   type="email" 
                   value={formData.email}
                   onChange={e => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all placeholder:text-slate-300"
-                  placeholder={isSecretariat ? "name@mbot.gov.my" : "email@gmail.com"}
+                  className="w-full px-6 py-3.5 bg-bg-elevated border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm transition-all placeholder:text-text-muted/50 text-text-primary"
+                  placeholder={isSecretariat ? "name@gmail.com" : "email@gmail.com"}
                 />
                 {isSecretariat && (
-                  <p className="text-[9px] text-slate-400 ml-4 italic">Note: Only the @mbot.gov.my domain is authorized for staff accounts.</p>
+                  <p className="text-[9px] text-text-muted ml-4 italic">Note: Only the @gmail.com domain is authorized for staff accounts in this beta.</p>
                 )}
               </div>
               <div className="space-y-3">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Secure Access Key (Password)</label>
+                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Password</label>
                 <input 
                   required
                   type="password" 
@@ -424,46 +424,46 @@ export default function Registration() {
           {!isSecretariat ? (
             <>
               <div>
-                <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-8 border-b border-slate-100 pb-2">Professional Qualifications</h2>
+                <h2 className="text-xs font-black text-text-muted uppercase tracking-[0.2em] mb-8 border-b border-brand-primary/10 pb-2">Education</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                    <div className="space-y-3">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Academic Tier</label>
+                    <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">Level</label>
                     <div className="relative">
                       <select 
                         value={formData.qualification}
                         onChange={e => setFormData({...formData, qualification: e.target.value as Qualification})}
-                        className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm appearance-none"
+                        className="w-full px-6 py-3.5 bg-bg-elevated border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm appearance-none text-text-primary"
                       >
                         {Object.values(Qualification).map(q => <option key={q} value={q}>{q}</option>)}
                       </select>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Technological Domain</label>
+                    <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">Field</label>
                     <select 
                       value={formData.field}
                       onChange={e => setFormData({...formData, field: e.target.value})}
-                      className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm appearance-none"
+                      className="w-full px-6 py-3.5 bg-bg-elevated border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm appearance-none text-text-primary"
                     >
                       {MBOT_FIELDS.map(f => <option key={f} value={f}>{f}</option>)}
                     </select>
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Years of Practice</label>
+                    <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">Experience (Years)</label>
                     <input 
                       required
                       type="number" 
                       min="0"
                       value={formData.yearsOfExperience}
                       onChange={e => setFormData({...formData, yearsOfExperience: Number(e.target.value)})}
-                      className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm transition-all"
+                      className="w-full px-6 py-3.5 bg-bg-elevated border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm transition-all text-text-primary"
                     />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">Evidence of Proficiency (CV/Resume)</label>
+                <label className="text-[10px] font-bold text-text-secondary uppercase tracking-widest ml-4">Upload CV</label>
                 <div className="relative">
                   <input 
                     type="file" 
@@ -476,36 +476,36 @@ export default function Registration() {
                     htmlFor="cv-upload"
                     className={cn(
                       "border-2 border-dashed rounded-[2rem] p-12 text-center transition-all cursor-pointer group flex flex-col items-center justify-center",
-                      uploadStatus === 'idle' && "border-slate-100 bg-slate-50/50 hover:bg-white hover:border-blue-200",
-                      uploadStatus === 'uploading' && "border-blue-200 bg-blue-50 animate-pulse",
-                      uploadStatus === 'success' && "border-green-200 bg-green-50",
+                      uploadStatus === 'idle' && "border-brand-primary/10 bg-bg-elevated/50 hover:bg-white hover:border-brand-primary/30",
+                      uploadStatus === 'uploading' && "border-brand-primary/30 bg-brand-primary/5 animate-pulse",
+                      uploadStatus === 'success' && "border-emerald-200 bg-emerald-50",
                       uploadStatus === 'error' && "border-red-200 bg-red-50"
                     )}
                   >
                     {uploadStatus === 'idle' && (
                       <>
-                        <Upload className="mx-auto w-12 h-12 text-slate-300 group-hover:text-blue-600 mb-4 transition-transform group-hover:-translate-y-1" />
-                        <p className="text-sm text-slate-600 font-bold">Transmit Secure Document</p>
-                        <p className="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Authorized formats: PDF, DOCX • Limit: 10MB</p>
+                        <Upload className="mx-auto w-12 h-12 text-text-muted/30 group-hover:text-brand-primary mb-4 transition-transform group-hover:-translate-y-1" />
+                        <p className="text-sm text-text-secondary font-bold">Upload file</p>
+                        <p className="text-[10px] text-text-muted mt-2 uppercase tracking-widest">PDF or DOCX • Max 10MB</p>
                       </>
                     )}
                     {uploadStatus === 'uploading' && (
                       <>
-                        <Clock className="w-12 h-12 text-blue-500 mb-4 animate-spin" />
-                        <p className="text-sm text-blue-600 font-bold">Uploading Artifact...</p>
+                        <Clock className="w-12 h-12 text-brand-primary mb-4 animate-spin" />
+                        <p className="text-sm text-brand-primary font-bold">Uploading...</p>
                       </>
                     )}
                     {uploadStatus === 'success' && (
                       <>
-                        <CheckCircle2 className="w-12 h-12 text-green-500 mb-4 border-white" />
-                        <p className="text-sm text-green-600 font-bold">CV Transmitted Successfully</p>
-                        <p className="text-[10px] text-green-500 mt-1">{cvMetadata?.name}</p>
+                        <CheckCircle2 className="w-12 h-12 text-emerald-500 mb-4 border-white" />
+                        <p className="text-sm text-emerald-600 font-bold">Done!</p>
+                        <p className="text-[10px] text-emerald-500 mt-1">{cvMetadata?.name}</p>
                       </>
                     )}
                     {uploadStatus === 'error' && (
                       <>
                         <Award className="w-12 h-12 text-red-500 mb-4 rotate-180" />
-                        <p className="text-sm text-red-600 font-bold">Transmission Failed</p>
+                        <p className="text-sm text-red-600 font-bold">Error</p>
                         <p className="text-[10px] text-red-500 mt-1 uppercase tracking-widest">{uploadError}</p>
                       </>
                     )}
@@ -515,7 +515,7 @@ export default function Registration() {
 
               {!isSecretariat && (
                 <div className="space-y-6">
-                  <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-8 border-b border-slate-100 pb-2">Identification Artifacts</h2>
+                  <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-8 border-b border-slate-100 pb-2">ID Documents</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4">
                       <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-4">NRIC Front View</label>
@@ -523,7 +523,7 @@ export default function Registration() {
                         onClick={() => document.getElementById('nric-front')?.click()}
                         className={cn(
                           "aspect-[1.58/1] w-full border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all overflow-hidden",
-                          nricFront ? "border-blue-500" : "border-slate-200 bg-slate-50 hover:bg-slate-100"
+                          nricFront ? "border-brand-primary" : "border-slate-200 bg-slate-50 hover:bg-slate-100"
                         )}
                       >
                         {nricFront ? (
@@ -543,7 +543,7 @@ export default function Registration() {
                         onClick={() => document.getElementById('nric-back')?.click()}
                         className={cn(
                           "aspect-[1.58/1] w-full border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all overflow-hidden",
-                          nricBack ? "border-blue-500" : "border-slate-200 bg-slate-50 hover:bg-slate-100"
+                          nricBack ? "border-brand-primary" : "border-slate-200 bg-slate-50 hover:bg-slate-100"
                         )}
                       >
                         {nricBack ? (
@@ -562,16 +562,16 @@ export default function Registration() {
               )}
 
               <div className="flex flex-col gap-4">
-                <div className="flex items-start gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                <div className="flex items-start gap-4 bg-bg-elevated p-6 rounded-3xl border border-brand-primary/10">
                   <input 
                     required
                     type="checkbox" 
                     id="declaration"
                     checked={formData.declaration}
                     onChange={e => setFormData({...formData, declaration: e.target.checked})}
-                    className="mt-1 w-5 h-5 text-blue-600 rounded-full border-slate-300 focus:ring-blue-500" 
+                    className="mt-1 w-5 h-5 text-brand-primary rounded-full border-brand-primary focus:ring-brand-primary" 
                   />
-                  <label htmlFor="declaration" className="text-xs text-slate-500 leading-relaxed font-medium">
+                  <label htmlFor="declaration" className="text-xs text-text-secondary leading-relaxed font-medium">
                     {regPath === 'QT' ? (
                       "I affirm that all provided information is accurate and authentic. I acknowledge that misrepresentation constitutes a violation of Act 768. I consent to the RM30 lifetime registration fee (Qualified Technician) for the Malaysia Board of Technologists."
                     ) : (
@@ -580,16 +580,16 @@ export default function Registration() {
                   </label>
                 </div>
 
-                <div className="flex items-start gap-4 bg-blue-50 p-6 rounded-3xl border border-blue-100">
+                <div className="flex items-start gap-4 bg-brand-primary/5 p-6 rounded-3xl border border-brand-primary/10">
                   <input 
                     required
                     type="checkbox" 
                     id="ethicsAffirmation"
                     checked={formData.ethicsAffirmation}
                     onChange={e => setFormData({...formData, ethicsAffirmation: e.target.checked})}
-                    className="mt-1 w-5 h-5 text-blue-600 rounded-full border-slate-300 focus:ring-blue-500" 
+                    className="mt-1 w-5 h-5 text-brand-primary rounded-full border-brand-primary focus:ring-brand-primary" 
                   />
-                  <label htmlFor="ethicsAffirmation" className="text-xs text-blue-700 leading-relaxed font-bold">
+                  <label htmlFor="ethicsAffirmation" className="text-xs text-brand-primary leading-relaxed font-bold">
                     [Professional Ethics] I solemnly declare that I shall abide by the Code of Professional Ethics and Conduct as stipulated by the Board and shall endeavor to uphold the integrity of the profession at all times.
                   </label>
                 </div>
@@ -604,7 +604,7 @@ export default function Registration() {
                   <select 
                     value={formData.department}
                     onChange={e => setFormData({...formData, department: e.target.value})}
-                    className="w-full px-6 py-3.5 bg-slate-50 border-none rounded-full focus:ring-2 focus:ring-blue-500/20 outline-none text-sm appearance-none font-bold"
+                    className="w-full px-6 py-3.5 bg-slate-100/50 border-none rounded-full focus:ring-2 focus:ring-brand-primary/20 outline-none text-sm appearance-none font-bold"
                   >
                     <option value="Registration & Certification">Registration & Certification</option>
                     <option value="CPD & Training">CPD & Training</option>
@@ -623,23 +623,23 @@ export default function Registration() {
             </div>
           )}
 
-          <button 
-            type="submit"
-            disabled={isSubmitting}
-            className={cn(
-              "w-full py-6 text-white font-black rounded-full shadow-2xl transition-all active:scale-[0.98] uppercase tracking-[0.4em] text-[10px] flex items-center justify-center gap-3",
-              isSecretariat ? "bg-indigo-950 shadow-indigo-950/20 hover:bg-slate-800" : "bg-blue-700 shadow-blue-700/20 hover:bg-blue-800",
-              isSubmitting && "opacity-50 cursor-not-allowed"
-            )}
-          >
-            {isSubmitting ? (
-              <>
-                <Clock className="animate-spin" size={14} /> Processing...
-              </>
-            ) : (
-              isSecretariat ? 'Onboard Staff Account' : 'Finalize Registration'
-            )}
-          </button>
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className={cn(
+                  "w-full py-6 text-white font-black rounded-full shadow-2xl transition-all active:scale-[0.98] uppercase tracking-[0.4em] text-[10px] flex items-center justify-center gap-3",
+                  isSecretariat ? "bg-brand-secondary shadow-brand-secondary/20 hover:bg-slate-800" : "bg-brand-primary shadow-brand-primary/20 hover:bg-brand-primary/90",
+                  isSubmitting && "opacity-50 cursor-not-allowed"
+                )}
+              >
+              {isSubmitting ? (
+                <>
+                  <Clock className="animate-spin" size={14} /> Processing...
+                </>
+              ) : (
+                isSecretariat ? 'Onboard Staff Account' : 'Register'
+              )}
+            </button>
           </>
           )}
         </form>
